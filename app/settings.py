@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "security",
     "user",
     "users",
+    "workshops",
 ]
 
 REST_FRAMEWORK = {
