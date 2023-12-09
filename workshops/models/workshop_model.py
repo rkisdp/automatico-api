@@ -7,8 +7,9 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from vehicles.models import VehicleModel
+
 from .speciality_model import SpecialityModel
-from .vehicle_model import VehicleModel
 
 
 def rename(instance: WorkshopModel, filename: str) -> str:

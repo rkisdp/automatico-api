@@ -1,9 +1,8 @@
-from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .vehicle_model import VehicleModel
-from .workshop_model import WorkshopModel
+from vehicles.models import VehicleModel
+from workshops.models import WorkshopModel
 
 
 class ServiceModel(models.Model):
