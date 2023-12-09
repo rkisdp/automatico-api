@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
 from vehicles.models import VehicleModel
-from workshops.models import WorkshopModel
+
+# from workshops.models import WorkshopModel
 
 
 class ServiceModel(models.Model):
@@ -23,7 +23,7 @@ class ServiceModel(models.Model):
     workshop = models.ForeignKey(
         verbose_name=_("workshop"),
         help_text=_("Workshop"),
-        to=WorkshopModel,
+        to="workshops.WorkshopModel",
         on_delete=models.PROTECT,
         related_name="services",
         null=True,

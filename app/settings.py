@@ -55,8 +55,10 @@ INSTALLED_APPS = [
     "core",
     "documentation",
     "security",
+    "services",
     "user",
     "users",
+    "vehicles",
     "workshops",
 ]
 
