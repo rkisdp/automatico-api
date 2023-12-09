@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  automatico-db:
+    container_name: PostgreSQL
+    image: postgres:15
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    env_file:
+      - .env.db
+
+  automatico-api:
+    container_name: Web-API
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/home/automatico-api/app/static
+      - media_volume:/home/automatico-api/app/media
+    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000
+    depends_on:
+      - automatico-db
+    env_file:
+      - app/.env
+
+  nginx:
+    container_name: Nginx
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    volumes:
+      - static_volume:/home/automatico-api/app/static
+      - media_volume:/home/automatico-api/app/media
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - automatico-api
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+volumes:
+  postgres-data:
+  static_volume:
+  media_volume:
