@@ -15,7 +15,7 @@ urlpatterns = [
         name="token-verify",
     ),
     path(
-        "passowrd/reset/",
+        "password/reset/",
         views.PasswordResetView().as_view(),
         name="password-reset",
     ),

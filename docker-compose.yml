@@ -7,7 +7,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data/
     env_file:
-      - .env.db
+      - db.env
 
   automatico-api:
     container_name: Web-API
@@ -25,19 +25,18 @@ services:
 
   nginx:
     container_name: Nginx
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx
+    image: nginx:latest
     volumes:
       - static_volume:/home/automatico-api/app/static
       - media_volume:/home/automatico-api/app/media
       - ./nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - automatico-api
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
 volumes:
   postgres-data:

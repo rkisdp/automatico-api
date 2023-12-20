@@ -1,0 +1,29 @@
+trigger:
+  tags:
+    include:
+      - '*'
+
+resources:
+  - repo: self
+
+pool:
+  name: Default
+
+variables:
+  dockerHubUserName: 'vxgamex'
+  dockerImageName: 'automatico-api'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: PushDockerContainer
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'docker_connection_name'
+              repository: '$(dockerHubUserName)/$(imageName)'
+              command: 'buildAndPush'
+              Dockerfile: 'Dockerfile'
+              tags: |
+                $(Build.SourceBranchName)
+                latest

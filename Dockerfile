@@ -7,10 +7,10 @@ RUN apt-get update && \
     apt-get install -y nano && \
     apt-get install -y netcat-traditional
 
-RUN addgroup --system prestamos-api && \
-    adduser --system --group prestamos-api
+RUN addgroup --system automatico-api && \
+    adduser --system --group automatico-api
 
-ENV APP_HOME=/home/prestamos-api/app
+ENV APP_HOME=/home/automatico-api/app
 RUN mkdir -p $APP_HOME/static && \
     mkdir -p $APP_HOME/media
 
@@ -28,8 +28,8 @@ RUN chmod +x entrypoint.sh
 
 COPY . .
 
-RUN chown -R prestamos-api:prestamos-api $APP_HOME
-USER prestamos-api
+RUN chown -R automatico-api:automatico-api $APP_HOME
+USER automatico-api
 
 EXPOSE 8000
 

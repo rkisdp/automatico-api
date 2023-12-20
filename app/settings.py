@@ -115,8 +115,7 @@ CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Loans API",
-    "DESCRIPTION": "API for loans management",
+    "TITLE": "AutoMático API",
     "VERSION": "v0.1.0",
     "TOS": None,
     "LICENSE": None,

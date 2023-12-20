@@ -5,9 +5,8 @@ from . import views
 app_name = "workshops"
 
 router = DefaultRouter()
-router.register("workshops", views.WorkshopViewSet, basename="workshops")
 router.register(
-    "workshops/contacts",
+    "contacts",
     views.WorkshopContactViewSet,
     basename="workshop-contacts",
 )
@@ -29,6 +28,7 @@ router.register(
     views.ReviewResponseViewSet,
     basename="review-responses",
 )
+router.register("", views.WorkshopViewSet, basename="workshops")
 
 urlpatterns = []
 
