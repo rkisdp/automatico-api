@@ -1,22 +1,40 @@
 from django.urls import path
-from rest_framework_simplejwt import views as jwt_views
 
 from . import views
 
 app_name = "security"
 
-urlpatterns = [
+urlpatterns = (
     path(
-        "token/", jwt_views.TokenObtainPairView().as_view(), name="token-pair"
+        "account/activation/",
+        views.AccountActivationView().as_view(),
+        name="account-activation",
     ),
     path(
-        "token/verify/",
-        jwt_views.TokenVerifyView().as_view(),
-        name="token-verify",
+        "account/activation/resend/",
+        views.ResendAccountActivationCodeView().as_view(),
+        name="resend-account-activation-code",
+    ),
+    path(
+        "email/verification/",
+        views.EmailVerificationView().as_view(),
+        name="email-verification",
+    ),
+    path(
+        "email/verification/resend/",
+        views.ResendEmailVerificationCodeView().as_view(),
+        name="resend-email-verification-code",
     ),
     path(
         "password/reset/",
         views.PasswordResetView().as_view(),
         name="password-reset",
     ),
-]
+    path(
+        "password/reset/confirm/",
+        views.ConfirmPasswordResetView().as_view(),
+        name="password-reset-confirm",
+    ),
+    path("sign-up/", views.SignUpView().as_view(), name="sign-up"),
+    path("token/", views.AccessTokenView().as_view(), name="access-token"),
+)

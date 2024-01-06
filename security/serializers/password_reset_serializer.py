@@ -1,33 +1,30 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from users.models import UserModel
+from security.email import send_verification_code
 
 
-class PasswordResetSerializer(serializers.ModelSerializer):
+class PasswordResetSerializer(serializers.Serializer):
     email = serializers.EmailField(write_only=True)
 
-    class Meta:
-        model = get_user_model()
-        fields = ["email"]
-
-    def validate_email(self, value):
-        user: UserModel = get_user_model().objects.filter(email__iexact=value)
-
-        if not user.exists():
-            raise serializers.ValidationError("User does not exist.")
-
-        return value
-
-    def update(self, instance, validated_data):
-        email = validated_data["email"]
-        user: UserModel = get_user_model().objects.get(email__iexact=email)
-
-        temp_password = get_user_model().objects.make_random_password()
-        user.set_password(temp_password)
-        user.email_user(
-            subject="Password reset",
-            message=f"Your temporary password is: {temp_password}",
+    def validate(self, validated_data):
+        email = validated_data.get("email")
+        users = get_user_model().objects.filter(
+            email__iexact=email, is_active=True, email_verified=True
         )
-        user.save()
-        return user
+
+        if not users.exists():
+            raise serializers.ValidationError(
+                {
+                    "email": "A user with that email does not exist, is not"
+                    " active or does not have a verified email"
+                }
+            )
+
+        send_verification_code(
+            user=users.first(),
+            code_type="PRC",
+            email_template="password_reset_code",
+            email_subject="Reinicio de Contraseña",
+        )
+        return validated_data

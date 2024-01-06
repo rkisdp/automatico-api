@@ -46,6 +46,11 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
             "unique": _("A user with that email already exists"),
         },
     )
+    email_verified = models.BooleanField(
+        verbose_name=_("email verified"),
+        help_text=_("User email verification status"),
+        default=False,
+    )
     password = models.CharField(
         verbose_name=_("password"),
         help_text=_("User hashed password"),
@@ -72,7 +77,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     )
     is_active = models.BooleanField(
         verbose_name=_("active"),
-        default=True,
+        default=False,
         help_text=_(
             "Designates whether this user should be treated as active. "
             "Unselect this instead of deleting accounts."

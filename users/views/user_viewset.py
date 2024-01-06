@@ -10,9 +10,7 @@ SCHEMA_NAME = "users"
 
 @extend_schema(tags=[SCHEMA_NAME])
 class UserViewSet(
-    mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
     mixins.ListModelMixin,
     GenericViewSet,
 ):

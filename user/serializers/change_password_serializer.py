@@ -9,20 +9,30 @@ from rest_framework.serializers import (
 from users.models import UserModel
 
 
-class PasswordSerializer(ModelSerializer):
-    current_password = CharField(write_only=True, trim_whitespace=False)
-    password = CharField(write_only=True, min_length=9, trim_whitespace=False)
+class ChangePasswordSerializer(ModelSerializer):
+    current_password = CharField(
+        write_only=True,
+        min_length=9,
+        trim_whitespace=False,
+    )
+    password = CharField(
+        write_only=True,
+        min_length=9,
+        trim_whitespace=False,
+    )
     password_confirm = CharField(
-        write_only=True, min_length=9, trim_whitespace=False
+        write_only=True,
+        min_length=9,
+        trim_whitespace=False,
     )
 
     class Meta:
         model = get_user_model()
-        fields = [
+        fields = (
             "current_password",
             "password",
             "password_confirm",
-        ]
+        )
 
     def validate_current_password(self, value):
         is_valid = self.instance.check_password(value)
@@ -53,11 +63,8 @@ class PasswordSerializer(ModelSerializer):
 
     def update(self, instance: UserModel, validated_data):
         password = validated_data.pop("password")
-        validated_data.pop("password_confirm")
-        validated_data.pop("current_password")
+        del validated_data["password_confirm"]
+        del validated_data["current_password"]
 
         instance.set_password(password)
-        instance.default_password = False
-        instance.save()
-
         return super().update(instance, validated_data)

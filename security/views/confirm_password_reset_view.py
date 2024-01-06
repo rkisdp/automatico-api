@@ -3,21 +3,21 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from ..serializers import PasswordResetSerializer
+from ..serializers import ConfirmPasswordResetSerializer
 
 SCHEMA_NAME = "auth"
 
 
 @extend_schema(tags=[SCHEMA_NAME])
-class PasswordResetView(GenericAPIView):
+class ConfirmPasswordResetView(GenericAPIView):
     authentication_classes = []
     permission_classes = []
-    serializer_class = PasswordResetSerializer
+    serializer_class = ConfirmPasswordResetSerializer
 
     @extend_schema(
-        responses={status.HTTP_202_ACCEPTED: None},
+        responses={status.HTTP_204_NO_CONTENT: None},
     )
-    def post(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(status=status.HTTP_202_ACCEPTED)
+        return Response(status=status.HTTP_204_NO_CONTENT)

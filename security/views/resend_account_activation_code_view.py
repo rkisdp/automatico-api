@@ -3,16 +3,16 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from ..serializers import PasswordResetSerializer
+from security.serializers import ResendAccountActivationCodeSerializer
 
 SCHEMA_NAME = "auth"
 
 
 @extend_schema(tags=[SCHEMA_NAME])
-class PasswordResetView(GenericAPIView):
+class ResendAccountActivationCodeView(GenericAPIView):
     authentication_classes = []
     permission_classes = []
-    serializer_class = PasswordResetSerializer
+    serializer_class = ResendAccountActivationCodeSerializer
 
     @extend_schema(
         responses={status.HTTP_202_ACCEPTED: None},

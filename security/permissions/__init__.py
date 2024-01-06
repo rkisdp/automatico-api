@@ -1,2 +1,2 @@
-from .default_password_permission import DefaultPasswordPermission
+from .email_verified_permission import EmailVerifiedPermission
 from .model_permissions import ModelPermissions
