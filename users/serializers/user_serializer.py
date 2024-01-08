@@ -10,7 +10,18 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
+            "email_verified",
+            "photo",
+            "phone_number",
+            "phone_number_verified",
             "is_active",
+            "is_staff",
+            "date_joined",
         )
 
-        read_only_fields = ("id",)
+        read_only_fields = (
+            "id",
+            "email_verified",
+            "photo",
+            "phone_number_verified",
+        )

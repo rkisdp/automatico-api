@@ -94,12 +94,14 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         verbose_name=_("date joined"),
         help_text=_("User registration date"),
         default=timezone.now,
+        editable=False,
     )
     last_login = models.DateTimeField(
         verbose_name=_("last login"),
         help_text=_("User last login date"),
         blank=True,
         null=True,
+        editable=False,
     )
 
     objects = UserManager()

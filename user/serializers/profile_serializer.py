@@ -13,10 +13,21 @@ class ProfileSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
+            "email_verified",
             "photo",
+            "phone_number",
+            "phone_number_verified",
+            "is_active",
+            "is_staff",
+            "date_joined",
         )
 
-        read_only_fields = ("id", "photo")
+        read_only_fields = (
+            "id",
+            "email_verified",
+            "photo",
+            "phone_number_verified",
+        )
 
     def update(self, instance: UserModel, validated_data):
         email = validated_data.pop("email", None)

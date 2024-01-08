@@ -15,10 +15,10 @@ class SignUpSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
+            "phone_number",
             "password",
             "confirm_password",
         )
-
         read_only_fields = ("id",)
         extra_kwargs = {
             "password": {
