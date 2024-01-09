@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from security.models import VerificationCodeModel
+from security.email import send_verification_code
 from users.models import UserModel
 
 
@@ -37,8 +37,12 @@ class ProfileSerializer(serializers.ModelSerializer):
             instance.email = email
             instance.email_verified = False
             instance.save()
-            VerificationCodeModel.objects.create(
-                user=instance, type__code="EVC"
+
+            send_verification_code(
+                user=instance,
+                code_type="EVC",
+                email_template="email_verification_code",
+                email_subject="Verificación de Correo Electrónico",
             )
 
         return super().update(instance, validated_data)

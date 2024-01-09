@@ -22,9 +22,6 @@ class ResendAccountActivationCodeSerializer(serializers.Serializer):
                 {"email": "Account is already active."}
             )
 
-        if hasattr(user, "verification_code"):
-            user.verification_code.delete()
-
         send_verification_code(
             user=user,
             code_type="RAAC",

@@ -15,7 +15,7 @@ class CodeValidator:
             _raise_validation_error("Invalid or expired validation code")
 
         verification_code: VerificationCodeModel = user.verification_code
-        if verification_code.type.code != type:
+        if verification_code.type.code is not type and not f"R{type}":
             _raise_validation_error("Invalid or expired validation code")
 
         if not check_password(code, verification_code.code):
