@@ -27,6 +27,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             "email_verified",
             "photo",
             "phone_number_verified",
+            "is_active",
+            "is_staff",
         )
 
     def update(self, instance: UserModel, validated_data):
