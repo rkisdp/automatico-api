@@ -7,13 +7,13 @@ resources:
   - repo: self
 
 pool:
-  vmImage: 'windows-latest'
+  name: 'Azure Pipelines'
 
 variables:
-  dockerHubConnection: 'dockerHubConnection' # Nombre de la conexión de servicio a Docker Hub en Azure DevOps
-  dockerHubUserName: 'vxgamex'              # Nombre de usuario de Docker Hub
-  dockerImageName: 'automatico-api'         # Nombre de la imagen de Docker
-  dockerFilePath: 'Dockerfile'              # Ruta al Dockerfile en tu repositorio
+  dockerHubConnection: 'dockerHubConnection'
+  dockerHubUserName: 'vxgamex'
+  dockerImageName: 'automatico-api'
+  dockerFilePath: 'Dockerfile'
 
 stages:
   - stage: Build
