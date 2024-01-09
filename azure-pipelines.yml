@@ -7,7 +7,7 @@ resources:
   - repo: self
 
 pool:
-  name: 'Azure Pipelines'
+  name: 'Default'
 
 variables:
   dockerHubConnection: 'dockerHubConnection'
