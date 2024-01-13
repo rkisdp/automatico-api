@@ -16,6 +16,11 @@ urlpatterns = (
         name="resend-account-activation-code",
     ),
     path(
+        "account/activation/validate/",
+        views.ValidateAccountActivationCodeView().as_view(),
+        name="validate-account-activation-code",
+    ),
+    path(
         "email/verification/",
         views.EmailVerificationView().as_view(),
         name="email-verification",
@@ -34,6 +39,11 @@ urlpatterns = (
         "password/reset/confirm/",
         views.ConfirmPasswordResetView().as_view(),
         name="password-reset-confirm",
+    ),
+    path(
+        "password/reset/validate/",
+        views.ValidatePasswordResetCodeView().as_view(),
+        name="validate-account-activation-code",
     ),
     path("sign-up/", views.SignUpView().as_view(), name="sign-up"),
     path("token/", views.AccessTokenView().as_view(), name="access-token"),

@@ -1,8 +1,12 @@
 from .access_token_view import AccessTokenView
 from .account_activation_view import AccountActivationView
 from .confirm_password_reset_view import ConfirmPasswordResetView
+from .email_verification_view import EmailVerificationView
 from .password_reset_view import PasswordResetView
 from .resend_account_activation_code_view import ResendAccountActivationCodeView
 from .resend_email_verification_code_view import ResendEmailVerificationCodeView
 from .sign_up_view import SignUpView
-from .email_verification_view import EmailVerificationView
+from .validate_account_activation_code_view import (
+    ValidateAccountActivationCodeView,
+)
+from .validate_password_reset_code_view import ValidatePasswordResetCodeView

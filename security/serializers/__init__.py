@@ -10,3 +10,9 @@ from .resend_email_verification_code_serializer import (
     ResendEmailVerificationCodeSerializer,
 )
 from .sign_up_serializer import SignUpSerializer
+from .validate_account_activation_code_serializer import (
+    ValidateAccountActivationCodeSerializer,
+)
+from .validate_password_reset_code_serializer import (
+    ValidatePasswordResetCodeSerializer,
+)
