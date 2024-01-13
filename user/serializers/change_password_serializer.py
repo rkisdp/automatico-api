@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import (
     CharField,
     ModelSerializer,
@@ -37,7 +38,7 @@ class ChangePasswordSerializer(ModelSerializer):
     def validate_current_password(self, value):
         is_valid = self.instance.check_password(value)
         if not is_valid:
-            raise ValidationError("Password do not match.")
+            raise ValidationError(_("Password do not match."))
         return value
 
     def validate_password(self, value):
@@ -51,12 +52,12 @@ class ChangePasswordSerializer(ModelSerializer):
 
         if current_password == password:
             raise ValidationError(
-                {"password": "Password cannot be the same as current."}
+                {"password": _("Password cannot be the same as current.")}
             )
 
         if password != password_confirm:
             raise ValidationError(
-                {"password_confirm": "Passwords do not match."}
+                {"password_confirm": _("Passwords do not match.")}
             )
 
         return attrs
