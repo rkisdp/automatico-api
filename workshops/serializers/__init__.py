@@ -1,10 +1,8 @@
-from .workshop_serializers import (
-    QuestionResponseSerializer,
-    QuestionSerializer,
-    ReviewPhotoSerializer,
-    ReviewResponseSerializer,
-    ReviewSerializer,
-    SpecialitySerializer,
-    WorkshopContactSerializer,
-    WorkshopSerializer,
-)
+from .question_response_serializer import QuestionResponseSerializer
+from .question_serializer import QuestionSerializer
+from .review_photo_serializer import ReviewPhotoSerializer
+from .review_response_serializer import ReviewResponseSerializer
+from .review_serializer import ReviewSerializer
+from .speciality_serializer import SpecialitySerializer
+from .workshop_contact_serializer import WorkshopContactSerializer
+from .workshop_serializers import WorkshopSerializer
