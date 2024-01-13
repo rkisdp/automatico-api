@@ -1,16 +1,9 @@
 from rest_framework import serializers
 
-from vehicles.models import VehicleBrandModel, VehicleModel
+from vehicles.models import VehicleModel
 
 
-class VehicleBrandModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = VehicleBrandModel
-        fields = ("id", "name")
-        read_only_fields = ("id",)
-
-
-class VehicleModelSerializer(serializers.ModelSerializer):
+class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = VehicleModel
         fields = (
@@ -23,11 +16,4 @@ class VehicleModelSerializer(serializers.ModelSerializer):
             "vin",
             "photo",
         )
-        read_only_fields = ("id",)
-
-
-class VehicleBrandModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = VehicleBrandModel
-        fields = ("id", "name")
-        read_only_fields = ("id",)
+        read_only_fields = ("id", "photo")

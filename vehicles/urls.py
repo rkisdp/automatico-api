@@ -1,13 +1,12 @@
-from rest_framework import routers
+from django.urls import path
 
 from . import views
 
 app_name = "vehicles"
 
-router = routers.DefaultRouter()
-router.register(r"brands", views.VehicleBrandModelViewSet)
-router.register(r"", views.VehicleModelViewSet)
 
-urlpatterns = []
-
-urlpatterns += router.urls
+urlpatterns = (
+    path("<int:id>/", views.VehicleView.as_view(), name="detail"),
+    path("<int:id>/photo/", views.VehiclePhotoView.as_view(), name="photo"),
+    path("brands/", views.VehicleBrandView.as_view(), name="brands"),
+)

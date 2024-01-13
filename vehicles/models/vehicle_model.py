@@ -14,7 +14,7 @@ def rename(instance: VehicleModel, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
-    return path.join("workshops", "photos", filename)
+    return path.join("vehicles", "photos", filename)
 
 
 class VehicleModel(models.Model):
@@ -49,8 +49,8 @@ class VehicleModel(models.Model):
         blank=True,
     )
     owner = models.ForeignKey(
-        verbose_name=_("workshop"),
-        help_text=_("Workshop"),
+        verbose_name=_("owner"),
+        help_text=_("Owner"),
         to=settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
         related_name="vehicles",
