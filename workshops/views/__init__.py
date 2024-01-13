@@ -1,11 +1,8 @@
-from .workshop_viewset import (
-    ModelViewSet,
-    QuestionResponseViewSet,
-    QuestionViewSet,
-    ReviewPhotoViewSet,
-    ReviewResponseViewSet,
-    ReviewViewSet,
-    SpecialityViewSet,
-    WorkshopContactViewSet,
-    WorkshopViewSet,
-)
+from .question_response_viewset import QuestionResponseViewSet
+from .question_viewset import QuestionViewSet
+from .review_photo_viewset import ReviewPhotoViewSet
+from .review_response_viewset import ReviewResponseViewSet
+from .review_viewset import ReviewViewSet
+from .speciality_viewset import SpecialityViewSet
+from .workshop_contact_viewset import WorkshopContactViewSet
+from .workshop_viewset import WorkshopViewSet
