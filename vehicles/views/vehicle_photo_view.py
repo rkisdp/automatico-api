@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from rest_framework import mixins
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
@@ -29,7 +30,9 @@ class VehiclePhotoView(
     def get_object(self):
         instance = super().get_object()
         if not instance.photo and self.request.method == "DELETE":
-            raise ValidationError({"detail": "Vehicle does not have a photo."})
+            raise ValidationError(
+                {"detail": _("Vehicle does not have a photo.")}
+            )
 
         return instance
 

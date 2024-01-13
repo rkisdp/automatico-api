@@ -7,3 +7,4 @@ from vehicles.serializers import VehicleBrandSerializer
 class VehicleBrandView(ListAPIView):
     queryset = VehicleBrandModel.objects.all()
     serializer_class = VehicleBrandSerializer
+    lookup_field = "id"
