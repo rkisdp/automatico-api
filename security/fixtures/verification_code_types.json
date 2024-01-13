@@ -1,1 +1,56 @@
-[{"model": "security.verificationcodetypemodel", "pk": 1, "fields": {"code": "AAC", "name": "Account Activation Code", "description": ""}}, {"model": "security.verificationcodetypemodel", "pk": 2, "fields": {"code": "RAAC", "name": "Resend Account Activation Code", "description": ""}}, {"model": "security.verificationcodetypemodel", "pk": 3, "fields": {"code": "EVC", "name": "Email Verification Code", "description": ""}}, {"model": "security.verificationcodetypemodel", "pk": 4, "fields": {"code": "REVC", "name": "Resend Email Verification Code", "description": ""}}, {"model": "security.verificationcodetypemodel", "pk": 5, "fields": {"code": "PRC", "name": "Password Reset Code", "description": ""}}, {"model": "security.verificationcodetypemodel", "pk": 6, "fields": {"code": "RPRC", "name": "Resend Password Reset Code", "description": ""}}]
+[
+  {
+    "model": "security.verificationcodetypemodel",
+    "pk": 1,
+    "fields": {
+      "code": "AAC",
+      "name": "Account Activation Code",
+      "description": ""
+    }
+  },
+  {
+    "model": "security.verificationcodetypemodel",
+    "pk": 2,
+    "fields": {
+      "code": "RAAC",
+      "name": "Resend Account Activation Code",
+      "description": ""
+    }
+  },
+  {
+    "model": "security.verificationcodetypemodel",
+    "pk": 3,
+    "fields": {
+      "code": "EVC",
+      "name": "Email Verification Code",
+      "description": ""
+    }
+  },
+  {
+    "model": "security.verificationcodetypemodel",
+    "pk": 4,
+    "fields": {
+      "code": "REVC",
+      "name": "Resend Email Verification Code",
+      "description": ""
+    }
+  },
+  {
+    "model": "security.verificationcodetypemodel",
+    "pk": 5,
+    "fields": {
+      "code": "PRC",
+      "name": "Password Reset Code",
+      "description": ""
+    }
+  },
+  {
+    "model": "security.verificationcodetypemodel",
+    "pk": 6,
+    "fields": {
+      "code": "RPRC",
+      "name": "Resend Password Reset Code",
+      "description": ""
+    }
+  }
+]
