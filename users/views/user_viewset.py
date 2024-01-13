@@ -10,8 +10,8 @@ SCHEMA_NAME = "users"
 
 @extend_schema(tags=[SCHEMA_NAME])
 class UserViewSet(
-    mixins.RetrieveModelMixin,
     mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
     GenericViewSet,
 ):
     queryset = get_user_model().objects.all()
