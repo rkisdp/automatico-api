@@ -76,4 +76,4 @@ class VehicleModel(models.Model):
         db_table = "vehicle"
 
     def __str__(self) -> str:
-        return f"{self.brand} {self.model} {self.year}"
+        return f"{self.brand} {self.model} ({self.year})"
