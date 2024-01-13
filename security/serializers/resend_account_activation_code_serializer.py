@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from security.email import send_verification_code
@@ -13,13 +14,13 @@ class ResendAccountActivationCodeSerializer(serializers.Serializer):
 
         if not users.exists():
             raise serializers.ValidationError(
-                {"email": "A user with that email does not exist."}
+                {"email": _("A user with that email does not exist.")}
             )
 
         user = users.first()
         if user.is_active:
             raise serializers.ValidationError(
-                {"email": "Account is already active."}
+                {"email": _("Account is already active.")}
             )
 
         send_verification_code(

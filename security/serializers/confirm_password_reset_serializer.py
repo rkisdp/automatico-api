@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from security.email import CodeValidator
@@ -21,8 +22,10 @@ class ConfirmPasswordResetSerializer(serializers.Serializer):
         if not users.exists():
             raise serializers.ValidationError(
                 {
-                    "email": "A user with that email does not exist, is not"
-                    " active, does not have a verified email"
+                    "email": _(
+                        "A user with that email does not exist, is not"
+                        " active, does not have a verified email"
+                    )
                 }
             )
 
@@ -35,18 +38,18 @@ class ConfirmPasswordResetSerializer(serializers.Serializer):
 
         if password != password_confirm:
             raise serializers.ValidationError(
-                {"password": "Passwords do not match"}
+                {"password": _("Passwords do not match")}
             )
 
         if user.check_password(password):
             raise serializers.ValidationError(
-                {"password": "Password cannot be the same as the old one"}
+                {"password": _("Password cannot be the same as the old one")}
             )
 
         try:
             validate_password(password, user=user)
         except ValidationError as e:
-            raise ValidationError({"password": e.messages})
+            raise ValidationError({"password": [_(m) for m in e.messages]})
 
         user.set_password(password)
         user.save()

@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from security.email import send_verification_code
@@ -16,8 +17,10 @@ class PasswordResetSerializer(serializers.Serializer):
         if not users.exists():
             raise serializers.ValidationError(
                 {
-                    "email": "A user with that email does not exist, is not"
-                    " active or does not have a verified email"
+                    "email": _(
+                        "A user with that email does not exist, is not"
+                        " active or does not have a verified email"
+                    )
                 }
             )
 

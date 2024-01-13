@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 
@@ -31,7 +32,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         user = get_user_model().objects.filter(username__iexact=value)
         if user.exists():
             raise serializers.ValidationError(
-                "A user with that username already exists."
+                _("A user with that username already exists.")
             )
         return value
 
@@ -39,7 +40,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         user = get_user_model().objects.filter(email__iexact=value)
         if user.exists():
             raise serializers.ValidationError(
-                "A user with that email already exists."
+                _("A user with that email already exists.")
             )
         return value
 
@@ -53,7 +54,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         if password != confirm_password:
             raise serializers.ValidationError(
-                {"password": "Password fields didn't match."}
+                {"password": _("Password fields didn't match.")}
             )
 
         return attrs

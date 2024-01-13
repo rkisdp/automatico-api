@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from security.email import CodeValidator
@@ -22,13 +23,13 @@ class EmailVerificationSerializer(serializers.Serializer):
 
         if not user.exists():
             raise serializers.ValidationError(
-                {"email": "A user with that email does not exist."}
+                {"email": _("A user with that email does not exist.")}
             )
 
         user = user.first()
         if user.email_verified:
             raise serializers.ValidationError(
-                {"email": "Email is already verified."}
+                {"email": _("Email is already verified.")}
             )
 
         CodeValidator.run_validations(user, code, "EVC")
