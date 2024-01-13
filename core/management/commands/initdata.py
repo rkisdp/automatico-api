@@ -7,3 +7,4 @@ class Command(BaseCommand):
 
     def fill_verification_code_types(self):
         call_command("loaddata", "verification_code_types")
+        call_command("loaddata", "vehicle_brands")
