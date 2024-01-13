@@ -1,5 +1,3 @@
-from .service_viewset import (
-    ServiceHistoryViewSet,
-    ServiceStatusViewSet,
-    ServiceViewSet,
-)
+from .service_history_viewset import ServiceHistoryViewSet
+from .service_status_viewset import ServiceStatusViewSet
+from .service_viewset import ServiceViewSet
