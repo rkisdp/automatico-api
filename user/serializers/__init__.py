@@ -1,3 +1,4 @@
 from .change_password_serializer import ChangePasswordSerializer
-from .profile_image_serializer import ProfileImageSerializer
 from .profile_serializer import ProfileSerializer
+from .user_photo_serializer import UserPhotoSerializer
+from .user_vehicle_serializer import UserVehicleSerializer

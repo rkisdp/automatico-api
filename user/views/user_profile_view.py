@@ -8,7 +8,7 @@ SCHEMA_NAME = "user"
 
 
 @extend_schema(tags=[SCHEMA_NAME])
-class ProfileView(RetrieveUpdateAPIView):
+class UserProfileView(RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated,)
 
