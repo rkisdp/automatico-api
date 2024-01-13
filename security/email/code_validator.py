@@ -1,11 +1,12 @@
 from django.contrib.auth.hashers import check_password
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from security.models import VerificationCodeModel
 
 
 def _raise_validation_error(message: str) -> None:
-    raise serializers.ValidationError({"code": message})
+    raise serializers.ValidationError({"code": _(message)})
 
 
 class CodeValidator:
