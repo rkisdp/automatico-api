@@ -53,10 +53,8 @@ class HeaderPagination(PageNumberPagination):
     def get_paginated_response(self, data) -> Response:
         links = self.get_links()
 
-        page_count = self.page.paginator.num_pages
-
         headers = {
-            "X-Page-Count": page_count,
+            "X-Page-Count": self.page.paginator.num_pages,
             "X-Page-Size": self.page_size,
             "X-Current-Page": self.page.number,
         }
