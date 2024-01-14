@@ -1,28 +1,28 @@
 from rest_framework import serializers
 
-from core.fields import HyperLinkStringRelatedField
+from core.fields import StringRelatedHyperLinkField
 from workshops.models import WorkshopModel
 
 
 class WorkshopSerializer(serializers.ModelSerializer):
-    owner = HyperLinkStringRelatedField(
+    owner = StringRelatedHyperLinkField(
         read_only=True,
         view_name="users:users-detail",
         lookup_field="id",
     )
-    employees = HyperLinkStringRelatedField(
+    employees = StringRelatedHyperLinkField(
         many=True,
         read_only=True,
         view_name="users:users-detail",
         lookup_field="id",
     )
-    specialities = HyperLinkStringRelatedField(
+    specialities = StringRelatedHyperLinkField(
         many=True,
         read_only=True,
         view_name="workshops:specialities-detail",
         lookup_field="id",
     )
-    vehicles = HyperLinkStringRelatedField(
+    vehicles = StringRelatedHyperLinkField(
         many=True,
         read_only=True,
         view_name="vehicles:detail",
