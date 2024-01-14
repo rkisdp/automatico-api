@@ -11,3 +11,4 @@ class VehicleView(RetrieveUpdateDestroyAPIView):
     serializer_class = VehicleSerializer
     permission_classes = (DjangoModelPermissions, IsOwnerPermission)
     lookup_field = "id"
+    ordering = ("id",)

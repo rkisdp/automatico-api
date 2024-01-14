@@ -116,7 +116,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         db_table = "user"
 
     def __str__(self):
-        return self.email
+        return self.get_full_name()
 
     def clean(self):
         super().clean()

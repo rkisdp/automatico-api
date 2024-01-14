@@ -8,3 +8,4 @@ class ServiceViewSet(viewsets.ModelViewSet):
     queryset = ServiceModel.objects.all()
     serializer_class = ServiceSerializer
     lookup_field = "id"
+    ordering = ("id",)

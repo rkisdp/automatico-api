@@ -20,6 +20,7 @@ class VehiclePhotoView(
     permission_classes = (DjangoModelPermissions, IsOwnerPermission)
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = "id"
+    ordering = ("id",)
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)

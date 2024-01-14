@@ -17,6 +17,6 @@ class UserViewSet(
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     lookup_field = "id"
-    ordering = ["id"]
+    ordering = ("id",)
     ordering_fields = ["first_name", "last_name"]
     search_fields = ["first_name", "last_name"]

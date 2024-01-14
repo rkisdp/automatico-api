@@ -6,9 +6,9 @@ from workshops.models import WorkshopModel
 @register(WorkshopModel)
 class WorkshopAdmin(ModelAdmin):
     search_help_text = (
-        "You can search by owner first name, owner last name, name, specialities, "
-        "vehicles, vehicles brand, vehicles model, vehicles year, vehicles nickname, "
-        "vehicles vin."
+        "You can search by owner first name, owner last name, name, "
+        "specialities, vehicles, vehicles brand, vehicles model, vehicles "
+        "year, vehicles nickname, vehicles vin."
     )
     show_full_result_count = True
     list_per_page = 25

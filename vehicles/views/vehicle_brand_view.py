@@ -8,3 +8,4 @@ class VehicleBrandView(ListAPIView):
     queryset = VehicleBrandModel.objects.all()
     serializer_class = VehicleBrandSerializer
     lookup_field = "id"
+    ordering = ("id",)

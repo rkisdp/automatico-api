@@ -1,7 +1,6 @@
-from services.models import ServiceStatusModel
-
-
 from rest_framework import serializers
+
+from services.models import ServiceStatusModel
 
 
 class ServiceStatusSerializer(serializers.ModelSerializer):
