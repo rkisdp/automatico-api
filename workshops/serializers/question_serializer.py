@@ -6,5 +6,5 @@ from workshops.models import QuestionModel
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionModel
-        fields = ("id", "workshop", "question")
-        read_only_fields = ("id",)
+        fields = ("id", "client", "workshop", "question", "questioned_at")
+        read_only_fields = ("id", "questioned_at")

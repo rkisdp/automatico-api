@@ -48,6 +48,7 @@ class QuestionResponseModel(models.Model):
         verbose_name=_("responded at"),
         help_text=_("Responded at"),
         auto_now_add=True,
+        editable=False,
     )
 
     class Meta:

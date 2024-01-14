@@ -35,10 +35,11 @@ class WorkshopSerializer(serializers.ModelSerializer):
             "id",
             "owner",
             "name",
+            "photo",
             "latitude",
             "longitude",
             "employees",
             "specialities",
             "vehicles",
         )
-        read_only_fields = ("id",)
+        read_only_fields = ("id", "photo")

@@ -41,6 +41,7 @@ class ServiceHistoryModel(models.Model):
         verbose_name=_("start date"),
         help_text=_("Start date"),
         auto_now_add=True,
+        editable=False,
     )
 
     class Meta:

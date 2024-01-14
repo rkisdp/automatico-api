@@ -37,6 +37,7 @@ class QuestionModel(models.Model):
         verbose_name=_("questioned at"),
         help_text=_("Questioned at"),
         auto_now_add=True,
+        editable=False,
     )
 
     class Meta:
