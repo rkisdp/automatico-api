@@ -1,10 +1,10 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import ListAPIView
 
 from workshops.models import SpecialityModel
 from workshops.serializers import SpecialitySerializer
 
 
-class SpecialityViewSet(ModelViewSet):
+class SpecialityView(ListAPIView):
     queryset = SpecialityModel.objects.all()
     serializer_class = SpecialitySerializer
     lookup_field = "id"

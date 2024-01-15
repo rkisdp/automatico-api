@@ -1,3 +1,4 @@
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from . import views
@@ -5,14 +6,6 @@ from . import views
 app_name = "workshops"
 
 router = DefaultRouter()
-router.register(
-    "contacts",
-    views.WorkshopContactViewSet,
-    basename="workshop-contacts",
-)
-router.register(
-    "specialities", views.SpecialityViewSet, basename="specialities"
-)
 router.register("questions", views.QuestionViewSet, basename="questions")
 router.register(
     "questions/responses",
@@ -30,6 +23,35 @@ router.register(
 )
 router.register("", views.WorkshopViewSet, basename="workshops")
 
-urlpatterns = []
-
-urlpatterns += router.urls
+urlpatterns = (
+    path(
+        "",
+        views.WorkshopViewSet.as_view({"get": "list", "post": "create"}),
+        name="workshops",
+    ),
+    path(
+        "<int:id>/contacts/",
+        views.WorkshopContactListView.as_view(),
+        name="contacts-list",
+    ),
+    path(
+        "<int:id>/specialities/",
+        views.WorkshopContactListView.as_view(),
+        name="specialities-list",
+    ),
+    path(
+        "<int:id>/vehicles/",
+        views.WorkshopContactListView.as_view(),
+        name="vehicles-list",
+    ),
+    path(
+        "<int:id>/employees/",
+        views.WorkshopContactListView.as_view(),
+        name="employees-list",
+    ),
+    path(
+        "specialities/",
+        views.SpecialityView.as_view(),
+        name="specialities",
+    ),
+)

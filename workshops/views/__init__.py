@@ -3,6 +3,7 @@ from .question_viewset import QuestionViewSet
 from .review_photo_viewset import ReviewPhotoViewSet
 from .review_response_viewset import ReviewResponseViewSet
 from .review_viewset import ReviewViewSet
-from .speciality_viewset import SpecialityViewSet
-from .workshop_contact_viewset import WorkshopContactViewSet
+from .speciality_viewset import SpecialityView
+from .workshop_contact_detail_view import WorkshopContactDetailView
+from .workshop_contact_list_view import WorkshopContactListView
 from .workshop_viewset import WorkshopViewSet

@@ -36,8 +36,6 @@ class WorkshopSerializer(serializers.ModelSerializer):
             "owner",
             "name",
             "photo",
-            "latitude",
-            "longitude",
             "employees",
             "specialities",
             "vehicles",

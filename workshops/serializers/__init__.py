@@ -4,5 +4,6 @@ from .review_photo_serializer import ReviewPhotoSerializer
 from .review_response_serializer import ReviewResponseSerializer
 from .review_serializer import ReviewSerializer
 from .speciality_serializer import SpecialitySerializer
-from .workshop_contact_serializer import WorkshopContactSerializer
+from .workshop_contact_detail_serializer import WorkshopContactDetailSerializer
+from .workshop_contact_list_serializer import WorkshopContactListSerializer
 from .workshop_serializers import WorkshopSerializer

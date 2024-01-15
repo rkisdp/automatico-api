@@ -23,19 +23,18 @@ class WorkshopContactModel(models.Model):
         verbose_name=_("code"),
         help_text=_("Workshop code"),
         max_length=50,
-        unique=True,
     )
     value = models.CharField(
         verbose_name=_("code"),
         help_text=_("Workshop code"),
         max_length=100,
-        unique=True,
     )
 
     class Meta:
         verbose_name = _("workshop contact")
         verbose_name_plural = _("workshop contacts")
         db_table = "workshop_contact"
+        unique_together = ("workshop", "name")
 
     def __str__(self) -> str:
         return self.name
