@@ -51,7 +51,7 @@ class VerificationCodeModel(models.Model):
         db_table = "verification_code"
 
     def __str__(self):
-        return self.user
+        return f"{self.type} - {self.user}"
 
     @property
     def is_valid(self) -> bool:

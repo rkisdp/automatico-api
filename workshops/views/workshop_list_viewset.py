@@ -1,13 +1,12 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import ListCreateAPIView
 
 from workshops.models import WorkshopModel
-from workshops.serializers import WorkshopSerializer
+from workshops.serializers import WorkshopListSerializer
 
 
-class WorkshopViewSet(ModelViewSet):
+class WorkshopListView(ListCreateAPIView):
     queryset = WorkshopModel.objects.all()
-    serializer_class = WorkshopSerializer
-    lookup_field = "id"
+    serializer_class = WorkshopListSerializer
     ordering = ("id",)
     filterset_fields = (
         "owner",

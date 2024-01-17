@@ -9,7 +9,6 @@ class UserAdmin(BaseUserAdmin):
     show_full_result_count = True
     list_per_page = 25
     date_hierarchy = "date_joined"
-    actions = ("activate_user", "deactivate_user")
 
     ordering = (
         "first_name",

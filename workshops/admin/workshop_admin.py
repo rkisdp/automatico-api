@@ -12,7 +12,7 @@ class WorkshopAdmin(ModelAdmin):
     )
     show_full_result_count = True
     list_per_page = 25
-    filter_horizontal = ("employees", "specialities", "vehicles")
+    filter_horizontal = ("employees", "specialities", "vehicles", "brands")
 
     list_display = ("name", "owner")
     search_fields = (
@@ -37,6 +37,7 @@ class WorkshopAdmin(ModelAdmin):
                     "latitude",
                     "longitude",
                     "employees",
+                    "brands",
                     "specialities",
                     "vehicles",
                 ),

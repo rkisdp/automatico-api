@@ -21,13 +21,17 @@ router.register(
     views.ReviewResponseViewSet,
     basename="review-responses",
 )
-router.register("", views.WorkshopViewSet, basename="workshops")
 
 urlpatterns = (
     path(
         "",
-        views.WorkshopViewSet.as_view({"get": "list", "post": "create"}),
-        name="workshops",
+        views.WorkshopListView.as_view(),
+        name="list",
+    ),
+    path(
+        "<int:id>/",
+        views.WorkshopDetailView.as_view(),
+        name="detail",
     ),
     path(
         "<int:id>/contacts/",
@@ -35,20 +39,25 @@ urlpatterns = (
         name="contacts-list",
     ),
     path(
+        "<int:id>/brands/",
+        views.WorkshopBrandListView.as_view(),
+        name="brands-list",
+    ),
+    path(
         "<int:id>/specialities/",
-        views.WorkshopContactListView.as_view(),
+        views.WorkshopSpecialityListView.as_view(),
         name="specialities-list",
     ),
-    path(
-        "<int:id>/vehicles/",
-        views.WorkshopContactListView.as_view(),
-        name="vehicles-list",
-    ),
-    path(
-        "<int:id>/employees/",
-        views.WorkshopContactListView.as_view(),
-        name="employees-list",
-    ),
+    # path(
+    #     "<int:id>/vehicles/",
+    #     views.WorkshopContactListView.as_view(),
+    #     name="vehicles-list",
+    # ),
+    # path(
+    #     "<int:id>/employees/",
+    #     views.WorkshopContactListView.as_view(),
+    #     name="employees-list",
+    # ),
     path(
         "specialities/",
         views.SpecialityView.as_view(),

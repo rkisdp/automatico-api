@@ -4,7 +4,7 @@ from core.fields import StringRelatedHyperLinkField
 from workshops.models import WorkshopModel
 
 
-class WorkshopSerializer(serializers.ModelSerializer):
+class WorkshopDetailSerializer(serializers.ModelSerializer):
     owner = StringRelatedHyperLinkField(
         read_only=True,
         view_name="users:users-detail",
@@ -16,10 +16,16 @@ class WorkshopSerializer(serializers.ModelSerializer):
         view_name="users:users-detail",
         lookup_field="id",
     )
+    brands = StringRelatedHyperLinkField(
+        many=True,
+        read_only=True,
+        view_name="workshops:brands-list",
+        lookup_field="id",
+    )
     specialities = StringRelatedHyperLinkField(
         many=True,
         read_only=True,
-        view_name="workshops:specialities-detail",
+        view_name="workshops:specialities-list",
         lookup_field="id",
     )
     vehicles = StringRelatedHyperLinkField(
@@ -37,6 +43,7 @@ class WorkshopSerializer(serializers.ModelSerializer):
             "name",
             "photo",
             "employees",
+            "brands",
             "specialities",
             "vehicles",
         )

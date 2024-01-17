@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from vehicles.models import VehicleModel
+from vehicles.models import VehicleBrandModel, VehicleModel
 
 from .speciality_model import SpecialityModel
 
@@ -68,6 +68,13 @@ class WorkshopModel(models.Model):
         help_text=_("Workshop employees"),
         to=settings.AUTH_USER_MODEL,
         related_name="workshop_empoyees",
+        blank=True,
+    )
+    brands = models.ManyToManyField(
+        verbose_name=_("brands"),
+        help_text=_("Workshop brands"),
+        to=VehicleBrandModel,
+        related_name="workshop_brands",
         blank=True,
     )
     specialities = models.ManyToManyField(
