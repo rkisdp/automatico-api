@@ -12,7 +12,6 @@ class WorkshopSpecialityDetailSerializer(serializers.ListSerializer):
     child = WorkshopSpecialityListSerializer()
 
     def validate(self, attrs):
-        print(attrs)
         specialities = [item.get("speciality") for item in attrs]
         if len(specialities) != len(set(specialities)):
             raise serializers.ValidationError(

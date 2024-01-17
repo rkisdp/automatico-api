@@ -67,7 +67,7 @@ class WorkshopModel(models.Model):
         verbose_name=_("employees"),
         help_text=_("Workshop employees"),
         to=settings.AUTH_USER_MODEL,
-        related_name="workshop_empoyees",
+        related_name="workshop_employees",
         blank=True,
     )
     brands = models.ManyToManyField(

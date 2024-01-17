@@ -1,0 +1,27 @@
+[
+  {
+    "model": "services.servicestatusmodel",
+    "pk": 1,
+    "fields": { "name": "Aceptado" }
+  },
+  {
+    "model": "services.servicestatusmodel",
+    "pk": 2,
+    "fields": { "name": "En proceso" }
+  },
+  {
+    "model": "services.servicestatusmodel",
+    "pk": 3,
+    "fields": { "name": "Listo para retirar" }
+  },
+  {
+    "model": "services.servicestatusmodel",
+    "pk": 4,
+    "fields": { "name": "Retirado" }
+  },
+  {
+    "model": "services.servicestatusmodel",
+    "pk": 5,
+    "fields": { "name": "Rechazado" }
+  }
+]

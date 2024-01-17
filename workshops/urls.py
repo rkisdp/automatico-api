@@ -48,16 +48,16 @@ urlpatterns = (
         views.WorkshopSpecialityListView.as_view(),
         name="specialities-list",
     ),
-    # path(
-    #     "<int:id>/vehicles/",
-    #     views.WorkshopContactListView.as_view(),
-    #     name="vehicles-list",
-    # ),
-    # path(
-    #     "<int:id>/employees/",
-    #     views.WorkshopContactListView.as_view(),
-    #     name="employees-list",
-    # ),
+    path(
+        "<int:id>/vehicles/",
+        views.WorkshopVehicleListView.as_view(),
+        name="vehicles-list",
+    ),
+    path(
+        "<int:id>/employees/",
+        views.WorkshopEmployeeListView.as_view(),
+        name="employees-list",
+    ),
     path(
         "specialities/",
         views.SpecialityView.as_view(),

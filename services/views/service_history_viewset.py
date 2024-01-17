@@ -14,3 +14,4 @@ class ServiceHistoryViewSet(
     serializer_class = ServiceHistorySerializer
     lookup_field = "id"
     ordering = ("id",)
+    filterset_fields = ("service", "status")
