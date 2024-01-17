@@ -20,7 +20,7 @@ class VerificationCodeModel(models.Model):
         verbose_name=_("user"),
         help_text=_("User user"),
         to=settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="verification_code",
         editable=False,
     )

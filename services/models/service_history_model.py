@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -28,14 +29,16 @@ class ServiceHistoryModel(models.Model):
         related_name="histories",
     )
     comment = models.TextField(
-        verbose_name=_("request description"),
-        help_text=_("Request description"),
+        verbose_name=_("comment"),
+        help_text=_("Comment"),
         max_length=255,
     )
-    responsable = models.TextField(
-        verbose_name=_("response description"),
-        help_text=_("Response description"),
-        max_length=255,
+    responsable = models.ForeignKey(
+        verbose_name=_("responsable"),
+        help_text=_("Responsable"),
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="service_histories",
     )
     created_at = models.DateTimeField(
         verbose_name=_("start date"),

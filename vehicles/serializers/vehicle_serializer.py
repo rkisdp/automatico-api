@@ -13,6 +13,7 @@ class VehicleSerializer(serializers.ModelSerializer):
             "year",
             "nickname",
             "owner",
+            "plate",
             "vin",
             "photo",
         )

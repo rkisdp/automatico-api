@@ -57,6 +57,11 @@ class VehicleModel(models.Model):
         null=True,
         blank=True,
     )
+    plate = models.CharField(
+        verbose_name=_("plate"),
+        help_text=_("Plate"),
+        max_length=7,
+    )
     vin = models.CharField(
         verbose_name=_("vin"),
         help_text=_("VIN"),

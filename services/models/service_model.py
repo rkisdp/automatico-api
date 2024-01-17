@@ -44,12 +44,14 @@ class ServiceModel(models.Model):
         verbose_name=_("start date"),
         help_text=_("Start date"),
         auto_now_add=True,
+        editable=False,
     )
     end_date = models.DateTimeField(
         verbose_name=_("end date"),
         help_text=_("End date"),
         null=True,
         blank=True,
+        editable=False,
     )
 
     class Meta:
