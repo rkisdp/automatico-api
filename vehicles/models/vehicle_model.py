@@ -40,13 +40,13 @@ class VehicleModel(models.Model):
     year = models.PositiveSmallIntegerField(
         verbose_name=_("year"),
         help_text=_("Year"),
+        null=True,
+        blank=True,
     )
     nickname = models.CharField(
         verbose_name=_("nickname"),
         help_text=_("Nickname"),
         max_length=50,
-        null=True,
-        blank=True,
     )
     owner = models.ForeignKey(
         verbose_name=_("owner"),
@@ -61,11 +61,15 @@ class VehicleModel(models.Model):
         verbose_name=_("plate"),
         help_text=_("Plate"),
         max_length=7,
+        null=True,
+        blank=True,
     )
     vin = models.CharField(
         verbose_name=_("vin"),
         help_text=_("VIN"),
         max_length=17,
+        null=True,
+        blank=True,
     )
     photo = models.ImageField(
         verbose_name=_("photo"),

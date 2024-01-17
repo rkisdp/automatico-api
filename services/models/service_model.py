@@ -34,11 +34,15 @@ class ServiceModel(models.Model):
         verbose_name=_("request description"),
         help_text=_("Request description"),
         max_length=255,
+        null=True,
+        blank=True,
     )
     response_description = models.TextField(
         verbose_name=_("response description"),
         help_text=_("Response description"),
         max_length=255,
+        null=True,
+        blank=True,
     )
     start_date = models.DateTimeField(
         verbose_name=_("start date"),
@@ -61,3 +65,9 @@ class ServiceModel(models.Model):
 
     def __str__(self) -> str:
         return f"{self.vehicle} - {self.workshop}"
+
+    @property
+    def current_status(self):
+        return (
+            self.histories.last().status.name if self.histories.last() else None
+        )

@@ -3,12 +3,12 @@ from .question_viewset import QuestionViewSet
 from .review_photo_viewset import ReviewPhotoViewSet
 from .review_response_viewset import ReviewResponseViewSet
 from .review_viewset import ReviewViewSet
-from .speciality_viewset import SpecialityView
+from .speciality_viewset import SpecialityViewSet
 from .workshop_brand_list_view import WorkshopBrandListView
 from .workshop_contact_detail_view import WorkshopContactDetailView
 from .workshop_contact_list_view import WorkshopContactListView
 from .workshop_detail_viewset import WorkshopDetailView
 from .workshop_employee_list_view import WorkshopEmployeeListView
-from .workshop_list_viewset import WorkshopListView
+from .workshop_list_view import WorkshopListView
 from .workshop_speciality_list_view import WorkshopSpecialityListView
 from .workshop_vehicle_list_view import WorkshopVehicleListView

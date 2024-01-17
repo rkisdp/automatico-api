@@ -23,5 +23,15 @@
     "model": "services.servicestatusmodel",
     "pk": 5,
     "fields": { "name": "Rechazado" }
+  },
+  {
+    "model": "services.servicestatusmodel",
+    "pk": 6,
+    "fields": { "name": "Recibido" }
+  },
+  {
+    "model": "services.servicestatusmodel",
+    "pk": 7,
+    "fields": { "name": "Cancelado" }
   }
 ]

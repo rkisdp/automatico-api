@@ -5,7 +5,9 @@ from services.models import ServiceStatusModel
 from services.serializers import ServiceStatusSerializer
 
 
-class ServiceStatusViewSet(mixins.ListModelMixin, GenericViewSet):
+class ServiceStatusViewSet(
+    mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet
+):
     queryset = ServiceStatusModel.objects.all()
     serializer_class = ServiceStatusSerializer
     lookup_field = "id"

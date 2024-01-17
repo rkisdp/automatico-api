@@ -4,7 +4,7 @@ from core.fields import StringRelatedHyperLinkField
 from workshops.models import WorkshopModel
 
 
-class WorkshopDetailSerializer(serializers.ModelSerializer):
+class UserWorkshopSerializer(serializers.ModelSerializer):
     owner = StringRelatedHyperLinkField(
         read_only=True,
         view_name="users:users-detail",
@@ -48,3 +48,7 @@ class WorkshopDetailSerializer(serializers.ModelSerializer):
             "vehicles",
         )
         read_only_fields = ("id", "photo")
+
+    def create(self, validated_data):
+        validated_data["owner"] = self.context["request"].user
+        return super().create(validated_data)

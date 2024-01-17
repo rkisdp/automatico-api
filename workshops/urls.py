@@ -36,31 +36,41 @@ urlpatterns = (
     path(
         "<int:id>/contacts/",
         views.WorkshopContactListView.as_view(),
-        name="contacts-list",
+        name="contacts",
     ),
     path(
         "<int:id>/brands/",
         views.WorkshopBrandListView.as_view(),
-        name="brands-list",
-    ),
-    path(
-        "<int:id>/specialities/",
-        views.WorkshopSpecialityListView.as_view(),
-        name="specialities-list",
-    ),
-    path(
-        "<int:id>/vehicles/",
-        views.WorkshopVehicleListView.as_view(),
-        name="vehicles-list",
+        name="brands",
     ),
     path(
         "<int:id>/employees/",
         views.WorkshopEmployeeListView.as_view(),
-        name="employees-list",
+        name="employees",
+    ),
+    path(
+        "<int:id>/services/",
+        views.QuestionViewSet.as_view({"get": "list", "post": "create"}),
+        name="services",
+    ),
+    path(
+        "<int:id>/specialities/",
+        views.WorkshopSpecialityListView.as_view(),
+        name="specialities",
+    ),
+    path(
+        "<int:id>/vehicles/",
+        views.WorkshopVehicleListView.as_view(),
+        name="vehicles",
     ),
     path(
         "specialities/",
-        views.SpecialityView.as_view(),
-        name="specialities",
+        views.SpecialityViewSet.as_view({"get": "list"}),
+        name="speciality-list",
+    ),
+    path(
+        "specialities/<int:id>/",
+        views.SpecialityViewSet.as_view({"get": "retrieve"}),
+        name="speciality-detail",
     ),
 )

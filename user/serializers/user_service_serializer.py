@@ -4,7 +4,7 @@ from core.fields import StringRelatedHyperLinkField
 from services.models import ServiceModel
 
 
-class ServiceSerializer(serializers.ModelSerializer):
+class UserServiceSerializer(serializers.ModelSerializer):
     vehicle = StringRelatedHyperLinkField(
         view_name="vehicles:detail", read_only=True, lookup_field="id"
     )
