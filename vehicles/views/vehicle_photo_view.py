@@ -3,7 +3,7 @@ from rest_framework import mixins
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
 from rest_framework.parsers import FormParser, MultiPartParser
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import IsAuthenticated
 
 from vehicles.models import VehicleModel
 from vehicles.permissions import IsOwnerPermission
@@ -17,7 +17,7 @@ class VehiclePhotoView(
 ):
     queryset = VehicleModel.objects.all()
     serializer_class = VehiclePhotoSerializer
-    permission_classes = (DjangoModelPermissions, IsOwnerPermission)
+    permission_classes = (IsAuthenticated, IsOwnerPermission)
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = "id"
     ordering = ("id",)

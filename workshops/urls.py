@@ -50,7 +50,7 @@ urlpatterns = (
     ),
     path(
         "<int:id>/services/",
-        views.QuestionViewSet.as_view({"get": "list", "post": "create"}),
+        views.WorkshopServiceViewSet.as_view({"get": "list", "post": "create"}),
         name="services",
     ),
     path(

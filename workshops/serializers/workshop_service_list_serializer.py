@@ -2,40 +2,35 @@ from rest_framework import serializers
 
 from core.fields import StringRelatedHyperLinkField
 from services.models import ServiceModel
+from vehicles.models import VehicleModel
 
 
-class ServiceSerializer(serializers.ModelSerializer):
+class WorkshopServiceListSerializer(serializers.ModelSerializer):
     vehicle = StringRelatedHyperLinkField(
-        view_name="vehicles:detail", read_only=True, lookup_field="id"
+        read_only=True,
+        view_name="vehicles:detail",
+        lookup_field="id",
     )
     vehicle_id = serializers.PrimaryKeyRelatedField(
-        source="vehicle", queryset=ServiceModel.objects.all(), write_only=True
+        queryset=VehicleModel.objects.all(),
+        write_only=True,
+        source="vehicle",
     )
     requested_by = StringRelatedHyperLinkField(
         read_only=True,
         view_name="users:users-detail",
         lookup_field="id",
     )
-    workshop = StringRelatedHyperLinkField(
-        view_name="workshops:detail", read_only=True, lookup_field="id"
-    )
-    workshop_id = serializers.PrimaryKeyRelatedField(
-        source="workshop", queryset=ServiceModel.objects.all(), write_only=True
-    )
 
     class Meta:
         model = ServiceModel
         fields = (
-            "id",
             "vehicle",
             "vehicle_id",
             "requested_by",
-            "workshop",
-            "workshop_id",
             "request_description",
             "response_description",
-            "current_status",
             "start_date",
             "end_date",
         )
-        read_only_fields = ("id",)
+        read_only_fields = ("response_description", "start_date", "end_date")

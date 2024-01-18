@@ -14,6 +14,8 @@ from .workshop_employee_detail_serializer import (
 )
 from .workshop_employee_list_serializer import WorkshopEmployeeListSerializer
 from .workshop_list_serializer import WorkshopListSerializer
+from .workshop_service_detail_serializer import WorkshopServiceDetailSerializer
+from .workshop_service_list_serializer import WorkshopServiceListSerializer
 from .workshop_speciality_detail_serializer import (
     WorkshopSpecialityDetailSerializer,
 )

@@ -71,3 +71,7 @@ class ServiceModel(models.Model):
         return (
             self.histories.last().status.name if self.histories.last() else None
         )
+
+    @property
+    def requested_by(self):
+        return self.vehicle.owner

@@ -4,6 +4,7 @@ from .review_photo_viewset import ReviewPhotoViewSet
 from .review_response_viewset import ReviewResponseViewSet
 from .review_viewset import ReviewViewSet
 from .speciality_viewset import SpecialityViewSet
+from .wokshop_service_viewset import WorkshopServiceViewSet
 from .workshop_brand_list_view import WorkshopBrandListView
 from .workshop_contact_detail_view import WorkshopContactDetailView
 from .workshop_contact_list_view import WorkshopContactListView
