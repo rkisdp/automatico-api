@@ -32,6 +32,8 @@ class ServiceHistoryModel(models.Model):
         verbose_name=_("comment"),
         help_text=_("Comment"),
         max_length=255,
+        null=True,
+        blank=True,
     )
     responsable = models.ForeignKey(
         verbose_name=_("responsable"),
@@ -39,6 +41,8 @@ class ServiceHistoryModel(models.Model):
         to=settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
         related_name="service_histories",
+        null=True,
+        blank=True,
     )
     created_at = models.DateTimeField(
         verbose_name=_("start date"),

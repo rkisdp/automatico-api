@@ -33,5 +33,10 @@
     "model": "services.servicestatusmodel",
     "pk": 7,
     "fields": { "name": "Cancelado" }
+  },
+  {
+    "model": "services.servicestatusmodel",
+    "pk": 8,
+    "fields": { "name": "Solicitado" }
   }
 ]
