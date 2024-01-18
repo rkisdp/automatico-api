@@ -1,5 +1,6 @@
 from rest_framework import mixins
 from rest_framework.generics import ListAPIView, get_object_or_404
+
 from workshops.models import SpecialityModel, WorkshopModel
 from workshops.serializers import (
     WorkshopSpecialityDetailSerializer,
@@ -11,6 +12,7 @@ class WorkshopSpecialityListView(
     mixins.UpdateModelMixin,
     ListAPIView,
 ):
+    queryset = SpecialityModel.objects.none()
     serializer_class = WorkshopSpecialityListSerializer
     lookup_field = "id"
     ordering = ("id",)

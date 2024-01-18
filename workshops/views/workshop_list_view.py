@@ -8,30 +8,10 @@ class WorkshopListView(ListCreateAPIView):
     queryset = WorkshopModel.objects.all()
     serializer_class = WorkshopListSerializer
     ordering = ("id",)
-    filterset_fields = (
-        "owner",
-        "name",
-        "latitude",
-        "longitude",
-        "employees",
-        "specialities",
-        "vehicles",
-    )
+    filterset_fields = ("specialities__name", "brands__name")
     search_fields = (
-        "owner",
         "name",
-        "latitude",
-        "longitude",
-        "employees",
-        "specialities",
-        "vehicles",
+        "specialities__name",
+        "brands__name",
     )
-    ordering_fields = (
-        "owner",
-        "name",
-        "latitude",
-        "longitude",
-        "employees",
-        "specialities",
-        "vehicles",
-    )
+    ordering_fields = ("name",)
