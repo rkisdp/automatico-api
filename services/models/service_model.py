@@ -27,8 +27,6 @@ class ServiceModel(models.Model):
         to="workshops.WorkshopModel",
         on_delete=models.PROTECT,
         related_name="services",
-        null=True,
-        blank=True,
     )
     request_description = models.TextField(
         verbose_name=_("request description"),

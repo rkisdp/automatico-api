@@ -1,9 +1,8 @@
+from core.fields import StringRelatedHyperLinkField
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
-
-from core.fields import StringRelatedHyperLinkField
 from services.models import (
     ServiceHistoryModel,
     ServiceModel,
@@ -63,7 +62,7 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
             )
 
         responsable = attrs.get("responsable")
-        if not responsable and status and status.id not in [4, 5, 7]:
+        if not responsable and status and status.id == 4:
             raise serializers.ValidationError(
                 {
                     "responsable_id": _(
@@ -95,6 +94,14 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
         if history.status.id in [4, 5, 7]:
             service = history.service
             service.end_date = timezone.now()
+            service.save()
+
+        if history.status.id in [5, 7]:
+            history.responsable = self.context["request"].user
+            history.save()
+
+        if not service.response_description:
+            service.response_description = history.comment
             service.save()
 
         return history

@@ -25,6 +25,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceModel
         fields = (
+            "id",
             "vehicle",
             "vehicle_id",
             "requested_by",
@@ -33,13 +34,20 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
         )
-        read_only_fields = ("response_description", "start_date", "end_date")
+        read_only_fields = (
+            "id",
+            "response_description",
+            "start_date",
+            "end_date",
+        )
 
     def create(self, validated_data):
+        workshop_id = self.context["workshop_id"]
+        validated_data["workshop_id"] = workshop_id
         service = super().create(validated_data)
-        user = self.context["request"].user
         service.histories.create(
             status=ServiceStatusModel.objects.get(name="Solicitado"),
-            responsable=user,
+            comment=service.request_description,
+            responsable=self.context["request"].user,
         )
         return service
