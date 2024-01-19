@@ -65,11 +65,17 @@ class ServiceModel(models.Model):
         return f"{self.vehicle} - {self.workshop}"
 
     @property
-    def current_status(self):
+    def current_status(self) -> str | None:
         return (
             self.histories.last().status.name if self.histories.last() else None
         )
 
     @property
-    def requested_by(self):
+    def current_status_id(self) -> int | None:
+        return (
+            self.histories.last().status.id if self.histories.last() else None
+        )
+
+    @property
+    def requested_by(self) -> str:
         return self.vehicle.owner

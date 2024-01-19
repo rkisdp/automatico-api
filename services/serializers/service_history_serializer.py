@@ -52,7 +52,11 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
         status = attrs.get("status")
         service_id = self.context["service_id"]
         service = ServiceModel.objects.get(id=service_id)
-        if status and status.id in [4, 5, 7] and service.end_date:
+        if (
+            status
+            and service.current_status_id in [4, 5, 7]
+            and service.end_date
+        ):
             raise serializers.ValidationError(
                 {
                     "status_id": _(
