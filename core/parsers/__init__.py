@@ -1,0 +1,1 @@
+from .automatico_json_parser import AutoMaticoJSONParser
