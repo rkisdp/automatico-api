@@ -6,6 +6,7 @@ from uuid import uuid4
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from rest_framework.exceptions import ValidationError
 
 from vehicles.models import VehicleBrandModel, VehicleModel
 
@@ -99,3 +100,10 @@ class WorkshopModel(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    @staticmethod
+    def validate_unique_name(name: str) -> None:
+        if WorkshopModel.objects.filter(name__iexact=name).exists():
+            raise ValidationError(
+                {"name": _("Workshop with this name already exists.")}
+            )

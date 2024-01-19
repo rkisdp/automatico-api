@@ -10,6 +10,11 @@ class UserWorkshopSerializer(serializers.ModelSerializer):
         view_name="users:users-detail",
         lookup_field="id",
     )
+    name = serializers.CharField(
+        max_length=100,
+        validators=[WorkshopModel.validate_unique_name],
+        trim_whitespace=True,
+    )
     employees = StringRelatedHyperLinkField(
         many=True,
         read_only=True,
