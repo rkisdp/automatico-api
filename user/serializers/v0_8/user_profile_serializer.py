@@ -5,7 +5,9 @@ from security.email import send_verification_code
 from users.models import UserModel
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
+    photo = serializers.ImageField(use_url=True, read_only=True)
+
     class Meta:
         model = get_user_model()
         fields = (
@@ -17,18 +19,12 @@ class ProfileSerializer(serializers.ModelSerializer):
             "photo",
             "phone_number",
             "phone_number_verified",
-            "is_active",
-            "is_staff",
-            "date_joined",
         )
 
         read_only_fields = (
             "id",
             "email_verified",
-            "photo",
             "phone_number_verified",
-            "is_active",
-            "is_staff",
         )
 
     def update(self, instance: UserModel, validated_data):

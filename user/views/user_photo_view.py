@@ -1,10 +1,9 @@
 from drf_spectacular.utils import extend_schema
+from importlib import import_module
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
-
-from user.serializers import UserPhotoSerializer
 
 SCHEMA_NAME = "user"
 
@@ -17,7 +16,6 @@ class UserPhotoView(
 ):
     permission_classes = (IsAuthenticated,)
     parser_classes = (MultiPartParser, FormParser)
-    serializer_class = UserPhotoSerializer
 
     def put(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
@@ -35,3 +33,20 @@ class UserPhotoView(
 
     def perform_destroy(self, instance):
         instance.photo.delete()
+
+    def get_serializer_class(self):
+        version = self._get_version()
+        serializer = self._get_versioned_serializer_class(version)
+        return serializer
+
+    def _get_version(self):
+        try:
+            version = self.request.version
+        except Exception:
+            version, _ = self.determine_version(self.request)
+        return version
+
+    def _get_versioned_serializer_class(self, version):
+        module = import_module(f"user.serializers.{version.replace('.', '_')}")
+        serializer = getattr(module, "UserPhotoSerializer")
+        return serializer

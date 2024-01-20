@@ -1,7 +1,2 @@
-from .change_password_serializer import ChangePasswordSerializer
-from .profile_serializer import ProfileSerializer
-from .user_photo_serializer import UserPhotoSerializer
-from .user_service_serializer import UserServiceSerializer
-from .user_vehicle_serializer import UserVehicleSerializer
-from .user_workshop_serializer import UserWorkshopSerializer
-from .user_workshop_service_serializer import UserWorkshopServiceSerializer
+import v0_7
+import v0_8
