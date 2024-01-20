@@ -68,6 +68,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": ("core.parsers.AutoMaticoJSONParser",),
     "DEFAULT_RENDERER_CLASSES": ("core.renderers.AutoMaticoJSONRenderer",),
     "DEFAULT_VERSIONING_CLASS": "core.versioning.XAutoMaticoAPIVersioning",
+    "DEFAULT_VERSION": "v0.8",
+    "ALLOWED_VERSIONS": ("v0.8", "v0.7", "v0"),
+    "VERSION_PARAM": "version",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
@@ -79,10 +82,11 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
     ),
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_SCHEMA_CLASS": "core.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "core.pagination.HeaderPagination",
     "PAGE_SIZE": 25,
     "COERCE_DECIMAL_TO_STRING": False,
+    "URL_FIELD_NAME": "url",
 }
 
 SIMPLE_JWT = {
@@ -109,12 +113,12 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = env.tuple("CORS_ALLOWED_ORIGINS", default=())
-
 CSRF_TRUSTED_ORIGINS = env.tuple("CSRF_TRUSTED_ORIGINS", default=())
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "AutoMático API",
-    "VERSION": "v0.7.2",
+    "DESCRIPTION": "AutoMático API",
+    "VERSION": "v0.8",
     "TOS": None,
     "LICENSE": None,
     "SERVE_INCLUDE_SCHEMA": False,
@@ -126,6 +130,22 @@ SPECTACULAR_SETTINGS = {
         "syntaxHighlight.theme": "monokai",
     },
     "COMPONENT_SPLIT_REQUEST": True,
+    "SERVERS": (
+        {
+            "url": "http://localhost:8000",
+            "description": "Local development server",
+        },
+        {
+            "url": "https://api.automatico.onunez.me",
+            "description": "Production server",
+        },
+    )
+    if DEBUG
+    else None,
+    "CONTACT": {
+        "name": "AutoMático Team",
+        "email": "automatico@onunez.me",
+    },
 }
 
 MIDDLEWARE = (
