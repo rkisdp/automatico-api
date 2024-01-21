@@ -1,7 +1,7 @@
+from importlib import import_module
+
 from drf_spectacular.utils import extend_schema
 from rest_framework.generics import CreateAPIView
-
-from ..serializers import SignUpSerializer
 
 SCHEMA_NAME = "auth"
 
@@ -10,4 +10,22 @@ SCHEMA_NAME = "auth"
 class SignUpView(CreateAPIView):
     authentication_classes = []
     permission_classes = []
-    serializer_class = SignUpSerializer
+
+    def get_serializer_class(self):
+        version = self._get_version()
+        serializer = self._get_versioned_serializer_class(version)
+        return serializer
+
+    def _get_version(self):
+        try:
+            version = self.request.version
+        except Exception:
+            version, _ = self.determine_version(self.request)
+        return version
+
+    def _get_versioned_serializer_class(self, version):
+        module = import_module(
+            f"security.serializers.{version.replace('.', '_')}"
+        )
+        serializer = getattr(module, "SignUpSerializer")
+        return serializer
