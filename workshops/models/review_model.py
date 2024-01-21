@@ -44,13 +44,15 @@ class ReviewModel(models.Model):
     )
     review = models.TextField(
         verbose_name=_("review"),
-        help_text=_("Reviewed at"),
+        help_text=_("Review message"),
         max_length=255,
     )
-    qualification = models.TextField(
-        verbose_name=_("response"),
-        help_text=_("Questioned at"),
-        max_length=255,
+    score = models.DecimalField(
+        verbose_name=_("score"),
+        help_text=_("Score"),
+        max_digits=2,
+        decimal_places=1,
+        default=4.5,
     )
     reviewed_at = models.DateTimeField(
         verbose_name=_("responded at"),
