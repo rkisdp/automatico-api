@@ -25,6 +25,13 @@ class UserServiceSerializer(serializers.ModelSerializer):
         source="workshop",
         queryset=ServiceModel.objects.all(),
     )
+    current_status = StringRelatedHyperLinkSerializer(
+        read_only=True,
+        source="histories.last.status",
+        view_name="services:status-detail",
+        lookup_field="id",
+        allow_null=True,
+    )
 
     class Meta:
         model = ServiceModel
