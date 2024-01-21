@@ -1,3 +1,5 @@
+from importlib import import_module
+
 from django.utils.translation import gettext_lazy as _
 from rest_framework import mixins
 from rest_framework.exceptions import ValidationError
@@ -7,7 +9,6 @@ from rest_framework.permissions import IsAuthenticated
 
 from vehicles.models import VehicleModel
 from vehicles.permissions import IsOwnerPermission
-from vehicles.serializers import VehiclePhotoSerializer
 
 
 class VehiclePhotoView(
@@ -16,7 +17,6 @@ class VehiclePhotoView(
     GenericAPIView,
 ):
     queryset = VehicleModel.objects.all()
-    serializer_class = VehiclePhotoSerializer
     permission_classes = (IsAuthenticated, IsOwnerPermission)
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = "id"
@@ -44,3 +44,22 @@ class VehiclePhotoView(
 
     def perform_destroy(self, instance):
         instance.photo.delete()
+
+    def get_serializer_class(self):
+        version = self._get_version()
+        serializer = self._get_versioned_serializer_class(version)
+        return serializer
+
+    def _get_version(self):
+        try:
+            version = self.request.version
+        except Exception:
+            version, _ = self.determine_version(self.request)
+        return version
+
+    def _get_versioned_serializer_class(self, version):
+        module = import_module(
+            f"vehicles.serializers.{version.replace('.', '_')}"
+        )
+        serializer = getattr(module, "VehiclePhotoSerializer")
+        return serializer
