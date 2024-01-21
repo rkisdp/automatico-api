@@ -1,18 +1,15 @@
+from importlib import import_module
+
 from rest_framework import mixins
 from rest_framework.generics import ListAPIView, get_object_or_404
 
 from workshops.models import WorkshopContactModel, WorkshopModel
-from workshops.serializers import (
-    WorkshopContactDetailSerializer,
-    WorkshopContactListSerializer,
-)
 
 
 class WorkshopContactListView(
     mixins.UpdateModelMixin,
     ListAPIView,
 ):
-    serializer_class = WorkshopContactListSerializer
     lookup_field = "id"
     ordering = ("id",)
 
@@ -27,12 +24,28 @@ class WorkshopContactListView(
         workshop = self.get_object()
         return WorkshopContactModel.objects.filter(workshop=workshop)
 
-    def get_serializer_class(self):
-        if self.request.method == "PUT":
-            return WorkshopContactDetailSerializer
-        return super().get_serializer_class()
-
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context["workshop_id"] = self.kwargs.get("id")
         return context
+
+    def get_serializer_class(self):
+        version = self._get_version()
+        serializer = self._get_versioned_serializer_class(version)
+        return serializer
+
+    def _get_version(self):
+        try:
+            version = self.request.version
+        except Exception:
+            version, _ = self.determine_version(self.request)
+        return version
+
+    def _get_versioned_serializer_class(self, version):
+        module = import_module(
+            f"workshops.serializers.{version.replace('.', '_')}"
+        )
+        if self.request.method == "PUT":
+            serializer = getattr(module, "WorkshopContactDetailSerializer")
+        serializer = getattr(module, "WorkshopContactListSerializer")
+        return serializer

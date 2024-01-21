@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from core.fields import StringRelatedHyperLinkField
+from core.serializers import StringRelatedHyperLinkSerializer
 from services.models import ServiceModel, ServiceStatusModel
 from vehicles.models import VehicleModel
 
 
 class WorkshopServiceListSerializer(serializers.ModelSerializer):
-    vehicle = StringRelatedHyperLinkField(
+    vehicle = StringRelatedHyperLinkSerializer(
         read_only=True,
         view_name="vehicles:detail",
         lookup_field="id",
@@ -16,7 +16,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         write_only=True,
         source="vehicle",
     )
-    requested_by = StringRelatedHyperLinkField(
+    requested_by = StringRelatedHyperLinkSerializer(
         read_only=True,
         view_name="users:users-detail",
         lookup_field="id",

@@ -1,17 +1,19 @@
+from importlib import import_module
+
 from rest_framework import mixins
 from rest_framework.generics import get_object_or_404
 from rest_framework.viewsets import GenericViewSet
 
 from services.models import ServiceModel
 from workshops.models import WorkshopModel
-from workshops.serializers import WorkshopServiceListSerializer
 
 
 class WorkshopServiceViewSet(
-    mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSet
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    GenericViewSet,
 ):
     queryset = ServiceModel.objects.all()
-    serializer_class = WorkshopServiceListSerializer
     lookup_field = "id"
     ordering = ("id",)
     filterset_fields = ("vehicle__plate", "vehicle__vin")
@@ -30,3 +32,22 @@ class WorkshopServiceViewSet(
         context = super().get_serializer_context()
         context["workshop_id"] = self.kwargs.get("id")
         return context
+
+    def get_serializer_class(self):
+        version = self._get_version()
+        serializer = self._get_versioned_serializer_class(version)
+        return serializer
+
+    def _get_version(self):
+        try:
+            version = self.request.version
+        except Exception:
+            version, _ = self.determine_version(self.request)
+        return version
+
+    def _get_versioned_serializer_class(self, version):
+        module = import_module(
+            f"workshops.serializers.{version.replace('.', '_')}"
+        )
+        serializer = getattr(module, "WorkshopServiceListSerializer")
+        return serializer
