@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from core.fields import StringRelatedHyperLinkField
+from core.serializers import StringRelatedHyperLinkSerializer
 from services.models import (
     ServiceHistoryModel,
     ServiceModel,
@@ -12,7 +12,7 @@ from services.models import (
 
 
 class ServiceHistorySerializer(serializers.ModelSerializer):
-    status = StringRelatedHyperLinkField(
+    status = StringRelatedHyperLinkSerializer(
         view_name="services:status-detail",
         read_only=True,
         lookup_field="id",
@@ -22,7 +22,7 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
         write_only=True,
         source="status",
     )
-    responsable = StringRelatedHyperLinkField(
+    responsable = StringRelatedHyperLinkSerializer(
         view_name="users:users-detail",
         read_only=True,
         lookup_field="id",
