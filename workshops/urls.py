@@ -74,3 +74,5 @@ urlpatterns = (
         name="speciality-detail",
     ),
 )
+
+urlpatterns += (*router.urls,)
