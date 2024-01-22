@@ -4,21 +4,15 @@ from drf_spectacular import views
 app_name = "documentation"
 
 urlpatterns = (
-    path(
-        "schema/",
-        views.SpectacularAPIView.as_view(),
-        name="api-schema",
-    ),
+    path("schema/", views.SpectacularAPIView.as_view(), name="schema"),
     path(
         "swagger/",
-        views.SpectacularSwaggerView.as_view(
-            url_name="documentation:api-schema"
-        ),
-        name="swagger-documentation",
+        views.SpectacularSwaggerView.as_view(url_name="documentation:schema"),
+        name="swagger",
     ),
     path(
         "redoc/",
-        views.SpectacularRedocView.as_view(url_name="documentation:api-schema"),
-        name="redoc-documentation",
+        views.SpectacularRedocView.as_view(url_name="documentation:schema"),
+        name="redoc",
     ),
 )

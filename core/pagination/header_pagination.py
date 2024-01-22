@@ -46,7 +46,7 @@ class HeaderPagination(PageNumberPagination):
             (last_url, "last"),
         ):
             if url is not None:
-                links.append(f'<{url}>; rel="{label}"')
+                links.append(f"<{url}>; rel='{label}'")
 
         return links
 
