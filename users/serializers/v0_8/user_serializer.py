@@ -3,6 +3,12 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
+    photo = serializers.ImageField(read_only=True, use_url=True)
+    url = serializers.HyperlinkedIdentityField(
+        view_name="users:users-detail",
+        lookup_field="id",
+    )
+
     class Meta:
         model = get_user_model()
         fields = (
@@ -14,14 +20,11 @@ class UserSerializer(serializers.ModelSerializer):
             "photo",
             "phone_number",
             "phone_number_verified",
-            "is_active",
-            "is_staff",
-            "date_joined",
+            "url",
         )
 
         read_only_fields = (
             "id",
             "email_verified",
-            "photo",
             "phone_number_verified",
         )
