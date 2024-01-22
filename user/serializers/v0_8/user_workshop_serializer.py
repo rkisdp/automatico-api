@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from core.serializers import StringRelatedHyperLinkSerializer
+from core.fields.v0_8 import HyperLinkSelfField
+from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from workshops.models import WorkshopModel
 
 
@@ -40,7 +41,7 @@ class UserWorkshopSerializer(serializers.ModelSerializer):
         view_name="vehicles:detail",
     )
     photo = serializers.ImageField(read_only=True, use_url=True)
-    url = serializers.HyperlinkedIdentityField(
+    url = HyperLinkSelfField(
         view_name="workshops:detail",
         lookup_field="id",
     )

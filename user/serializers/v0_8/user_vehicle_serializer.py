@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.serializers import StringRelatedHyperLinkSerializer
+from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from vehicles.models import VehicleBrandModel, VehicleModel
 
 
