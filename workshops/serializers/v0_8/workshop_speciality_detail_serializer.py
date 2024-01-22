@@ -15,7 +15,7 @@ class WorkshopSpecialityDetailSerializer(serializers.ListSerializer):
         specialities = [item.get("speciality") for item in attrs]
         if len(specialities) != len(set(specialities)):
             raise serializers.ValidationError(
-                {"speciality_id": _("Specialities cannot be duplicated")}
+                {"id": _("Specialities cannot be duplicated")}
             )
         return attrs
 

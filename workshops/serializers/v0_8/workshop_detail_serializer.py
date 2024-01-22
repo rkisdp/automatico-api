@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from core.serializers import StringRelatedHyperLinkSerializer
+from core.fields.v0_8 import HyperLinkSelfField
+from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from workshops.models import WorkshopModel
 
 
@@ -34,6 +35,7 @@ class WorkshopDetailSerializer(serializers.ModelSerializer):
         view_name="vehicles:detail",
         lookup_field="id",
     )
+    url = HyperLinkSelfField(view_name="workshops:detail", lookup_field="id")
 
     class Meta:
         model = WorkshopModel
@@ -46,5 +48,6 @@ class WorkshopDetailSerializer(serializers.ModelSerializer):
             "brands",
             "specialities",
             "vehicles",
+            "url",
         )
         read_only_fields = ("id", "photo")

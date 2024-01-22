@@ -1,12 +1,14 @@
 from rest_framework import mixins
-from rest_framework.generics import ListAPIView, get_object_or_404
+from rest_framework.generics import get_object_or_404
+from rest_framework.viewsets import GenericViewSet
 
 from workshops.models import SpecialityModel, WorkshopModel
 
 
 class WorkshopSpecialityListView(
+    mixins.ListModelMixin,
     mixins.UpdateModelMixin,
-    ListAPIView,
+    GenericViewSet,
 ):
     queryset = SpecialityModel.objects.none()
     lookup_field = "id"
@@ -45,9 +47,8 @@ class WorkshopSpecialityListView(
             f"workshops.serializers.{version.replace('.', '_')}"
         )
         if self.request.method == "PUT":
-            serializer = getattr(module, "WorkshopSpecialityDetailSerializer")
-        serializer = getattr(module, "WorkshopSpecialityListSerializer")
-        return serializer
+            return getattr(module, "WorkshopSpecialityDetailSerializer")
+        return getattr(module, "WorkshopSpecialityListSerializer")
 
 
 from importlib import import_module

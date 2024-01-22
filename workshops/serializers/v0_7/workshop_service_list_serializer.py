@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.serializers import StringRelatedHyperLinkSerializer
+from core.serializers.v0_7 import StringRelatedHyperLinkSerializer
 from services.models import ServiceModel, ServiceStatusModel
 from vehicles.models import VehicleModel
 

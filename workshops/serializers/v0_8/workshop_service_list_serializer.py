@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from core.serializers import StringRelatedHyperLinkSerializer
+from core.fields.v0_8 import HyperLinkSelfField
+from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from services.models import ServiceModel, ServiceStatusModel
 from vehicles.models import VehicleModel
 
@@ -21,6 +22,10 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         view_name="users:users-detail",
         lookup_field="id",
     )
+    url = HyperLinkSelfField(
+        view_name="services:detail",
+        lookup_field="id",
+    )
 
     class Meta:
         model = ServiceModel
@@ -33,6 +38,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
             "response_description",
             "start_date",
             "end_date",
+            "url",
         )
         read_only_fields = (
             "id",

@@ -1,21 +1,29 @@
 from importlib import import_module
 
+from drf_spectacular.utils import extend_schema
 from rest_framework import mixins
-from rest_framework.generics import ListAPIView, get_object_or_404
+from rest_framework.generics import get_object_or_404
+from rest_framework.viewsets import GenericViewSet
 
 from vehicles.models import VehicleModel
 from workshops.models import WorkshopModel
 
 
-class WorkshopVehicleListView(
+class WorkshopVehicleViewSet(
+    mixins.ListModelMixin,
     mixins.UpdateModelMixin,
-    ListAPIView,
+    GenericViewSet,
 ):
+    queryset = VehicleModel.objects.none()
     lookup_field = "id"
     ordering = ("id",)
 
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+    @extend_schema(
+        operation_id="Workshop vehicles",
+        description="List all vehicles of a workshop",
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     def get_object(self):
         workshop_id = self.kwargs.get("id")
@@ -47,6 +55,5 @@ class WorkshopVehicleListView(
             f"workshops.serializers.{version.replace('.', '_')}"
         )
         if self.request.method == "PUT":
-            serializer = getattr(module, "WorkshopVehicleDetailSerializer")
-        serializer = getattr(module, "WorkshopVehicleListSerializer")
-        return serializer
+            return getattr(module, "WorkshopVehicleDetailSerializer")
+        return getattr(module, "WorkshopVehicleListSerializer")

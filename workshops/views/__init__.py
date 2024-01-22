@@ -12,4 +12,4 @@ from .workshop_detail_viewset import WorkshopDetailView
 from .workshop_employee_list_view import WorkshopEmployeeListView
 from .workshop_list_view import WorkshopListView
 from .workshop_speciality_list_view import WorkshopSpecialityListView
-from .workshop_vehicle_list_view import WorkshopVehicleListView
+from .workshop_vehicle_viewset import WorkshopVehicleViewSet

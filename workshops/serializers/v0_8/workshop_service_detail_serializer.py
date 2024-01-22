@@ -13,7 +13,7 @@ class WorkshopServiceDetailSerializer(serializers.ListSerializer):
         services = [item.get("service") for item in attrs]
         if len(services) != len(set(services)):
             raise serializers.ValidationError(
-                {"service_id": _("Specialities cannot be duplicated")}
+                {"id": _("Specialities cannot be duplicated")}
             )
         return attrs
 

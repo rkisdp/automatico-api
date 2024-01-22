@@ -1,6 +1,5 @@
+from core.serializers.v0_7 import StringRelatedHyperLinkSerializer
 from rest_framework import serializers
-
-from core.serializers import StringRelatedHyperLinkSerializer
 from workshops.models import WorkshopModel
 
 

@@ -55,12 +55,14 @@ urlpatterns = (
     ),
     path(
         "<int:id>/specialities/",
-        views.WorkshopSpecialityListView.as_view(),
+        views.WorkshopSpecialityListView.as_view(
+            {"get": "list", "put": "update"}
+        ),
         name="specialities",
     ),
     path(
         "<int:id>/vehicles/",
-        views.WorkshopVehicleListView.as_view(),
+        views.WorkshopVehicleViewSet.as_view({"get": "list", "put": "update"}),
         name="vehicles",
     ),
     path(
@@ -69,10 +71,15 @@ urlpatterns = (
         name="speciality-list",
     ),
     path(
+        "contacts/<int:id>/",
+        views.SpecialityViewSet.as_view({"get": "retrieve"}),
+        name="contact-detail",
+    ),
+    path(
         "specialities/<int:id>/",
         views.SpecialityViewSet.as_view({"get": "retrieve"}),
         name="speciality-detail",
     ),
 )
 
-urlpatterns += (*router.urls,)
+# urlpatterns += (*router.urls,)

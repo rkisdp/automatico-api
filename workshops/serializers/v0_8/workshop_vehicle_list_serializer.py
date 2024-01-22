@@ -1,19 +1,28 @@
 from rest_framework import serializers
 
+from core.fields.v0_8 import HyperLinkSelfField
+from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from vehicles.models import VehicleModel
 
 
 class WorkshopVehicleListSerializer(serializers.ModelSerializer):
-    vehicle_id = serializers.PrimaryKeyRelatedField(
+    id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
         source="vehicle",
         queryset=VehicleModel.objects.all(),
-        write_only=True,
     )
+    brand = StringRelatedHyperLinkSerializer(
+        read_only=True,
+        view_name="vehicles:brand-detail",
+        lookup_field="id",
+    )
+    photo = serializers.ImageField(read_only=True, use_url=True)
+    url = HyperLinkSelfField(view_name="vehicles:detail", lookup_field="id")
 
     class Meta:
         model = VehicleModel
         fields = (
-            "vehicle_id",
+            "id",
             "brand",
             "model",
             "year",
@@ -21,6 +30,7 @@ class WorkshopVehicleListSerializer(serializers.ModelSerializer):
             "plate",
             "vin",
             "photo",
+            "url",
         )
         read_only_fields = (
             "brand",
@@ -29,5 +39,4 @@ class WorkshopVehicleListSerializer(serializers.ModelSerializer):
             "nickname",
             "plate",
             "vin",
-            "photo",
         )

@@ -13,7 +13,7 @@ class WorkshopEmployeeDetailSerializer(serializers.ListSerializer):
         employees = [item.get("employee") for item in attrs]
         if len(employees) != len(set(employees)):
             raise serializers.ValidationError(
-                {"employee_id": _("Employees cannot be duplicated")}
+                {"id": _("Employees cannot be duplicated")}
             )
         return attrs
 
