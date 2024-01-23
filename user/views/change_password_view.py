@@ -1,5 +1,6 @@
-from drf_spectacular.utils import extend_schema
 from importlib import import_module
+
+from drf_spectacular.utils import extend_schema
 from rest_framework import mixins, status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -22,8 +23,7 @@ class ChangePasswordView(mixins.UpdateModelMixin, GenericAPIView):
 
     def get_serializer_class(self):
         version = self._get_version()
-        serializer = self._get_versioned_serializer_class(version)
-        return serializer
+        return self._get_versioned_serializer_class(version)
 
     def _get_version(self):
         try:
@@ -34,5 +34,4 @@ class ChangePasswordView(mixins.UpdateModelMixin, GenericAPIView):
 
     def _get_versioned_serializer_class(self, version):
         module = import_module(f"user.serializers.{version.replace('.', '_')}")
-        serializer = getattr(module, "ChangePasswordSerializer")
-        return serializer
+        return getattr(module, "ChangePasswordSerializer")

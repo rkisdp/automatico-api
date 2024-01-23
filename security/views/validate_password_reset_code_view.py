@@ -21,8 +21,7 @@ class ValidatePasswordResetCodeView(GenericAPIView):
 
     def get_serializer_class(self):
         version = self._get_version()
-        serializer = self._get_versioned_serializer_class(version)
-        return serializer
+        return self._get_versioned_serializer_class(version)
 
     def _get_version(self):
         try:
@@ -35,5 +34,4 @@ class ValidatePasswordResetCodeView(GenericAPIView):
         module = import_module(
             f"security.serializers.{version.replace('.', '_')}"
         )
-        serializer = getattr(module, "ValidatePasswordResetCodeSerializer")
-        return serializer
+        return getattr(module, "ValidatePasswordResetCodeSerializer")

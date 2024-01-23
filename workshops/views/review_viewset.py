@@ -1,6 +1,7 @@
 from importlib import import_module
 
 from rest_framework.viewsets import ModelViewSet
+
 from workshops.models import ReviewModel
 
 
@@ -14,8 +15,7 @@ class ReviewViewSet(ModelViewSet):
 
     def get_serializer_class(self):
         version = self._get_version()
-        serializer = self._get_versioned_serializer_class(version)
-        return serializer
+        return self._get_versioned_serializer_class(version)
 
     def _get_version(self):
         try:
@@ -28,5 +28,4 @@ class ReviewViewSet(ModelViewSet):
         module = import_module(
             f"workshops.serializers.{version.replace('.', '_')}"
         )
-        serializer = getattr(module, "ReviewSerializer")
-        return serializer
+        return getattr(module, "ReviewSerializer")

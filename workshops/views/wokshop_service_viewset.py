@@ -35,8 +35,7 @@ class WorkshopServiceViewSet(
 
     def get_serializer_class(self):
         version = self._get_version()
-        serializer = self._get_versioned_serializer_class(version)
-        return serializer
+        return self._get_versioned_serializer_class(version)
 
     def _get_version(self):
         try:
@@ -49,5 +48,4 @@ class WorkshopServiceViewSet(
         module = import_module(
             f"workshops.serializers.{version.replace('.', '_')}"
         )
-        serializer = getattr(module, "WorkshopServiceListSerializer")
-        return serializer
+        return getattr(module, "WorkshopServiceListSerializer")

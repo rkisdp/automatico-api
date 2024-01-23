@@ -1,5 +1,6 @@
-from drf_spectacular.utils import extend_schema
 from importlib import import_module
+
+from drf_spectacular.utils import extend_schema
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 from rest_framework.parsers import FormParser, MultiPartParser
@@ -36,8 +37,7 @@ class UserPhotoView(
 
     def get_serializer_class(self):
         version = self._get_version()
-        serializer = self._get_versioned_serializer_class(version)
-        return serializer
+        return self._get_versioned_serializer_class(version)
 
     def _get_version(self):
         try:
@@ -48,5 +48,4 @@ class UserPhotoView(
 
     def _get_versioned_serializer_class(self, version):
         module = import_module(f"user.serializers.{version.replace('.', '_')}")
-        serializer = getattr(module, "UserPhotoSerializer")
-        return serializer
+        return getattr(module, "UserPhotoSerializer")

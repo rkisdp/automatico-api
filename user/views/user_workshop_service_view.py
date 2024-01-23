@@ -1,4 +1,5 @@
 from importlib import import_module
+
 from rest_framework.generics import ListAPIView
 
 from services.models import ServiceModel
@@ -13,8 +14,7 @@ class UserWorkshopServiceView(ListAPIView):
 
     def get_serializer_class(self):
         version = self._get_version()
-        serializer = self._get_versioned_serializer_class(version)
-        return serializer
+        return self._get_versioned_serializer_class(version)
 
     def _get_version(self):
         try:
@@ -25,5 +25,4 @@ class UserWorkshopServiceView(ListAPIView):
 
     def _get_versioned_serializer_class(self, version):
         module = import_module(f"user.serializers.{version.replace('.', '_')}")
-        serializer = getattr(module, "UserWorkshopServiceSerializer")
-        return serializer
+        return getattr(module, "UserWorkshopServiceSerializer")

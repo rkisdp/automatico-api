@@ -3,6 +3,7 @@ from importlib import import_module
 from django.contrib.auth import get_user_model
 from rest_framework import mixins
 from rest_framework.generics import ListAPIView, get_object_or_404
+
 from workshops.models import WorkshopModel
 
 
@@ -31,8 +32,7 @@ class WorkshopEmployeeListView(
 
     def get_serializer_class(self):
         version = self._get_version()
-        serializer = self._get_versioned_serializer_class(version)
-        return serializer
+        return self._get_versioned_serializer_class(version)
 
     def _get_version(self):
         try:
@@ -46,6 +46,5 @@ class WorkshopEmployeeListView(
             f"workshops.serializers.{version.replace('.', '_')}"
         )
         if self.request.method == "PUT":
-            serializer = getattr(module, "WorkshopEmployeeDetailSerializer")
-        serializer = getattr(module, "WorkshopEmployeeListSerializer")
-        return serializer
+            return getattr(module, "WorkshopEmployeeDetailSerializer")
+        return getattr(module, "WorkshopEmployeeListSerializer")

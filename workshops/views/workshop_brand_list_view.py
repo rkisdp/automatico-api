@@ -25,9 +25,6 @@ class WorkshopBrandListView(
         workshop = self.get_object()
         return VehicleBrandModel.objects.filter(workshop_brands=workshop)
 
-    def get_serializer_class(self):
-        return super().get_serializer_class()
-
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context["workshop_id"] = self.kwargs.get("id")
@@ -35,8 +32,7 @@ class WorkshopBrandListView(
 
     def get_serializer_class(self):
         version = self._get_version()
-        serializer = self._get_versioned_serializer_class(version)
-        return serializer
+        return self._get_versioned_serializer_class(version)
 
     def _get_version(self):
         try:
@@ -50,6 +46,5 @@ class WorkshopBrandListView(
             f"workshops.serializers.{version.replace('.', '_')}"
         )
         if self.request.method == "PUT":
-            serializer = getattr(module, "WorkshopBrandDetailSerializer")
-        serializer = getattr(module, "WorkshopBrandListSerializer")
-        return serializer
+            return getattr(module, "WorkshopBrandDetailSerializer")
+        return getattr(module, "WorkshopBrandListSerializer")
