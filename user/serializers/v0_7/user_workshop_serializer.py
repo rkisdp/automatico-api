@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.fields import StringRelatedHyperLinkField
+from core.fields.v0_7 import StringRelatedHyperLinkField
 from workshops.models import WorkshopModel
 
 

@@ -20,7 +20,6 @@ class AutoSchema(BaseAutoSchema):
             location=OpenApiParameter.HEADER,
             description="API version.",
             enum=tuple(api_settings.ALLOWED_VERSIONS),
-            default=api_settings.DEFAULT_VERSION,
         ),
         OpenApiParameter(
             name="Location",
@@ -102,4 +101,5 @@ class AutoSchema(BaseAutoSchema):
     )
 
     def get_override_parameters(self):
+        self._global_params[1].default = self.view.request.version
         return self._global_params
