@@ -69,7 +69,7 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("core.renderers.AutoMaticoJSONRenderer",),
     "DEFAULT_VERSIONING_CLASS": "core.versioning.XAutoMaticoAPIVersioning",
     "DEFAULT_VERSION": "v0.8",
-    "ALLOWED_VERSIONS": ("v0.8", "v0.7", "v0"),
+    "ALLOWED_VERSIONS": ("v0.8", "v0.7"),
     "VERSION_PARAM": "version",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -135,13 +135,14 @@ SPECTACULAR_SETTINGS = {
             "url": "http://localhost:8000",
             "description": "Local development server",
         },
+    )
+    if DEBUG
+    else (
         {
             "url": "https://api.automatico.onunez.me",
             "description": "Production server",
         },
-    )
-    if DEBUG
-    else None,
+    ),
     "CONTACT": {
         "name": "AutoMático Team",
         "email": "automatico@onunez.me",
@@ -166,9 +167,7 @@ ROOT_URLCONF = "app.urls"
 TEMPLATES = (
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            BASE_DIR / "templates",
-        ],
+        "DIRS": (BASE_DIR / "templates",),
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": (
@@ -270,3 +269,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.UserModel"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+APPEND_SLASH = False
