@@ -6,14 +6,14 @@ app_name = "documentation"
 
 urlpatterns = (
     path(
-        "schema/",
+        "/schema",
         views.SpectacularAPIView.as_view(
             versioning_class=QueryParameterVersioning
         ),
         name="schema",
     ),
     path(
-        "swagger/",
+        "/swagger",
         views.SpectacularSwaggerView.as_view(
             url_name="documentation:schema",
             versioning_class=QueryParameterVersioning,
@@ -21,7 +21,7 @@ urlpatterns = (
         name="swagger",
     ),
     path(
-        "redoc/",
+        "/redoc",
         views.SpectacularRedocView.as_view(
             url_name="documentation:schema",
             versioning_class=QueryParameterVersioning,

@@ -6,45 +6,45 @@ app_name = "security"
 
 urlpatterns = (
     path(
-        "account/activation/",
+        "/account/activation",
         views.AccountActivationView().as_view(),
         name="account-activation",
     ),
     path(
-        "account/activation/resend/",
+        "/account/activation/resend",
         views.ResendAccountActivationCodeView().as_view(),
         name="resend-account-activation-code",
     ),
     path(
-        "account/activation/validate/",
+        "/account/activation/validate",
         views.ValidateAccountActivationCodeView().as_view(),
         name="validate-account-activation-code",
     ),
     path(
-        "email/verification/",
+        "/email/verification",
         views.EmailVerificationView().as_view(),
         name="email-verification",
     ),
     path(
-        "email/verification/resend/",
+        "/email/verification/resend",
         views.ResendEmailVerificationCodeView().as_view(),
         name="resend-email-verification-code",
     ),
     path(
-        "password/reset/",
+        "/password/reset",
         views.PasswordResetView().as_view(),
         name="password-reset",
     ),
     path(
-        "password/reset/confirm/",
+        "/password/reset/confirm",
         views.ConfirmPasswordResetView().as_view(),
         name="password-reset-confirm",
     ),
     path(
-        "password/reset/validate/",
+        "/password/reset/validate",
         views.ValidatePasswordResetCodeView().as_view(),
         name="validate-account-activation-code",
     ),
-    path("sign-up/", views.SignUpView().as_view(), name="sign-up"),
-    path("token/", views.AccessTokenView().as_view(), name="access-token"),
+    path("/sign-up", views.SignUpView().as_view(), name="sign-up"),
+    path("/token", views.AccessTokenView().as_view(), name="access-token"),
 )
