@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.serializers import StringRelatedHyperLinkSerializer
+from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from services.models import ServiceModel
 
 
@@ -22,6 +22,10 @@ class ServiceSerializer(serializers.ModelSerializer):
     workshop_id = serializers.PrimaryKeyRelatedField(
         source="workshop", queryset=ServiceModel.objects.all(), write_only=True
     )
+    url = serializers.HyperlinkedIdentityField(
+        view_name="services:detail",
+        lookup_field="id",
+    )
 
     class Meta:
         model = ServiceModel
@@ -37,5 +41,6 @@ class ServiceSerializer(serializers.ModelSerializer):
             "current_status",
             "start_date",
             "end_date",
+            "url",
         )
         read_only_fields = ("id",)

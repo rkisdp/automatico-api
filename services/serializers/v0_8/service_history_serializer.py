@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from core.serializers import StringRelatedHyperLinkSerializer
+from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from services.models import (
     ServiceHistoryModel,
     ServiceModel,
