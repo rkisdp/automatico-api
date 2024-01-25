@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix responsable not added when accepting a service.
 - Change Q/A and reviews endpoints.
 - Add service request (model, endpoints). This allows to have a chat on a request, not just two messages and more details about the request itself.
+- Change "response" to "message" (QuestionResponse model).
+- Deactivate a workshop.
+- Activate a workshop.
+- Removed "Paginated*" object schemas.
+- Authorization with 3rd party (Google and Facebook).
 
 ## [0.8.1] - 2024-01-22
 
@@ -21,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "url" field to `/services/*` endpoints.
 - "url" field to `/users/*` endpoints.
 - "url" field to `/workshops/*` endpoints.
+- Decapricating `/workshops/questions/?.*` and `/workshops/reviews/?.*` endpoints.
 
 ### Fixed
 
@@ -31,12 +37,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Workshops related fields "resource" field renamed to "name".
 - Workshops related fields "link" field renamed to "url".
 - Renamed workshops/id/vehicles/ vehicle_id field to id.
+- Endpoints trailing slash is now optional.
+- Improved workshops documentation.
 
 ## [0.8.0] - 2024-01-21
 
 ### Added
 
-- Changelog
+- Changelog.
 - Workshop's service rating.
 - Workshop's service comments.
 - Workshop's service images.
