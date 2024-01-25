@@ -1,29 +1,22 @@
-from importlib import import_module
+from drf_spectacular.utils import extend_schema
+from rest_framework import mixins
 
-from rest_framework import viewsets
-
+from core.generics import GenericAPIView
 from services.models import ServiceModel
 
 
-class ServiceViewSet(viewsets.ModelViewSet):
+class ServiceView(
+    mixins.RetrieveModelMixin,
+    GenericAPIView,
+):
     queryset = ServiceModel.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "service_id"
-    ordering = ("id",)
 
-    def get_serializer_class(self):
-        version = self._get_version()
-        return self._get_versioned_serializer_class(version)
-
-    def _get_version(self):
-        try:
-            version = self.request.version
-        except Exception:
-            version, _ = self.determine_version(self.request)
-        return version
-
-    def _get_versioned_serializer_class(self, version):
-        module = import_module(
-            f"services.serializers.{version.replace('.', '_')}"
-        )
-        return getattr(module, "ServiceSerializer")
+    @extend_schema(
+        operation_id="get-a-service",
+        summary="Get a service",
+        description="Gets a service.",
+    )
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)

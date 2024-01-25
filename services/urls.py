@@ -1,28 +1,28 @@
-from django.urls import path
+from django.urls import re_path
 
 from . import views
 
 app_name = "services"
 
 urlpatterns = (
-    path(
-        "/<int:service_id>",
-        views.ServiceViewSet.as_view({"get": "retrieve"}),
+    re_path(
+        r"^/(?P<service_id>\d+)/?$",
+        views.ServiceView.as_view(),
         name="detail",
     ),
-    path(
-        "/<int:service_id>/histories",
-        views.ServiceHistoryViewSet.as_view({"get": "list", "post": "create"}),
+    re_path(
+        r"^/(?P<service_id>\d+)/histories/?$",
+        views.ServiceHistoryView.as_view(),
         name="histories",
     ),
-    path(
-        "/statuses",
-        views.ServiceStatusViewSet.as_view({"get": "list"}),
+    re_path(
+        r"^/statuses/?$",
+        views.ServiceStatusListView.as_view(),
         name="status-list",
     ),
-    path(
-        "/statuses/<int:status_id>",
-        views.ServiceStatusViewSet.as_view({"get": "retrieve"}),
+    re_path(
+        r"^/statuses/(?P<status_id>\d+)/?$",
+        views.ServiceStatusDetailView.as_view(),
         name="status-detail",
     ),
 )

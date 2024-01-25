@@ -1,3 +1,4 @@
-from .service_history_viewset import ServiceHistoryViewSet
-from .service_status_viewset import ServiceStatusViewSet
-from .service_viewset import ServiceViewSet
+from .service_history_view import ServiceHistoryView
+from .service_status_detail_view import ServiceStatusDetailView
+from .service_status_list_view import ServiceStatusListView
+from .service_viewset import ServiceView
