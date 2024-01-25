@@ -2,8 +2,9 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from workshops.models import WorkshopModel
+
 from .review_model import ReviewModel
-from .workshop_model import WorkshopModel
 
 
 class ReviewResponseModel(models.Model):

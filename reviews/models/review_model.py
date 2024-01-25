@@ -3,8 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from services.models import ServiceModel
-
-from .workshop_model import WorkshopModel
+from workshops.models import WorkshopModel
 
 
 class ReviewModel(models.Model):

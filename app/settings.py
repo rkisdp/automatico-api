@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     "core",
     "documentation",
     "questions",
+    "reviews",
     "security",
     "services",
     "user",
