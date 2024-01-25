@@ -119,7 +119,7 @@ CSRF_TRUSTED_ORIGINS = env.tuple("CSRF_TRUSTED_ORIGINS", default=())
 SPECTACULAR_SETTINGS = {
     "TITLE": "AutoMático API",
     "DESCRIPTION": "AutoMático API",
-    "VERSION": "v0.8",
+    "VERSION": "v0.9.0",
     "TOS": None,
     "LICENSE": None,
     "SERVE_INCLUDE_SCHEMA": False,

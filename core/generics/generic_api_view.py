@@ -14,10 +14,15 @@ class GenericAPIView(BaseGenericAPIView):
             version, _ = self.determine_version(self.request)
         return version
 
-    def _get_module(self, version):
+    def _get_module(self, version, module_name=None):
+        if module_name is None:
+            module_name = self.__module__
+            return import_module(
+                f"{'.'.join(module_name.split('.')[:-2])}.serializers."
+                + version.replace(".", "_")
+            )
         return import_module(
-            f"{'.'.join(self.__module__.split('.')[:-2])}.serializers."
-            + version.replace(".", "_")
+            f"{module_name}.serializers.{version.replace('.', '_')}"
         )
 
     def _get_serializer_name(self):

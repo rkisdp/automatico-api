@@ -13,7 +13,7 @@ urlpatterns = (
     path(
         "/workshops/services",
         views.UserWorkshopServiceView().as_view(),
-        name="workshop-services",
+        name="workshops-services",
     ),
     path("/services", views.UserServiceView().as_view(), name="services"),
 )
