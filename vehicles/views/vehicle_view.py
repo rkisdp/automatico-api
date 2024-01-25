@@ -1,5 +1,3 @@
-from importlib import import_module
-
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import mixins
@@ -7,7 +5,10 @@ from rest_framework import mixins
 from core.generics import GenericAPIView
 from vehicles.models import VehicleModel
 
+SCHEMA_TAGS = ("vehicles",)
 
+
+@extend_schema(tags=SCHEMA_TAGS)
 class VehicleView(
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
@@ -45,6 +46,7 @@ class VehicleView(
             "owner of the vehicle."
         ),
         deprecated=True,
+        tags=(*SCHEMA_TAGS, "deprecated"),
         parameters=(
             OpenApiParameter(
                 name="vehicle_id",
@@ -86,6 +88,7 @@ class VehicleView(
             "the vehicle."
         ),
         deprecated=True,
+        tags=(*SCHEMA_TAGS, "deprecated"),
         parameters=(
             OpenApiParameter(
                 name="vehicle_id",

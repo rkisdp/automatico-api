@@ -9,7 +9,10 @@ from core.generics import GenericAPIView
 from vehicles.models import VehicleModel
 from vehicles.permissions import IsOwnerPermission
 
+SCHEMA_TAGS = ("vehicles",)
 
+
+@extend_schema(tags=SCHEMA_TAGS)
 class VehiclePhotoView(
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,

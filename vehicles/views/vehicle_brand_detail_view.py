@@ -5,7 +5,10 @@ from rest_framework import mixins
 from core.generics import GenericAPIView
 from vehicles.models import VehicleBrandModel
 
+SCHEMA_TAGS = ("vehicles",)
 
+
+@extend_schema(tags=SCHEMA_TAGS)
 class VehicleBrandDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
