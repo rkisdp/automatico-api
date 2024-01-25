@@ -19,11 +19,32 @@ class UserWorkshopView(
     ordering = ("id",)
     ordering_fields = ("id", "name")
 
+    @extend_schema(
+        operation_id="list-the-workshops-for-the-authenticated-user",
+        summary="List the workshops for the authenticated user",
+        description=(
+            "Lists the workshops for the currently authenticated user."
+            "\n\n"
+            "**Note**: Pagination is powered exclusively by the `page` parameter. "
+            "Use the [Link header]"
+            "(https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link) "
+            "to get the URL for the next page of workshops."
+        ),
+    )
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
+    @extend_schema(
+        operation_id="create-a-workshop-for-the-authenticated-user",
+        summary="Create a workshop for the authenticated user",
+        description="Creates a workshop for the currently authenticated user.",
+    )
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
     def get_queryset(self):
         return self.request.user.workshops.all()
+
+    def _get_versioned_serializer_class(self, version):
+        module = self._get_module(version, "workshops")
+        return getattr(module, "WorkshopListSerializer")

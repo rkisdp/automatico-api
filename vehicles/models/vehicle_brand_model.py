@@ -1,5 +1,16 @@
+from __future__ import annotations
+
+from os import path
+from uuid import uuid4
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+
+def rename(instance: VehicleBrandModel, filename: str) -> str:
+    ext = filename.split(".")[-1]
+    filename = f"{uuid4()}.{ext}"
+    return path.join("vehicles", "brands", "photos", filename)
 
 
 class VehicleBrandModel(models.Model):
@@ -15,6 +26,13 @@ class VehicleBrandModel(models.Model):
         help_text=_("Vehicle brand"),
         max_length=50,
         unique=True,
+    )
+    image = models.ImageField(
+        verbose_name=_("image"),
+        help_text=_("Image"),
+        upload_to=rename,
+        null=True,
+        blank=True,
     )
 
     class Meta:

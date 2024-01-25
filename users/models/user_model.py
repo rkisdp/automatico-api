@@ -56,9 +56,9 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         help_text=_("User hashed password"),
         max_length=128,
     )
-    photo = models.ImageField(
-        verbose_name=_("photo"),
-        help_text=_("User profile photo"),
+    image = models.ImageField(
+        verbose_name=_("image"),
+        help_text=_("User profile image"),
         upload_to=rename,
         blank=True,
         null=True,

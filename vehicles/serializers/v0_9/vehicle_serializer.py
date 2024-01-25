@@ -1,19 +1,17 @@
 from rest_framework import serializers
 
-from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from vehicles.models import VehicleModel
+
+from .vehicle_brand_serializer import VehicleBrandSerializer
 
 
 class VehicleSerializer(serializers.ModelSerializer):
-    brand = StringRelatedHyperLinkSerializer(
-        read_only=True,
-        view_name="vehicles:brand-detail",
-        lookup_field="id",
-    )
+    brand = VehicleBrandSerializer(read_only=True)
     photo = serializers.ImageField(read_only=True, use_url=True)
     url = serializers.HyperlinkedIdentityField(
         view_name="vehicles:detail",
         lookup_field="id",
+        lookup_url_kwarg="vehicle_id",
     )
 
     class Meta:

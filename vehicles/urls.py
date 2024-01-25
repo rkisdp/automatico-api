@@ -6,15 +6,19 @@ app_name = "vehicles"
 
 
 urlpatterns = (
-    path("/<int:id>", views.VehicleView.as_view(), name="detail"),
-    path("/<int:id>/photo", views.VehiclePhotoView.as_view(), name="photo"),
+    path("/<int:vehicle_id>", views.VehicleView.as_view(), name="detail"),
+    path(
+        "/<int:vehicle_id>/photo",
+        views.VehiclePhotoView.as_view(),
+        name="photo",
+    ),
     path(
         "/brands",
         views.VehicleBrandViewSet.as_view({"get": "list"}),
         name="brand-list",
     ),
     path(
-        "/brands/<int:id>",
+        "/brands/<int:brand_id>",
         views.VehicleBrandViewSet.as_view({"get": "retrieve"}),
         name="brand-detail",
     ),

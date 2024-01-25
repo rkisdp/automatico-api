@@ -15,7 +15,15 @@ class ChangePasswordView(
 ):
     permission_classes = (IsAuthenticated,)
 
-    @extend_schema(responses={204: None})
+    @extend_schema(
+        operation_id="change-authenticated-user-password",
+        summary="Change authenticated user password",
+        description=(
+            "Changes the password of the currently authenticated user. The "
+            "current password can not be used as the new password."
+        ),
+        responses={204: None},
+    )
     def put(self, request, *args, **kwargs):
         super().update(request, *args, **kwargs)
         return Response(status=status.HTTP_204_NO_CONTENT)

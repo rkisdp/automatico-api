@@ -8,6 +8,7 @@ from vehicles.models import VehicleModel
 class VehicleView(RetrieveUpdateDestroyAPIView):
     queryset = VehicleModel.objects.all()
     lookup_field = "id"
+    lookup_url_kwarg = "vehicle_id"
     ordering = ("id",)
 
     def get_serializer_class(self):

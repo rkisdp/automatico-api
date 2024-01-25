@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import re_path
 from rest_framework.routers import DefaultRouter
 
 from . import views
@@ -33,58 +33,58 @@ router.register(
 )
 
 urlpatterns = (
-    path(
-        "",
+    re_path(
+        r"^/?$",
         views.WorkshopListView.as_view(),
         name="list",
     ),
-    path(
-        "/<int:workshop_id>",
+    re_path(
+        r"^/(?P<workshop_id>\d+)/?$",
         views.WorkshopDetailView.as_view(),
         name="detail",
     ),
-    path(
-        "/<int:workshop_id>/brands",
+    re_path(
+        r"^/(?P<workshop_id>\d+)/brands/?$",
         views.WorkshopBrandListView.as_view(),
         name="brands",
     ),
-    path(
-        "/<int:workshop_id>/contacts",
+    re_path(
+        r"^/(?P<workshop_id>\d+)/contacts/?$",
         views.WorkshopContactListView.as_view(),
         name="contacts",
     ),
-    path(
-        "/<int:workshop_id>/employees",
+    re_path(
+        r"^/(?P<workshop_id>\d+)/employees/?$",
         views.WorkshopEmployeeListView.as_view(),
         name="employees",
     ),
-    path(
-        "/<int:workshop_id>/services",
+    re_path(
+        r"^/(?P<workshop_id>\d+)/services/?$",
         views.WorkshopServiceView.as_view(),
         name="services",
     ),
-    path(
-        "/<int:workshop_id>/specialities",
+    re_path(
+        r"^/(?P<workshop_id>\d+)/specialities/?$",
         views.WorkshopSpecialityListView.as_view(),
         name="specialities",
     ),
-    path(
-        "/<int:workshop_id>/vehicles",
+    re_path(
+        r"^/(?P<workshop_id>\d+)/vehicles/?$",
         views.WorkshopVehicleView.as_view(),
         name="vehicles",
     ),
-    path(
-        "/<int:workshop_id>/contacts/<int:contact_id>",
+    re_path(
+        r"^/(?P<workshop_id>\d+)/contacts/(?P<contact_id>\d+)/?$",
         views.WorkshopContactDetailView.as_view(),
         name="contact-detail",
     ),
-    path(
-        "/specialities",
+    re_path(
+        r"^/specialities/?$",
         views.SpecialityListView.as_view(),
         name="speciality-list",
     ),
-    path(
-        "/specialities/<int:speciality_id>",
+    re_path(
+        r"^/specialities/(?P<speciality_id>\d+)/?$",
         views.SpecialityDetailView.as_view(),
         name="speciality-detail",
     ),

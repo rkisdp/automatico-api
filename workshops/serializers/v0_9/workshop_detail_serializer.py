@@ -1,7 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from core.fields.v0_8 import HyperLinkSelfField
 from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from workshops.models import WorkshopModel
 
@@ -46,7 +45,7 @@ class WorkshopDetailSerializer(serializers.ModelSerializer):
         lookup_field="id",
         lookup_url_kwarg="id",
     )
-    url = HyperLinkSelfField(
+    url = serializers.HyperlinkedIdentityField(
         help_text=_("The workshop URL."),
         view_name="workshops:detail",
         lookup_field="id",

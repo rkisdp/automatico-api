@@ -71,9 +71,9 @@ class VehicleModel(models.Model):
         null=True,
         blank=True,
     )
-    photo = models.ImageField(
-        verbose_name=_("photo"),
-        help_text=_("Photo"),
+    image = models.ImageField(
+        verbose_name=_("image"),
+        help_text=_("Image"),
         upload_to=rename,
         null=True,
         blank=True,

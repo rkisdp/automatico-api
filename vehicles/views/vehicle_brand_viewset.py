@@ -11,6 +11,7 @@ class VehicleBrandViewSet(
 ):
     queryset = VehicleBrandModel.objects.all()
     lookup_field = "id"
+    lookup_url_kwarg = "brand_id"
     ordering = ("id",)
 
     def get_serializer_class(self):

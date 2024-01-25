@@ -16,13 +16,34 @@ class UserProfileView(
 ):
     permission_classes = (IsAuthenticated,)
 
+    @extend_schema(
+        operation_id="get-the-authenticated-user",
+        summary="Get the authenticated user",
+        description=(
+            "Provides information about the currently authenticated user."
+        ),
+    )
     def get(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
+    @extend_schema(
+        operation_id="update-the-authenticated-user",
+        summary="Update the authenticated user",
+        description=(
+            "Update the information of the currently authenticated user."
+        ),
+    )
     def patch(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
-    @extend_schema(responses={204: None})
+    @extend_schema(
+        operation_id="delete-the-authenticated-user",
+        summary="Delete the authenticated user",
+        description="Delete the account of the currently authenticated user.",
+        responses={204: None},
+        deprecated=True,
+        tags=(*SCHEMA_TAGS, "deprecated"),
+    )
     def delete(self, request, *args, **kwargs):
         return super().delete(request, *args, **kwargs)
 

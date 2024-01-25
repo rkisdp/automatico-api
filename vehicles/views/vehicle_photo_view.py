@@ -20,6 +20,7 @@ class VehiclePhotoView(
     permission_classes = (IsAuthenticated, IsOwnerPermission)
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = "id"
+    lookup_url_kwarg = "vehicle_id"
     ordering = ("id",)
 
     def put(self, request, *args, **kwargs):

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.fields.v0_8 import HyperLinkSelfField
-from workshops.models import ReviewPhotoModel
+from reviews.models import ReviewPhotoModel
 
 
 class ReviewPhotoSerializer(serializers.ModelSerializer):

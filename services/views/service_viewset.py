@@ -8,6 +8,7 @@ from services.models import ServiceModel
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = ServiceModel.objects.all()
     lookup_field = "id"
+    lookup_url_kwarg = "service_id"
     ordering = ("id",)
 
     def get_serializer_class(self):

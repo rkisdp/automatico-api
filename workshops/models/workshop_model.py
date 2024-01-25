@@ -50,6 +50,13 @@ class WorkshopModel(models.Model):
         null=True,
         blank=True,
     )
+    image = models.ImageField(
+        verbose_name=_("image"),
+        help_text=_("The workshop image."),
+        upload_to=rename,
+        null=True,
+        blank=True,
+    )
     latitude = models.DecimalField(
         verbose_name=_("latitude"),
         help_text=_("Workshop latitude"),

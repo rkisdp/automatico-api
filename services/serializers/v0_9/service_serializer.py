@@ -1,30 +1,29 @@
 from rest_framework import serializers
 
-from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from services.models import ServiceModel
+from users.serializers.v0_9 import UserListSerializer
+from vehicles.serializers.v0_9 import VehicleSerializer
+from workshops.serializers.v0_9 import WorkshopListSerializer
 
 
 class ServiceSerializer(serializers.ModelSerializer):
-    vehicle = StringRelatedHyperLinkSerializer(
-        view_name="vehicles:detail", read_only=True, lookup_field="id"
-    )
     vehicle_id = serializers.PrimaryKeyRelatedField(
-        source="vehicle", queryset=ServiceModel.objects.all(), write_only=True
-    )
-    requested_by = StringRelatedHyperLinkSerializer(
-        read_only=True,
-        view_name="users:users-detail",
-        lookup_field="id",
-    )
-    workshop = StringRelatedHyperLinkSerializer(
-        view_name="workshops:detail", read_only=True, lookup_field="id"
+        source="vehicle",
+        queryset=ServiceModel.objects.all(),
+        write_only=True,
     )
     workshop_id = serializers.PrimaryKeyRelatedField(
-        source="workshop", queryset=ServiceModel.objects.all(), write_only=True
+        source="workshop",
+        queryset=ServiceModel.objects.all(),
+        write_only=True,
     )
+    vehicle = VehicleSerializer(read_only=True)
+    requested_by = UserListSerializer(read_only=True)
+    workshop = WorkshopListSerializer(read_only=True)
     url = serializers.HyperlinkedIdentityField(
         view_name="services:detail",
         lookup_field="id",
+        lookup_url_kwarg="service_id",
     )
 
     class Meta:

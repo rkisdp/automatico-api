@@ -52,14 +52,14 @@ class WorkshopContactListView(
             ),
             OpenApiParameter(
                 name="page",
-                description="A page number within the paginated result set.",
+                description="The page number of the results to fetch.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
                 default=1,
             ),
             OpenApiParameter(
                 name="page_size",
-                description="Number of results to return per page.",
+                description="The number of results to return per page (max 100)..",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
                 default=api_settings.PAGE_SIZE,
@@ -99,7 +99,7 @@ class WorkshopContactListView(
             ),
             OpenApiParameter(
                 name="page",
-                description="A page number within the paginated result set.",
+                description="The page number of the results to fetch.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
                 default=1,
@@ -107,7 +107,7 @@ class WorkshopContactListView(
             ),
             OpenApiParameter(
                 name="page_size",
-                description="Number of results to return per page.",
+                description="The number of results to return per page (max 100)..",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
                 default=api_settings.PAGE_SIZE,

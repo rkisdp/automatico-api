@@ -14,6 +14,7 @@ class ServiceHistoryViewSet(
 ):
     queryset = ServiceHistoryModel.objects.all()
     lookup_field = "id"
+    lookup_url_kwarg = "service_id"
     ordering = ("id",)
     filterset_fields = ("service", "status")
 

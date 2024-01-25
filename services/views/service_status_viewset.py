@@ -11,6 +11,7 @@ class ServiceStatusViewSet(
 ):
     queryset = ServiceStatusModel.objects.all()
     lookup_field = "id"
+    lookup_url_kwarg = "status_id"
     ordering = ("id",)
 
     def get_serializer_class(self):

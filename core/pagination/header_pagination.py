@@ -33,25 +33,22 @@ class HeaderPagination(PageNumberPagination):
     page_size = 25
     max_page_size = 100
 
-    def get_links(self) -> list[LinkHeader]:
-        next_url = self.get_next_link()
-        previous_url = self.get_previous_link()
-        first_url = self.get_first_link()
-        last_url = self.get_last_link()
+    def _get_links(self) -> list[LinkHeader]:
         links = []
         for url, label in (
-            (first_url, "first"),
-            (previous_url, "prev"),
-            (next_url, "next"),
-            (last_url, "last"),
+            (self.get_first_link(), "first"),
+            (self.get_previous_link(), "prev"),
+            (self.get_next_link(), "next"),
+            (self.get_last_link(), "last"),
         ):
             if url is not None:
+                url = url.replace("/?", "?")
                 links.append(f"<{url}>; rel='{label}'")
 
         return links
 
     def get_paginated_response(self, data) -> Response:
-        links = self.get_links()
+        links = self._get_links()
 
         headers = {
             "X-Page-Count": self.page.paginator.num_pages,

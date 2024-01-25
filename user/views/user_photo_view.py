@@ -19,9 +19,24 @@ class UserPhotoView(
     permission_classes = (IsAuthenticated,)
     parser_classes = (MultiPartParser, FormParser)
 
+    @extend_schema(
+        operation_id="upload-image-for-the-authenticated-user",
+        summary="Upload image for the authenticated user",
+        description=(
+            "Uploads the image for the currently authenticated user. The "
+            "current image will be deleted."
+        ),
+        responses={204: None},
+    )
     def put(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
+    @extend_schema(
+        operation_id="delete-image-for-the-authenticated-user",
+        summary="Delete image for the authenticated user",
+        description="Delete the image for the currently authenticated user.",
+        responses={204: None},
+    )
     def delete(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
 
