@@ -56,7 +56,6 @@ INSTALLED_APPS = (
     "core",
     "documentation",
     "questions",
-    "reviews",
     "security",
     "services",
     "user",
@@ -157,6 +156,7 @@ SPECTACULAR_SETTINGS = {
             "description": "Authenticate to access more endpoints.",
         },
         {"name": "questions", "description": "Q/A."},
+        {"name": "reviews", "description": "Review workshops."},
         {"name": "services", "description": "Request and manage services."},
         {
             "name": "user",

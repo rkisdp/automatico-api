@@ -1,3 +1,0 @@
-from .review_photo_viewset import ReviewPhotoViewSet
-from .review_response_viewset import ReviewResponseViewSet
-from .review_viewset import ReviewViewSet
