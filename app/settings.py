@@ -70,8 +70,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": ("core.parsers.AutoMaticoJSONParser",),
     "DEFAULT_RENDERER_CLASSES": ("core.renderers.AutoMaticoJSONRenderer",),
     "DEFAULT_VERSIONING_CLASS": "core.versioning.XAutoMaticoAPIVersioning",
-    "DEFAULT_VERSION": "v0.8",
-    "ALLOWED_VERSIONS": ("v0.8", "v0.7"),
+    "DEFAULT_VERSION": "v0.9",
+    "ALLOWED_VERSIONS": ("v0.9", "v0.8"),
     "VERSION_PARAM": "version",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
