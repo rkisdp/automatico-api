@@ -16,5 +16,8 @@ class UserListView(
 ):
     queryset = get_user_model().objects.all()
     ordering = ("id",)
-    ordering_fields = ["first_name", "last_name"]
-    search_fields = ["first_name", "last_name"]
+    ordering_fields = ("first_name", "last_name")
+    search_fields = ("first_name", "last_name")
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
