@@ -1,22 +1,29 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from core.fields.v0_9 import HyperLinkSelfField
 from security.email import send_verification_code
 
 
 class PrivateUserSerializer(serializers.ModelSerializer):
-    services_url = HyperLinkSelfField(
-        view_name="user:services",
+    services = serializers.IntegerField(
+        read_only=True,
+        source="services.count",
+        default=0,
     )
-    vehicles_url = HyperLinkSelfField(
-        view_name="user:vehicles",
+    vehicles = serializers.IntegerField(
+        read_only=True,
+        source="vehicles.count",
+        default=0,
     )
-    workshops_url = HyperLinkSelfField(
-        view_name="user:workshops",
+    workshops = serializers.IntegerField(
+        read_only=True,
+        source="workshops.count",
+        default=0,
     )
-    workshops_services_url = HyperLinkSelfField(
-        view_name="user:workshops-services",
+    workshops_url = serializers.HyperlinkedIdentityField(
+        view_name="users:workshops",
+        lookup_field="id",
+        lookup_url_kwarg="user_id",
     )
     photo_url = serializers.ImageField(
         read_only=True,
@@ -39,10 +46,10 @@ class PrivateUserSerializer(serializers.ModelSerializer):
             "email_verified",
             "phone_number",
             "phone_number_verified",
-            "services_url",
-            "vehicles_url",
+            "services",
+            "vehicles",
+            "workshops",
             "workshops_url",
-            "workshops_services_url",
             "photo_url",
             "url",
             "date_joined",

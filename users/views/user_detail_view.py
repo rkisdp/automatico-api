@@ -6,10 +6,10 @@ from rest_framework import mixins
 
 from core.generics import GenericAPIView
 
-SCHEMA_NAME = "users"
+SCHEMA_TAGS = ("users",)
 
 
-@extend_schema(tags=[SCHEMA_NAME])
+@extend_schema(tags=SCHEMA_TAGS)
 class UserDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,

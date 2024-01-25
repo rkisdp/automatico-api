@@ -5,17 +5,15 @@ from core.fields.v0_9 import HyperLinkSelfField
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
-    services_url = HyperLinkSelfField(
-        view_name="user:services",
-    )
-    vehicles_url = HyperLinkSelfField(
-        view_name="user:vehicles",
+    workshops = serializers.IntegerField(
+        read_only=True,
+        source="workshops.count",
+        default=0,
     )
     workshops_url = HyperLinkSelfField(
-        view_name="user:workshops",
-    )
-    workshops_services_url = HyperLinkSelfField(
-        view_name="user:workshops-services",
+        view_name="users:workshops",
+        lookup_field="id",
+        lookup_url_kwarg="user_id",
     )
     photo_url = serializers.ImageField(
         read_only=True,
@@ -36,10 +34,8 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "phone_number",
-            "services_url",
-            "vehicles_url",
+            "workshops",
             "workshops_url",
-            "workshops_services_url",
             "photo_url",
             "url",
         )

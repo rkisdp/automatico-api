@@ -1,5 +1,3 @@
-from importlib import import_module
-
 from drf_spectacular.utils import extend_schema
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated

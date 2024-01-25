@@ -1,31 +1,26 @@
-from importlib import import_module
-
-from rest_framework.generics import ListAPIView
+from drf_spectacular.utils import extend_schema
+from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 
+from core.generics import GenericAPIView
 from services.models import ServiceModel
 
+SCHEMA_TAGS = ("user",)
 
-class UserServiceView(ListAPIView):
-    permission_classes = (IsAuthenticated,)
+
+@extend_schema(tags=SCHEMA_TAGS)
+class UserServiceView(
+    mixins.ListModelMixin,
+    GenericAPIView,
+):
     queryset = ServiceModel.objects.none()
+    permission_classes = (IsAuthenticated,)
     ordering = ("id",)
+    ordering_fields = ("id", "start_date", "end_date")
     filterset_fields = ("histories__status__name",)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
     def get_queryset(self):
         return ServiceModel.objects.filter(vehicle__owner=self.request.user)
-
-    def get_serializer_class(self):
-        version = self._get_version()
-        return self._get_versioned_serializer_class(version)
-
-    def _get_version(self):
-        try:
-            version = self.request.version
-        except Exception:
-            version, _ = self.determine_version(self.request)
-        return version
-
-    def _get_versioned_serializer_class(self, version):
-        module = import_module(f"user.serializers.{version.replace('.', '_')}")
-        return getattr(module, "UserServiceSerializer")

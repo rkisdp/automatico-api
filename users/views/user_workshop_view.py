@@ -3,27 +3,23 @@ from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 
 from core.generics import GenericAPIView
-from vehicles.models import VehicleModel
+from workshops.models import WorkshopModel
 
-SCHEMA_TAGS = ("user",)
+SCHEMA_TAGS = ("users",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
-class UserVehicleView(
+class UserWorkshopView(
     mixins.ListModelMixin,
-    mixins.CreateModelMixin,
     GenericAPIView,
 ):
     permission_classes = (IsAuthenticated,)
-    queryset = VehicleModel.objects.none()
+    queryset = WorkshopModel.objects.none()
     ordering = ("id",)
-    ordering_fields = ("id", "brand", "model")
+    ordering_fields = ("id", "name")
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
     def get_queryset(self):
-        return self.request.user.vehicles.all()
+        return self.request.user.workshops.all()
