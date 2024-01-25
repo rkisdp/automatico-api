@@ -13,6 +13,7 @@ class UserListSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = (
             "id",
+            "full_name",
             "first_name",
             "last_name",
             "url",
