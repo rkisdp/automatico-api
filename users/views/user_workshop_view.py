@@ -63,6 +63,13 @@ class UserWorkshopView(
                 location=OpenApiParameter.QUERY,
                 default=api_settings.PAGE_SIZE,
             ),
+            OpenApiParameter(
+                name="user_id",
+                description="The user ID.",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.PATH,
+                required=True,
+            ),
         ),
     )
     def get(self, request, *args, **kwargs):

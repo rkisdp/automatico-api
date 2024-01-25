@@ -1,9 +1,8 @@
-from importlib import import_module
-
 from drf_spectacular.utils import extend_schema
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from core.generics import GenericAPIView
 
@@ -29,13 +28,13 @@ class UserPhotoView(
         responses={204: None},
     )
     def put(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
+        super().update(request, *args, **kwargs)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @extend_schema(
         operation_id="delete-image-for-the-authenticated-user",
         summary="Delete image for the authenticated user",
         description="Delete the image for the currently authenticated user.",
-        responses={204: None},
     )
     def delete(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
