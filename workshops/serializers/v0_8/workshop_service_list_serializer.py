@@ -11,6 +11,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         read_only=True,
         view_name="vehicles:detail",
         lookup_field="id",
+        # lookup_url_kwarg="vehicle_id",
     )
     vehicle_id = serializers.PrimaryKeyRelatedField(
         queryset=VehicleModel.objects.all(),
@@ -19,12 +20,14 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
     )
     requested_by = StringRelatedHyperLinkSerializer(
         read_only=True,
-        view_name="users:users-detail",
+        view_name="users:detail",
         lookup_field="id",
+        lookup_url_kwarg="user_id",
     )
     url = HyperLinkSelfField(
         view_name="services:detail",
         lookup_field="id",
+        # lookup_url_kwarg="service_id",
     )
 
     class Meta:

@@ -23,27 +23,29 @@ def rename(instance: WorkshopModel, filename: str) -> str:
 class WorkshopModel(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
-        help_text=_("Workshop id"),
+        help_text=_("The workshop ID."),
         primary_key=True,
         unique=True,
         editable=False,
     )
     owner = models.ForeignKey(
         verbose_name=_("owner"),
-        help_text=_("Owner"),
+        help_text=_("The account owner of the workshop."),
         to=settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
         related_name="workshops",
     )
     name = models.CharField(
         verbose_name=_("name"),
-        help_text=_("Workshop name"),
+        help_text=_(
+            "The name of the workshop. This field is not case sensitive."
+        ),
         max_length=100,
         unique=True,
     )
     photo = models.ImageField(
         verbose_name=_("photo"),
-        help_text=_("Workshop photo"),
+        help_text=_("The workshop photo."),
         upload_to=rename,
         null=True,
         blank=True,
@@ -66,14 +68,14 @@ class WorkshopModel(models.Model):
     )
     employees = models.ManyToManyField(
         verbose_name=_("employees"),
-        help_text=_("Workshop employees"),
+        help_text=_("The workshop employees"),
         to=settings.AUTH_USER_MODEL,
         related_name="workshop_employees",
         blank=True,
     )
     brands = models.ManyToManyField(
         verbose_name=_("brands"),
-        help_text=_("Workshop brands"),
+        help_text=_("The brands of vehicles the workshop works with"),
         to=VehicleBrandModel,
         related_name="workshop_brands",
         blank=True,
@@ -91,6 +93,11 @@ class WorkshopModel(models.Model):
         to=VehicleModel,
         related_name="workshop_vehicles",
         blank=True,
+    )
+    is_active = models.BooleanField(
+        verbose_name=_("is active"),
+        help_text=_("Whether the workshop is active or not."),
+        default=True,
     )
 
     class Meta:

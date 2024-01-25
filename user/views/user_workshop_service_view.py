@@ -1,11 +1,13 @@
 from importlib import import_module
 
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from services.models import ServiceModel
 
 
 class UserWorkshopServiceView(ListAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = ServiceModel.objects.none()
     ordering = ("id",)
 

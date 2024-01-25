@@ -1,11 +1,13 @@
 from importlib import import_module
 
 from rest_framework.generics import ListCreateAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from vehicles.models import VehicleModel
 
 
 class UserVehicleView(ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = VehicleModel.objects.none()
     ordering = ("id",)
 

@@ -7,11 +7,6 @@ from workshops.models import WorkshopModel
 
 class WorkshopListSerializer(serializers.ModelSerializer):
     owner = serializers.StringRelatedField(read_only=True)
-    owner_id = serializers.PrimaryKeyRelatedField(
-        source="owner",
-        queryset=get_user_model().objects.all(),
-        write_only=True,
-    )
     employees_count = serializers.IntegerField(
         source="employees.count",
         read_only=True,
@@ -19,6 +14,7 @@ class WorkshopListSerializer(serializers.ModelSerializer):
     employees_url = HyperLinkSelfField(
         view_name="workshops:employees",
         lookup_field="id",
+        lookup_url_kwarg="workshop_id",
     )
     brands_count = serializers.IntegerField(
         source="brands.count",
@@ -27,6 +23,7 @@ class WorkshopListSerializer(serializers.ModelSerializer):
     brands_url = HyperLinkSelfField(
         view_name="workshops:brands",
         lookup_field="id",
+        lookup_url_kwarg="workshop_id",
     )
     specialities_count = serializers.IntegerField(
         source="specialities.count",
@@ -35,6 +32,7 @@ class WorkshopListSerializer(serializers.ModelSerializer):
     specialities_url = HyperLinkSelfField(
         view_name="workshops:specialities",
         lookup_field="id",
+        lookup_url_kwarg="workshop_id",
     )
     vehicles_count = serializers.IntegerField(
         source="vehicles.count",
@@ -43,15 +41,19 @@ class WorkshopListSerializer(serializers.ModelSerializer):
     vehicles_url = HyperLinkSelfField(
         view_name="workshops:vehicles",
         lookup_field="id",
+        lookup_url_kwarg="workshop_id",
     )
-    url = HyperLinkSelfField(view_name="workshops:detail", lookup_field="id")
+    url = HyperLinkSelfField(
+        view_name="workshops:detail",
+        lookup_field="id",
+        lookup_url_kwarg="workshop_id",
+    )
 
     class Meta:
         model = WorkshopModel
         fields = (
             "id",
             "owner",
-            "owner_id",
             "name",
             "photo",
             "employees_count",

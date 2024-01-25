@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.fields.v0_8 import HyperLinkSelfField
-from workshops.models import QuestionModel
+from questions.models import QuestionModel
 
 
 class QuestionSerializer(serializers.ModelSerializer):

@@ -8,34 +8,43 @@ from workshops.models import WorkshopModel
 class WorkshopDetailSerializer(serializers.ModelSerializer):
     owner = StringRelatedHyperLinkSerializer(
         read_only=True,
-        view_name="users:users-detail",
+        view_name="users:detail",
         lookup_field="id",
+        lookup_url_kwarg="user_id",
     )
     employees = StringRelatedHyperLinkSerializer(
         many=True,
         read_only=True,
-        view_name="users:users-detail",
+        view_name="users:detail",
         lookup_field="id",
+        lookup_url_kwarg="user_id",
     )
     brands = StringRelatedHyperLinkSerializer(
         many=True,
         read_only=True,
         view_name="vehicles:brand-detail",
         lookup_field="id",
+        lookup_url_kwarg="id",
     )
     specialities = StringRelatedHyperLinkSerializer(
         many=True,
         read_only=True,
         view_name="workshops:speciality-detail",
         lookup_field="id",
+        lookup_url_kwarg="speciality_id",
     )
     vehicles = StringRelatedHyperLinkSerializer(
         many=True,
         read_only=True,
         view_name="vehicles:detail",
         lookup_field="id",
+        lookup_url_kwarg="id",
     )
-    url = HyperLinkSelfField(view_name="workshops:detail", lookup_field="id")
+    url = HyperLinkSelfField(
+        view_name="workshops:detail",
+        lookup_field="id",
+        lookup_url_kwarg="workshop_id",
+    )
 
     class Meta:
         model = WorkshopModel

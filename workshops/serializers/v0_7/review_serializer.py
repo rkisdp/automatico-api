@@ -12,7 +12,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             "service",
             "client",
             "review",
-            "qualification",
+            "score",
             "reviewed_at",
         )
         read_only_fields = ("id", "reviewed_at")

@@ -1,11 +1,15 @@
 from importlib import import_module
 
+from drf_spectacular.utils import extend_schema
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
 from workshops.models import ReviewPhotoModel
 
+SCHEMA_TAGS = ("deprecated",)
 
+
+@extend_schema(deprecated=True, tags=SCHEMA_TAGS)
 class ReviewPhotoViewSet(
     mixins.DestroyModelMixin,
     mixins.CreateModelMixin,
@@ -17,6 +21,18 @@ class ReviewPhotoViewSet(
     filterset_fields = ("review",)
     search_fields = ("review",)
     ordering_fields = ("review",)
+
+    @extend_schema(
+        description="Use `/reviews/{review_id}/photo/` instead.",
+    )
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
+    @extend_schema(
+        description="Use `/reviews/{review_id}/photo/` instead.",
+    )
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
 
     def get_serializer_class(self):
         version = self._get_version()

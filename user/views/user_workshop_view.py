@@ -1,11 +1,13 @@
 from importlib import import_module
 
 from rest_framework.generics import ListCreateAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from workshops.models import WorkshopModel
 
 
 class UserWorkshopView(ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = WorkshopModel.objects.none()
     ordering = ("id",)
 

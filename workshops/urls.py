@@ -44,14 +44,14 @@ urlpatterns = (
         name="detail",
     ),
     path(
-        "/<int:workshop_id>/contacts",
-        views.WorkshopContactListView.as_view(),
-        name="contacts",
-    ),
-    path(
         "/<int:workshop_id>/brands",
         views.WorkshopBrandListView.as_view(),
         name="brands",
+    ),
+    path(
+        "/<int:workshop_id>/contacts",
+        views.WorkshopContactListView.as_view(),
+        name="contacts",
     ),
     path(
         "/<int:workshop_id>/employees",
@@ -60,25 +60,18 @@ urlpatterns = (
     ),
     path(
         "/<int:workshop_id>/services",
-        views.WorkshopServiceViewSet.as_view({"get": "list", "post": "create"}),
+        views.WorkshopServiceView.as_view(),
         name="services",
     ),
     path(
         "/<int:workshop_id>/specialities",
-        views.WorkshopSpecialityListView.as_view(
-            {"get": "list", "put": "update"}
-        ),
+        views.WorkshopSpecialityListView.as_view(),
         name="specialities",
     ),
     path(
         "/<int:workshop_id>/vehicles",
-        views.WorkshopVehicleViewSet.as_view({"get": "list", "put": "update"}),
+        views.WorkshopVehicleView.as_view(),
         name="vehicles",
-    ),
-    path(
-        "/specialities",
-        views.SpecialityViewSet.as_view({"get": "list"}),
-        name="speciality-list",
     ),
     path(
         "/<int:workshop_id>/contacts/<int:contact_id>",
@@ -86,13 +79,13 @@ urlpatterns = (
         name="contact-detail",
     ),
     path(
-        "/contacts/<int:contact_id>",
-        views.SpecialityViewSet.as_view({"get": "retrieve"}),
-        name="contact-detail",
+        "/specialities",
+        views.SpecialityListView.as_view(),
+        name="speciality-list",
     ),
     path(
         "/specialities/<int:speciality_id>",
-        views.SpecialityViewSet.as_view({"get": "retrieve"}),
+        views.SpecialityDetailView.as_view(),
         name="speciality-detail",
     ),
 )

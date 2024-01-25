@@ -2,12 +2,15 @@ from importlib import import_module
 
 from drf_spectacular.utils import extend_schema
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 
 SCHEMA_NAME = "user"
 
 
 @extend_schema(tags=[SCHEMA_NAME])
 class UserProfileView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+
     @extend_schema(responses={"204": None})
     def delete(self, request, *args, **kwargs):
         return super().delete(request, *args, **kwargs)

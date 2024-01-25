@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     "rest_framework",
     "core",
     "documentation",
+    "questions",
     "security",
     "services",
     "user",
@@ -75,11 +76,10 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
-        "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
     ),
     "DEFAULT_SCHEMA_CLASS": "core.openapi.AutoSchema",
@@ -122,6 +122,8 @@ SPECTACULAR_SETTINGS = {
     "TOS": None,
     "LICENSE": None,
     "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_PATCH": True,
+    "COMPONENT_NO_READ_ONLY_REQUIRED": False,
     "SWAGGER_UI_SETTINGS": {
         "deepLinking": True,
         "filter": True,
@@ -147,6 +149,26 @@ SPECTACULAR_SETTINGS = {
         "name": "AutoMático Team",
         "email": "automatico@onunez.me",
     },
+    "DEFAULT_GENERATOR_CLASS": "core.generators.SchemaGenerator",
+    "TAGS": (
+        {
+            "name": "auth",
+            "description": "Authenticate to access more endpoints.",
+        },
+        {"name": "questions", "description": "Q/A."},
+        {"name": "services", "description": "Request and manage services."},
+        {
+            "name": "user",
+            "description": "Interact with the authenticated user.",
+        },
+        {
+            "name": "users",
+            "description": "Get public information about users.",
+        },
+        {"name": "vehicles", "description": "Manage vehicles."},
+        {"name": "workshops", "description": "Explore workshops."},
+        {"name": "deprecated", "description": "Deprecated endpoints."},
+    ),
 }
 
 MIDDLEWARE = (
