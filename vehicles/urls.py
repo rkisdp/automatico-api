@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import re_path
 
 from . import views
 
@@ -6,20 +6,24 @@ app_name = "vehicles"
 
 
 urlpatterns = (
-    path("/<int:vehicle_id>", views.VehicleView.as_view(), name="detail"),
-    path(
-        "/<int:vehicle_id>/photo",
+    re_path(
+        r"/(?P<vehicle_id>\d+)/?$",
+        views.VehicleView.as_view(),
+        name="detail",
+    ),
+    re_path(
+        r"^/(?P<vehicle_id>\d+)/photo/?$",
         views.VehiclePhotoView.as_view(),
         name="photo",
     ),
-    path(
-        "/brands",
-        views.VehicleBrandViewSet.as_view({"get": "list"}),
+    re_path(
+        r"^/brands/?$",
+        views.VehicleBrandListView.as_view(),
         name="brand-list",
     ),
-    path(
-        "/brands/<int:brand_id>",
-        views.VehicleBrandViewSet.as_view({"get": "retrieve"}),
+    re_path(
+        r"^/brands/(?P<brand_id>\d+)/?$",
+        views.VehicleBrandDetailView.as_view(),
         name="brand-detail",
     ),
 )

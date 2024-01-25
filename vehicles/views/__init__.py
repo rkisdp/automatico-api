@@ -1,3 +1,4 @@
-from .vehicle_brand_viewset import VehicleBrandViewSet
+from .vehicle_brand_detail_view import VehicleBrandDetailView
+from .vehicle_brand_list_view import VehicleBrandListView
 from .vehicle_photo_view import VehiclePhotoView
 from .vehicle_view import VehicleView
