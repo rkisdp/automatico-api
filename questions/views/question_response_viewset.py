@@ -12,6 +12,8 @@ SCHEMA_TAGS = ("questions",)
 @extend_schema(tags=SCHEMA_TAGS)
 class QuestionResponseViewSet(MultipleFieldLookupMixin, ModelViewSet):
     queryset = QuestionResponseModel.objects.all()
+    lookup_field = "id"
+    lookup_url_kwarg = "question_id"
     lookup_fields = ("question_id", "id")
     lookup_url_kwargs = ("question_id", "response_id")
     ordering = ("id",)

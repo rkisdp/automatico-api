@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from core.generics import GenericAPIView
 
-SCHEMA_TAGS = ("user",)
+SCHEMA_TAGS = ("users",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)

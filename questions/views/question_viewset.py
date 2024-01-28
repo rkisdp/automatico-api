@@ -1,10 +1,14 @@
 from importlib import import_module
 
+from drf_spectacular.utils import extend_schema
 from rest_framework.viewsets import ModelViewSet
 
 from questions.models import QuestionModel
 
+SCHEMA_TAGS = ("questions",)
 
+
+@extend_schema(tags=SCHEMA_TAGS)
 class QuestionViewSet(ModelViewSet):
     queryset = QuestionModel.objects.all()
     lookup_field = "id"

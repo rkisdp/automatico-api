@@ -4,7 +4,10 @@ from rest_framework import mixins
 from core.generics import GenericAPIView
 from services.models import ServiceModel
 
+SCHEMA_TAGS = ("services",)
 
+
+@extend_schema(tags=SCHEMA_TAGS)
 class ServiceView(
     mixins.RetrieveModelMixin,
     GenericAPIView,

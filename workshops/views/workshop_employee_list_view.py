@@ -1,6 +1,3 @@
-from importlib import import_module
-
-from django.contrib.auth import get_user_model
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import mixins
@@ -16,6 +13,7 @@ SCHEMA_TAGS = ("workshops",)
 @extend_schema(tags=SCHEMA_TAGS)
 class WorkshopEmployeeListView(
     mixins.ListModelMixin,
+    mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
@@ -25,9 +23,9 @@ class WorkshopEmployeeListView(
     ordering_fields = ("id",)
 
     @extend_schema(
-        operation_id="list_workshop_employees",
+        operation_id="list-workshop-employees",
+        summary="List workshop employees",
         description="List workshop employees",
-        summary="List workshop employees by workshop id",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
@@ -72,9 +70,9 @@ class WorkshopEmployeeListView(
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="update_workshop_employees",
-        description="Update workshop employees",
-        summary="Update workshop employees by workshop id",
+        operation_id="add-workshop-employees",
+        summary="Add workshop employees",
+        description="Add workshop employees",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
@@ -83,37 +81,22 @@ class WorkshopEmployeeListView(
                 location=OpenApiParameter.PATH,
                 required=True,
             ),
+        ),
+    )
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    @extend_schema(
+        operation_id="replace-workshop-employees",
+        summary="Replace workshop employees",
+        description="Replaces workshop employees",
+        parameters=(
             OpenApiParameter(
-                name="ordering",
-                description="Which field to use when ordering the results.",
-                type=OpenApiTypes.STR,
-                many=True,
-                explode=False,
-                enum=(
-                    field
-                    for pair in zip(
-                        ordering, (f"-{field}" for field in ordering)
-                    )
-                    for field in pair
-                ),
-                default="id",
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page",
-                description="The page number of the results to fetch.",
+                name="workshop_id",
+                description="Workshop id.",
                 type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=1,
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page_size",
-                description="The number of results to return per page (max 100)..",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=api_settings.PAGE_SIZE,
-                exclude=True,
+                location=OpenApiParameter.PATH,
+                required=True,
             ),
         ),
     )
@@ -121,16 +104,16 @@ class WorkshopEmployeeListView(
         return self.update(request, *args, **kwargs)
 
     def get_object(self):
-        workshop_id = self.kwargs.get("id")
+        workshop_id = self.kwargs[self.lookup_url_kwarg]
         return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
 
     def get_queryset(self):
         workshop = self.get_object()
-        return get_user_model().objects.filter(workshop_employees=workshop)
+        return workshop.employees.all()
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs.get("id")
+        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
         return context
 
     def get_serializer_class(self):
@@ -145,9 +128,7 @@ class WorkshopEmployeeListView(
         return version
 
     def _get_versioned_serializer_class(self, version):
-        module = import_module(
-            f"workshops.serializers.{version.replace('.', '_')}"
-        )
-        if self.request.method == "PUT":
+        module = self._get_serializer_module(version)
+        if self.request.method in ("POST", "PUT"):
             return getattr(module, "WorkshopEmployeeDetailSerializer")
         return getattr(module, "WorkshopEmployeeListSerializer")

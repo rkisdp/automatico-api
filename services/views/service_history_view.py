@@ -7,7 +7,10 @@ from rest_framework.settings import api_settings
 from core.generics import GenericAPIView
 from services.models import ServiceHistoryModel, ServiceModel
 
+SCHEMA_TAGS = ("services",)
 
+
+@extend_schema(tags=SCHEMA_TAGS)
 class ServiceHistoryView(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,

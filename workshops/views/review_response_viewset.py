@@ -3,9 +3,9 @@ from importlib import import_module
 from drf_spectacular.utils import extend_schema
 from rest_framework.viewsets import ModelViewSet
 
-from reviews.models import ReviewResponseModel
+from workshops.models import ReviewResponseModel
 
-SCHEMA_TAGS = ("deprecated",)
+SCHEMA_TAGS = ("reviews", "deprecated")
 
 
 @extend_schema(deprecated=True, tags=SCHEMA_TAGS)

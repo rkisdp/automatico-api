@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from questions.models import QuestionResponseModel
 
-SCHEMA_TAGS = ("deprecated",)
+SCHEMA_TAGS = ("questions", "deprecated")
 
 
 @extend_schema(deprecated=True, tags=SCHEMA_TAGS)

@@ -155,20 +155,34 @@ SPECTACULAR_SETTINGS = {
             "name": "auth",
             "description": "Authenticate to access more endpoints.",
         },
-        {"name": "questions", "description": "Q/A."},
-        {"name": "reviews", "description": "Review workshops."},
-        {"name": "services", "description": "Request and manage services."},
         {
-            "name": "user",
-            "description": "Interact with the authenticated user.",
+            "name": "questions",
+            "description": "Q/A.",
+        },
+        {
+            "name": "reviews",
+            "description": "Write, read and respond to reviews.",
+        },
+        {
+            "name": "services",
+            "description": "Request and manage services.",
         },
         {
             "name": "users",
-            "description": "Get public information about users.",
+            "description": "Get public and private information about users.",
         },
-        {"name": "vehicles", "description": "Manage vehicles."},
-        {"name": "workshops", "description": "Explore workshops."},
-        {"name": "deprecated", "description": "Deprecated endpoints."},
+        {
+            "name": "vehicles",
+            "description": "Manage vehicles.",
+        },
+        {
+            "name": "workshops",
+            "description": "Explore and manage workshops.",
+        },
+        {
+            "name": "deprecated",
+            "description": "Deprecated endpoints.",
+        },
     ),
 }
 

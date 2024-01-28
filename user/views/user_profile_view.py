@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from core.generics import GenericAPIView
 
-SCHEMA_TAGS = ("user",)
+SCHEMA_TAGS = ("users",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
@@ -57,7 +57,7 @@ class UserProfileView(
         instance.save()
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_module(version, "users")
+        module = self._get_serializer_module(version)
         try:
             return getattr(module, "PrivateUserSerializer")
         except AttributeError:

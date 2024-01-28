@@ -65,7 +65,7 @@ urlpatterns = (
     ),
     re_path(
         r"^/(?P<workshop_id>\d+)/specialities/?$",
-        views.WorkshopSpecialityListView.as_view(),
+        views.WorkshopSpecialityView.as_view(),
         name="specialities",
     ),
     re_path(
@@ -77,6 +77,21 @@ urlpatterns = (
         r"^/(?P<workshop_id>\d+)/contacts/(?P<contact_id>\d+)/?$",
         views.WorkshopContactDetailView.as_view(),
         name="contact-detail",
+    ),
+    re_path(
+        r"^/(?P<workshop_id>\d+)/reviews/?$",
+        views.ReviewListView.as_view(),
+        name="reviews",
+    ),
+    re_path(
+        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_id>\d+)/responses/?$",
+        views.ReviewResponseView.as_view(),
+        name="review-responses",
+    ),
+    re_path(
+        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_id>\d+)/photos/?$",
+        views.ReviewResponseView.as_view(),
+        name="review-photos",
     ),
     re_path(
         r"^/specialities/?$",

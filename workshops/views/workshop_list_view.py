@@ -96,6 +96,8 @@ class WorkshopListView(
         operation_id="create-a-workshop-for-the-authenticated-user",
         summary="Create a workshop for the authenticated user",
         description="Creates a new workshop for the authenticated user.",
+        deprecated=True,
+        tags=(*SCHEMA_TAGS, "deprecated"),
     )
     def post(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)

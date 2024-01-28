@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from core.generics import GenericAPIView
 from services.models import ServiceModel
 
-SCHEMA_TAGS = ("user",)
+SCHEMA_TAGS = ("services",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
@@ -38,5 +38,5 @@ class UserServiceView(
         return ServiceModel.objects.filter(vehicle__owner=self.request.user)
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_module(version, "services")
+        module = self._get_serializer_module(version, "services")
         return getattr(module, "ServiceSerializer")

@@ -4,7 +4,10 @@ from rest_framework import mixins
 from core.generics import GenericAPIView
 from services.models import ServiceStatusModel
 
+SCHEMA_TAGS = ("services",)
 
+
+@extend_schema(tags=SCHEMA_TAGS)
 class ServiceStatusDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
@@ -22,5 +25,5 @@ class ServiceStatusDetailView(
         return self.retrieve(request, *args, **kwargs)
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_module(version)
+        module = self._get_serializer_module(version)
         return getattr(module, "ServiceStatusSerializer")

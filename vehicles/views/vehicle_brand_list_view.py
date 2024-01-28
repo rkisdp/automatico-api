@@ -25,5 +25,5 @@ class VehicleBrandListView(
         return self.list(request, *args, **kwargs)
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_module(version)
+        module = self._get_serializer_module(version)
         return getattr(module, "VehicleBrandSerializer")

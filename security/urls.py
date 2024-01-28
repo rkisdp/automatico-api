@@ -1,50 +1,58 @@
-from django.urls import path
+from django.urls import re_path
 
 from . import views
 
 app_name = "security"
 
 urlpatterns = (
-    path(
-        "/account/activation",
+    re_path(
+        r"^/account/activation/?$",
         views.AccountActivationView().as_view(),
         name="account-activation",
     ),
-    path(
-        "/account/activation/resend",
+    re_path(
+        r"^/account/activation/resend/?$",
         views.ResendAccountActivationCodeView().as_view(),
         name="resend-account-activation-code",
     ),
-    path(
-        "/account/activation/validate",
+    re_path(
+        r"^/account/activation/validate/?$",
         views.ValidateAccountActivationCodeView().as_view(),
         name="validate-account-activation-code",
     ),
-    path(
-        "/email/verification",
+    re_path(
+        r"^/email/verification/?$",
         views.EmailVerificationView().as_view(),
         name="email-verification",
     ),
-    path(
-        "/email/verification/resend",
+    re_path(
+        r"^/email/verification/resend/?$",
         views.ResendEmailVerificationCodeView().as_view(),
         name="resend-email-verification-code",
     ),
-    path(
-        "/password/reset",
+    re_path(
+        r"^/password/reset/?$",
         views.PasswordResetView().as_view(),
         name="password-reset",
     ),
-    path(
-        "/password/reset/confirm",
+    re_path(
+        r"^/password/reset/confirm/?$",
         views.ConfirmPasswordResetView().as_view(),
         name="password-reset-confirm",
     ),
-    path(
-        "/password/reset/validate",
+    re_path(
+        r"^/password/reset/validate/?$",
         views.ValidatePasswordResetCodeView().as_view(),
         name="validate-account-activation-code",
     ),
-    path("/sign-up", views.SignUpView().as_view(), name="sign-up"),
-    path("/token", views.AccessTokenView().as_view(), name="access-token"),
+    re_path(
+        r"^/sign-up/?$",
+        views.SignUpView().as_view(),
+        name="sign-up",
+    ),
+    re_path(
+        r"^/token/?$",
+        views.AccessTokenView().as_view(),
+        name="access-token",
+    ),
 )

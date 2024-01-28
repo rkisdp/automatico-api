@@ -13,6 +13,12 @@ class WorkshopListSerializer(serializers.ModelSerializer):
         read_only=True,
         help_text=_("The account owner of the workshop."),
     )
+    image_url = serializers.ImageField(
+        read_only=True,
+        source="image",
+        use_url=True,
+        help_text=_("The image of the workshop."),
+    )
     brands = serializers.ListSerializer(
         child=serializers.CharField(),
         read_only=True,
@@ -69,7 +75,7 @@ class WorkshopListSerializer(serializers.ModelSerializer):
             "id",
             "owner",
             "name",
-            "photo",
+            "image_url",
             "brands",
             "specialities",
             "brands_count",
@@ -80,9 +86,8 @@ class WorkshopListSerializer(serializers.ModelSerializer):
             "vehicles_url",
             "url",
         )
-        read_only_fields = ("id", "photo")
+        read_only_fields = ("id",)
 
     def create(self, validated_data):
-        user = self.context["request"].user
-        validated_data["owner"] = user
+        validated_data["owner"] = self.context["request"].user
         return super().create(validated_data)

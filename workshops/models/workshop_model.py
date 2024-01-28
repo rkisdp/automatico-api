@@ -57,27 +57,11 @@ class WorkshopModel(models.Model):
         null=True,
         blank=True,
     )
-    latitude = models.DecimalField(
-        verbose_name=_("latitude"),
-        help_text=_("Workshop latitude"),
-        max_digits=9,
-        decimal_places=6,
-        null=True,
-        blank=True,
-    )
-    longitude = models.DecimalField(
-        verbose_name=_("longitude"),
-        help_text=_("Workshop longitude"),
-        max_digits=9,
-        decimal_places=6,
-        null=True,
-        blank=True,
-    )
     employees = models.ManyToManyField(
         verbose_name=_("employees"),
         help_text=_("The workshop employees"),
         to=settings.AUTH_USER_MODEL,
-        related_name="workshop_employees",
+        related_name="workplace",
         blank=True,
     )
     brands = models.ManyToManyField(

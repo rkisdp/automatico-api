@@ -11,7 +11,7 @@ SCHEMA_TAGS = ("workshops",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
-class WorkshopSpecialityListView(
+class WorkshopSpecialityView(
     mixins.ListModelMixin,
     mixins.UpdateModelMixin,
     GenericAPIView,
@@ -19,12 +19,13 @@ class WorkshopSpecialityListView(
     queryset = SpecialityModel.objects.none()
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"
-    ordering = ("id", "name")
+    ordering = ("id",)
+    ordering_fields = ("id", "name")
 
     @extend_schema(
-        operation_id="list_workshop_specialities",
-        description="List workshop specialities",
-        summary="List workshop specialities by workshop id",
+        operation_id="list-workshop-specialities",
+        summary="List workshop specialities",
+        description="Lists workshop specialities",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
@@ -68,9 +69,9 @@ class WorkshopSpecialityListView(
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="update_workshop_specialities",
-        description="Update workshop specialities",
-        summary="Update workshop specialities by workshop id",
+        operation_id="add-workshop-specialities",
+        summary="Add workshop specialities",
+        description="Adds workshop specialities",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
@@ -79,37 +80,22 @@ class WorkshopSpecialityListView(
                 location=OpenApiParameter.PATH,
                 required=True,
             ),
+        ),
+    )
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    @extend_schema(
+        operation_id="replace-workshop-specialities",
+        summary="Replace workshop specialities",
+        description="Replaces workshop specialities",
+        parameters=(
             OpenApiParameter(
-                name="ordering",
-                description="Which field to use when ordering the results.",
-                type=OpenApiTypes.STR,
-                many=True,
-                explode=False,
-                enum=(
-                    field
-                    for pair in zip(
-                        ordering, (f"-{field}" for field in ordering)
-                    )
-                    for field in pair
-                ),
-                default="id",
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page",
-                description="The page number of the results to fetch.",
+                name="workshop_id",
+                description="Workshop id.",
                 type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=1,
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page_size",
-                description="The number of results to return per page (max 100)..",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=api_settings.PAGE_SIZE,
-                exclude=True,
+                location=OpenApiParameter.PATH,
+                required=True,
             ),
         ),
     )
@@ -117,36 +103,20 @@ class WorkshopSpecialityListView(
         return self.update(request, *args, **kwargs)
 
     def get_object(self):
-        workshop_id = self.kwargs.get("id")
+        workshop_id = self.kwargs[self.lookup_url_kwarg]
         return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
 
     def get_queryset(self):
         workshop = self.get_object()
-        return SpecialityModel.objects.filter(workshop_specialities=workshop)
+        return workshop.specialities.all()
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs.get("id")
+        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
         return context
 
-    def get_serializer_class(self):
-        version = self._get_version()
-        return self._get_versioned_serializer_class(version)
-
-    def _get_version(self):
-        try:
-            version = self.request.version
-        except Exception:
-            version, _ = self.determine_version(self.request)
-        return version
-
     def _get_versioned_serializer_class(self, version):
-        module = import_module(
-            f"workshops.serializers.{version.replace('.', '_')}"
-        )
-        if self.request.method == "PUT":
+        module = self._get_serializer_module(version)
+        if self.request.method in ("POST", "PUT"):
             return getattr(module, "WorkshopSpecialityDetailSerializer")
         return getattr(module, "WorkshopSpecialityListSerializer")
-
-
-from importlib import import_module

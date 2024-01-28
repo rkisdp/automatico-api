@@ -29,7 +29,7 @@ class WorkshopDetailView(
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="The workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -80,7 +80,7 @@ class WorkshopDetailView(
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="The workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -100,10 +100,12 @@ class WorkshopDetailView(
             "**Note**: Deactivated workshops cannot receive nor accept new "
             "service requests."
         ),
+        deprecated=True,
+        tags=(*SCHEMA_TAGS, "deprecated"),
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="The workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,

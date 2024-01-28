@@ -13,6 +13,7 @@ SCHEMA_TAGS = ("workshops",)
 @extend_schema(tags=SCHEMA_TAGS)
 class WorkshopContactListView(
     mixins.ListModelMixin,
+    mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
@@ -29,7 +30,7 @@ class WorkshopContactListView(
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="Workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -70,13 +71,62 @@ class WorkshopContactListView(
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
+        operation_id="add-a-workshop-contact",
+        summary="Add a workshop contact",
+        description="Adds a workshop contact.",
+        parameters=(
+            OpenApiParameter(
+                name="workshop_id",
+                description="Workshop ID.",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.PATH,
+                required=True,
+            ),
+            OpenApiParameter(
+                name="ordering",
+                description="Which field to use when ordering the results.",
+                type=OpenApiTypes.STR,
+                many=True,
+                explode=False,
+                enum=(
+                    field
+                    for pair in zip(
+                        ordering, (f"-{field}" for field in ordering)
+                    )
+                    for field in pair
+                ),
+                default="id",
+                exclude=True,
+            ),
+            OpenApiParameter(
+                name="page",
+                description="The page number of the results to fetch.",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                default=1,
+                exclude=True,
+            ),
+            OpenApiParameter(
+                name="page_size",
+                description="The number of results to return per page (max 100)..",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                default=api_settings.PAGE_SIZE,
+                exclude=True,
+            ),
+        ),
+    )
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    @extend_schema(
         operation_id="replace-all-workshop-contacts",
         summary="Replace all workshop contacts",
         description="Replaces all workshop contacts.",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="Workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -132,7 +182,7 @@ class WorkshopContactListView(
         return context
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_module(version)
-        if self.request.method == "PUT":
+        module = self._get_serializer_module(version)
+        if self.request.method in ("POST", "PUT"):
             return getattr(module, "WorkshopContactDetailSerializer")
         return getattr(module, self._get_serializer_name())

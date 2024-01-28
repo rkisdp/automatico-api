@@ -6,8 +6,9 @@ from workshops.models import SpecialityModel
 
 class WorkshopSpecialityListSerializer(serializers.ModelSerializer):
     url = HyperLinkSelfField(
-        view_name="workshops:speciality-detail",
+        view_name="workshops:specialities",
         lookup_field="id",
+        lookup_url_kwarg="workshop_id",
     )
 
     class Meta:
@@ -17,4 +18,3 @@ class WorkshopSpecialityListSerializer(serializers.ModelSerializer):
             "name",
             "url",
         )
-        read_only_fields = ("name",)

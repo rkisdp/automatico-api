@@ -34,8 +34,6 @@ class WorkshopAdmin(ModelAdmin):
                 "classes": ("extrapretty",),
                 "fields": (
                     "name",
-                    "latitude",
-                    "longitude",
                     "employees",
                     "brands",
                     "specialities",

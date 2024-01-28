@@ -1,19 +1,16 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from core.fields.v0_8 import HyperLinkSelfField
-from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from services.models import ServiceModel, ServiceStatusModel
+from users.serializers.v0_9 import UserListSerializer
 from vehicles.models import VehicleModel
+from vehicles.serializers.v0_9 import VehicleSerializer
 
 
 class WorkshopServiceListSerializer(serializers.ModelSerializer):
-    vehicle = StringRelatedHyperLinkSerializer(
+    vehicle = VehicleSerializer(
         read_only=True,
-        view_name="vehicles:detail",
-        lookup_field="id",
-        # lookup_url_kwarg="vehicle_id",
-        help_text=_("URL to the vehicle."),
+        help_text=_("Vehicle data."),
     )
     vehicle_id = serializers.PrimaryKeyRelatedField(
         queryset=VehicleModel.objects.all(),
@@ -21,17 +18,14 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         source="vehicle",
         help_text=_("The vehicle ID."),
     )
-    requested_by = StringRelatedHyperLinkSerializer(
+    requested_by = UserListSerializer(
         read_only=True,
-        view_name="users:detail",
-        lookup_field="id",
-        lookup_url_kwarg="user_id",
-        help_text=_("URL to the user."),
+        help_text=_("User data."),
     )
-    url = HyperLinkSelfField(
+    url = serializers.HyperlinkedIdentityField(
         view_name="services:detail",
         lookup_field="id",
-        # lookup_url_kwarg="service_id",
+        lookup_url_kwarg="service_id",
         help_text=_("URL to the service."),
     )
 
@@ -60,7 +54,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         validated_data["workshop_id"] = workshop_id
         service = super().create(validated_data)
         service.histories.create(
-            status=ServiceStatusModel.objects.get(name="Solicitado"),
+            status=ServiceStatusModel.objects.get(name__iexact="Solicitado"),
             comment=service.request_description,
             responsable=self.context["request"].user,
         )

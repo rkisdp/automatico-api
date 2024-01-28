@@ -1,6 +1,9 @@
 from .question_response_viewset import QuestionResponseViewSet
 from .question_viewset import QuestionViewSet
+from .review_list_view import ReviewListView
+from .review_photo_view import ReviewPhotoView
 from .review_photo_viewset import ReviewPhotoViewSet
+from .review_response_view import ReviewResponseView
 from .review_response_viewset import ReviewResponseViewSet
 from .review_viewset import ReviewViewSet
 from .speciality_detail_view import SpecialityDetailView
@@ -12,5 +15,5 @@ from .workshop_detail_viewset import WorkshopDetailView
 from .workshop_employee_list_view import WorkshopEmployeeListView
 from .workshop_list_view import WorkshopListView
 from .workshop_service_view import WorkshopServiceView
-from .workshop_speciality_list_view import WorkshopSpecialityListView
+from .workshop_speciality_list_view import WorkshopSpecialityView
 from .workshop_vehicle_view import WorkshopVehicleView

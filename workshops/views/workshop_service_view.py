@@ -1,5 +1,3 @@
-from importlib import import_module
-
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import mixins
@@ -10,7 +8,7 @@ from core.generics import GenericAPIView
 from services.models import ServiceModel
 from workshops.models import WorkshopModel
 
-SCHEMA_TAGS = ("workshops",)
+SCHEMA_TAGS = ("services",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
@@ -96,12 +94,12 @@ class WorkshopServiceView(
         return self.queryset.filter(workshop=workshop)
 
     def get_object(self):
-        workshop_id = self.kwargs.get("workshop_id")
+        workshop_id = self.kwargs[self.lookup_url_kwarg]
         return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs.get("id")
+        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
         return context
 
     def get_serializer_class(self):
@@ -116,7 +114,5 @@ class WorkshopServiceView(
         return version
 
     def _get_versioned_serializer_class(self, version):
-        module = import_module(
-            f"workshops.serializers.{version.replace('.', '_')}"
-        )
+        module = self._get_serializer_module(version)
         return getattr(module, "WorkshopServiceListSerializer")

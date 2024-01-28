@@ -10,7 +10,7 @@ from core.generics import GenericAPIView
 from vehicles.models import VehicleModel
 from workshops.models import WorkshopModel
 
-SCHEMA_TAGS = ("workshops",)
+SCHEMA_TAGS = ("vehicles",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
@@ -74,6 +74,8 @@ class WorkshopVehicleView(
         operation_id="update_workshop_vehicles",
         description="Update workshop vehicles",
         summary="Update workshop vehicles by workshop id",
+        deprecated=True,
+        tags=(*SCHEMA_TAGS, "deprecated"),
         parameters=(
             OpenApiParameter(
                 name="workshop_id",

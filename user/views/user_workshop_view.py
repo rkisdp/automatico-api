@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from core.generics import GenericAPIView
 from workshops.models import WorkshopModel
 
-SCHEMA_TAGS = ("user",)
+SCHEMA_TAGS = ("workshops",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
@@ -46,5 +46,5 @@ class UserWorkshopView(
         return self.request.user.workshops.all()
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_module(version, "workshops")
+        module = self._get_serializer_module(version, "workshops")
         return getattr(module, "WorkshopListSerializer")

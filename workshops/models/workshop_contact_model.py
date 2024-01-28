@@ -17,7 +17,7 @@ class WorkshopContactModel(models.Model):
         help_text=_("Workshop"),
         to=WorkshopModel,
         on_delete=models.PROTECT,
-        related_name="workshops",
+        related_name="contacts",
     )
     name = models.CharField(
         verbose_name=_("code"),

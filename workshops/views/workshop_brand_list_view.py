@@ -14,6 +14,7 @@ SCHEMA_TAGS = ("workshops",)
 @extend_schema(tags=SCHEMA_TAGS)
 class WorkshopBrandListView(
     mixins.ListModelMixin,
+    mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
@@ -30,7 +31,7 @@ class WorkshopBrandListView(
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -71,48 +72,33 @@ class WorkshopBrandListView(
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
+        operation_id="add-workshop-brand",
+        summary="Add workshop brand",
+        description="Adds a workshop brand.",
+        parameters=(
+            OpenApiParameter(
+                name="workshop_id",
+                description="The workshop ID.",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.PATH,
+                required=True,
+            ),
+        ),
+    )
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    @extend_schema(
         operation_id="replace-all-workshop-brands",
         summary="Replace all workshop brands",
         description="Replaces all workshop brands.",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
-            ),
-            OpenApiParameter(
-                name="ordering",
-                description="Which field to use when ordering the results.",
-                type=OpenApiTypes.STR,
-                many=True,
-                explode=False,
-                enum=(
-                    field
-                    for pair in zip(
-                        ordering, (f"-{field}" for field in ordering)
-                    )
-                    for field in pair
-                ),
-                default="id",
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page",
-                description="The page number of the results to fetch.",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=1,
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page_size",
-                description="The number of results to return per page (max 100)..",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=api_settings.PAGE_SIZE,
-                exclude=True,
             ),
         ),
     )
@@ -120,7 +106,7 @@ class WorkshopBrandListView(
         return self.update(request, *args, **kwargs)
 
     def get_object(self):
-        workshop_id = self.kwargs.get("workshop_id")
+        workshop_id = self.kwargs[self.lookup_url_kwarg]
         return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
 
     def get_queryset(self):
@@ -129,11 +115,11 @@ class WorkshopBrandListView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs.get("workshop_id")
+        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
         return context
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_module(version)
-        if self.request.method == "PUT":
+        module = self._get_serializer_module(version)
+        if self.request.method in ("POST", "PUT"):
             return getattr(module, "WorkshopBrandDetailSerializer")
         return getattr(module, self._get_serializer_name())

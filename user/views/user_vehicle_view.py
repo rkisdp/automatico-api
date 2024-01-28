@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from core.generics import GenericAPIView
 from vehicles.models import VehicleModel
 
-SCHEMA_TAGS = ("user",)
+SCHEMA_TAGS = ("vehicles",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
@@ -46,5 +46,5 @@ class UserVehicleView(
         return self.request.user.vehicles.all()
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_module(version, "vehicles")
+        module = self._get_serializer_module(version, "vehicles")
         return getattr(module, "VehicleSerializer")

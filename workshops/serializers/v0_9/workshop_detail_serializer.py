@@ -1,49 +1,40 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
+from users.serializers.v0_9 import UserListSerializer
 from workshops.models import WorkshopModel
 
 
 class WorkshopDetailSerializer(serializers.ModelSerializer):
-    owner = StringRelatedHyperLinkSerializer(
+    owner = UserListSerializer(
         help_text=_("The account owner of the workshop."),
         read_only=True,
-        view_name="users:detail",
-        lookup_field="id",
-        lookup_url_kwarg="user_id",
     )
-    employees = StringRelatedHyperLinkSerializer(
-        help_text=_("The workshop employees."),
-        many=True,
+    brands_count = serializers.IntegerField(
+        help_text=_("The count of brands of vehicles the workshop works with."),
+        source="brands.count",
         read_only=True,
-        view_name="users:detail",
-        lookup_field="id",
-        lookup_url_kwarg="user_id",
     )
-    brands = StringRelatedHyperLinkSerializer(
+    specialities_count = serializers.IntegerField(
+        help_text=_("The count of specialities of the workshop."),
+        source="specialities.count",
+        read_only=True,
+    )
+    brands = serializers.ListSerializer(
         help_text=_("The brands of vehicles the workshop works with."),
-        many=True,
+        child=serializers.CharField(),
         read_only=True,
-        view_name="vehicles:brand-detail",
-        lookup_field="id",
-        lookup_url_kwarg="id",
     )
-    specialities = StringRelatedHyperLinkSerializer(
+    specialities = serializers.ListSerializer(
         help_text=_("The specialities of the workshop."),
-        many=True,
+        child=serializers.CharField(),
         read_only=True,
-        view_name="workshops:speciality-detail",
-        lookup_field="id",
-        lookup_url_kwarg="speciality_id",
     )
-    vehicles = StringRelatedHyperLinkSerializer(
-        help_text=_("The vehicles the workshop currently has."),
-        many=True,
+    image_url = serializers.ImageField(
+        help_text=_("The workshop image URL."),
+        source="image",
         read_only=True,
-        view_name="vehicles:detail",
-        lookup_field="id",
-        lookup_url_kwarg="id",
+        use_url=True,
     )
     url = serializers.HyperlinkedIdentityField(
         help_text=_("The workshop URL."),
@@ -56,13 +47,13 @@ class WorkshopDetailSerializer(serializers.ModelSerializer):
         model = WorkshopModel
         fields = (
             "id",
-            "owner",
             "name",
-            "photo",
-            "employees",
+            "owner",
             "brands",
             "specialities",
-            "vehicles",
+            "brands_count",
+            "specialities_count",
+            "image_url",
             "url",
         )
-        read_only_fields = ("id", "photo")
+        read_only_fields = ("id",)
