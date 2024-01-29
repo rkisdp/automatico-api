@@ -43,17 +43,18 @@ class VehicleSerializer(serializers.ModelSerializer):
 
         if self.context and self.context["request"].method != "GET":
             self.fields["brand"] = serializers.CharField(write_only=True)
-        if data is not empty:
-            data["brand"] = {"name": data.get("brand", None)}
-            self.fields["brand"] = VehicleBrandSerializer()
+
+    def run_validation(self, data=empty):
+        validated_data = super().run_validation(data)
+        self.fields["brand"] = VehicleBrandSerializer()
+        return validated_data
 
     def validate_brand(self, value):
-        name = value.get("name", None)
         try:
-            return VehicleBrandModel.objects.get(name__iexact=name)
+            return VehicleBrandModel.objects.get(name__iexact=value)
         except VehicleBrandModel.DoesNotExist:
             raise serializers.ValidationError(
-                _(f"Vehicle brand '{name}' does not exist.")
+                _(f"Vehicle brand '{value}' does not exist.")
             )
 
     def create(self, validated_data):
