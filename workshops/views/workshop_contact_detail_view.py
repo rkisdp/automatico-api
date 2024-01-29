@@ -1,5 +1,3 @@
-from importlib import import_module
-
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import mixins
@@ -8,10 +6,10 @@ from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
 from workshops.models import WorkshopContactModel
 
-SCHEMA_TAGS = ("workshops",)
+SCHEMA_TAGS = ("workshops", "deprecated")
 
 
-@extend_schema(tags=SCHEMA_TAGS)
+@extend_schema(tags=SCHEMA_TAGS, deprecated=True)
 class WorkshopContactDetailView(
     MultipleFieldLookupMixin,
     mixins.RetrieveModelMixin,
@@ -27,19 +25,17 @@ class WorkshopContactDetailView(
         operation_id="retrieve_workshop_contact",
         description="Retrieve workshop contact",
         summary="Retrieve workshop contact by workshop and contact id",
-        deprecated=True,
-        tags=(*SCHEMA_TAGS, "deprecated"),
         parameters=(
             OpenApiParameter(
                 name="contact_id",
-                description="Contact id.",
+                description="The contact ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
             ),
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -56,14 +52,14 @@ class WorkshopContactDetailView(
         parameters=(
             OpenApiParameter(
                 name="contact_id",
-                description="Contact id.",
+                description="The contact ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
             ),
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -80,14 +76,14 @@ class WorkshopContactDetailView(
         parameters=(
             OpenApiParameter(
                 name="contact_id",
-                description="Contact id.",
+                description="The contact ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
             ),
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -97,19 +93,6 @@ class WorkshopContactDetailView(
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
-    def get_serializer_class(self):
-        version = self._get_version()
-        return self._get_versioned_serializer_class(version)
-
-    def _get_version(self):
-        try:
-            version = self.request.version
-        except Exception:
-            version, _ = self.determine_version(self.request)
-        return version
-
     def _get_versioned_serializer_class(self, version):
-        module = import_module(
-            f"workshops.serializers.{version.replace('.', '_')}"
-        )
+        module = self._get_serializer_module(version)
         return getattr(module, "WorkshopContactListSerializer")

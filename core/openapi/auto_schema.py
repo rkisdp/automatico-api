@@ -103,3 +103,11 @@ class AutoSchema(BaseAutoSchema):
     def get_override_parameters(self):
         self._global_params[1].default = self.view.request.version
         return self._global_params
+
+    def _is_create_operation(self):
+        if self.get_operation_id().startswith("add"):
+            return False
+
+        if self.view.request.method == "POST":
+            return True
+        return super()._is_create_operation()

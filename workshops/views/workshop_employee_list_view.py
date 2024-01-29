@@ -1,7 +1,8 @@
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 from core.generics import GenericAPIView
@@ -84,7 +85,10 @@ class WorkshopEmployeeListView(
         ),
     )
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @extend_schema(
         operation_id="replace-workshop-employees",

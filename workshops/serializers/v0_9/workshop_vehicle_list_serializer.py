@@ -6,18 +6,18 @@ from vehicles.models import VehicleModel
 
 
 class WorkshopVehicleListSerializer(serializers.ModelSerializer):
-    id = serializers.PrimaryKeyRelatedField(
-        write_only=True,
-        source="vehicle",
-        queryset=VehicleModel.objects.all(),
-    )
     brand = StringRelatedHyperLinkSerializer(
         read_only=True,
         view_name="vehicles:brand-detail",
         lookup_field="id",
+        lookup_url_kwarg="brand_id",
     )
     photo = serializers.ImageField(read_only=True, use_url=True)
-    url = HyperLinkSelfField(view_name="vehicles:detail", lookup_field="id")
+    url = HyperLinkSelfField(
+        view_name="vehicles:detail",
+        lookup_field="id",
+        lookup_url_kwarg="vehicle_id",
+    )
 
     class Meta:
         model = VehicleModel

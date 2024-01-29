@@ -1,7 +1,8 @@
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 from core.generics import GenericAPIView
@@ -13,7 +14,6 @@ SCHEMA_TAGS = ("workshops",)
 @extend_schema(tags=SCHEMA_TAGS)
 class WorkshopContactListView(
     mixins.ListModelMixin,
-    mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
@@ -82,42 +82,13 @@ class WorkshopContactListView(
                 location=OpenApiParameter.PATH,
                 required=True,
             ),
-            OpenApiParameter(
-                name="ordering",
-                description="Which field to use when ordering the results.",
-                type=OpenApiTypes.STR,
-                many=True,
-                explode=False,
-                enum=(
-                    field
-                    for pair in zip(
-                        ordering, (f"-{field}" for field in ordering)
-                    )
-                    for field in pair
-                ),
-                default="id",
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page",
-                description="The page number of the results to fetch.",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=1,
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page_size",
-                description="The number of results to return per page (max 100)..",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=api_settings.PAGE_SIZE,
-                exclude=True,
-            ),
         ),
     )
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @extend_schema(
         operation_id="replace-all-workshop-contacts",
@@ -131,45 +102,13 @@ class WorkshopContactListView(
                 location=OpenApiParameter.PATH,
                 required=True,
             ),
-            OpenApiParameter(
-                name="ordering",
-                description="Which field to use when ordering the results.",
-                type=OpenApiTypes.STR,
-                many=True,
-                explode=False,
-                enum=(
-                    field
-                    for pair in zip(
-                        ordering, (f"-{field}" for field in ordering)
-                    )
-                    for field in pair
-                ),
-                default="id",
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page",
-                description="The page number of the results to fetch.",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=1,
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page_size",
-                description="The number of results to return per page (max 100)..",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=api_settings.PAGE_SIZE,
-                exclude=True,
-            ),
         ),
     )
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
     def get_object(self):
-        workshop_id = self.kwargs.get("workshop_id")
+        workshop_id = self.kwargs[self.lookup_url_kwarg]
         return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
 
     def get_queryset(self):
@@ -178,7 +117,7 @@ class WorkshopContactListView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs.get("workshop_id")
+        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
         return context
 
     def _get_versioned_serializer_class(self, version):

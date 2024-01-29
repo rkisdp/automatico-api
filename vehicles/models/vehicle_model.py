@@ -4,6 +4,7 @@ from os import path
 from uuid import uuid4
 
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -42,6 +43,10 @@ class VehicleModel(models.Model):
         help_text=_("Year"),
         null=True,
         blank=True,
+        validators=[
+            MinValueValidator(1900),
+            MaxValueValidator(2100),
+        ],
     )
     nickname = models.CharField(
         verbose_name=_("nickname"),
