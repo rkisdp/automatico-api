@@ -1,5 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
+from rest_framework.fields import empty
 
 from services.models import ServiceModel, ServiceStatusModel
 from users.serializers.v0_9 import UserListSerializer
@@ -11,12 +12,6 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
     vehicle = VehicleSerializer(
         read_only=True,
         help_text=_("Vehicle data."),
-    )
-    vehicle_id = serializers.PrimaryKeyRelatedField(
-        queryset=VehicleModel.objects.all(),
-        write_only=True,
-        source="vehicle",
-        help_text=_("The vehicle ID."),
     )
     requested_by = UserListSerializer(
         read_only=True,
@@ -34,7 +29,6 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "vehicle",
-            "vehicle_id",
             "requested_by",
             "request_description",
             "response_description",
@@ -48,6 +42,26 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
         )
+
+    def __init__(self, instance=None, data=empty, **kwargs):
+        super().__init__(instance, data, **kwargs)
+
+        if self.context and self.context["request"].method != "GET":
+            self.fields["vehicle"] = serializers.CharField(write_only=True)
+
+    def run_validation(self, data=empty):
+        validated_data = super().run_validation(data)
+        self.fields["vehicle"] = VehicleSerializer()
+        return validated_data
+
+    def validate_vehicle(self, value):
+        try:
+            user = self.context["request"].user
+            return user.vehicles.get(nickname__iexact=value)
+        except VehicleModel.DoesNotExist:
+            raise serializers.ValidationError(
+                _(f"Vehicle '{value}' does not exist.")
+            )
 
     def create(self, validated_data):
         workshop_id = self.context["workshop_id"]
