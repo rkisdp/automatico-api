@@ -1,5 +1,6 @@
 from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
+
 from vehicles.models import VehicleBrandModel
 
 
@@ -10,13 +11,8 @@ class VehicleBrandSerializer(serializers.ModelSerializer):
         source="image",
         use_url=True,
     )
-    url = serializers.HyperlinkedIdentityField(
-        view_name="vehicles:brand-detail",
-        lookup_field="id",
-        lookup_url_kwarg="brand_id",
-    )
 
     class Meta:
         model = VehicleBrandModel
-        fields = ("id", "name", "image_url", "url")
+        fields = ("id", "name", "image_url")
         read_only_fields = ("id",)

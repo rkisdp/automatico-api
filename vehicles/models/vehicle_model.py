@@ -43,10 +43,10 @@ class VehicleModel(models.Model):
         help_text=_("Year"),
         null=True,
         blank=True,
-        validators=[
+        validators=(
             MinValueValidator(1900),
             MaxValueValidator(2100),
-        ],
+        ),
     )
     nickname = models.CharField(
         verbose_name=_("nickname"),
@@ -87,6 +87,11 @@ class VehicleModel(models.Model):
     class Meta:
         verbose_name = _("vehicle")
         verbose_name_plural = _("vehicles")
+        unique_together = (
+            ("nickname", "owner"),
+            ("vin", "owner"),
+            ("plate", "owner"),
+        )
         db_table = "vehicle"
 
     def __str__(self) -> str:

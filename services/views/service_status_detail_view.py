@@ -4,10 +4,10 @@ from rest_framework import mixins
 from core.generics import GenericAPIView
 from services.models import ServiceStatusModel
 
-SCHEMA_TAGS = ("services",)
+SCHEMA_TAGS = ("services", "deprecated")
 
 
-@extend_schema(tags=SCHEMA_TAGS)
+@extend_schema(tags=SCHEMA_TAGS, deprecated=True)
 class ServiceStatusDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
