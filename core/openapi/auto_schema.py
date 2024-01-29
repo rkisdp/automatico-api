@@ -111,3 +111,6 @@ class AutoSchema(BaseAutoSchema):
         if self.view.request.method == "POST":
             return True
         return super()._is_create_operation()
+
+    def _get_paginator(self):
+        return None
