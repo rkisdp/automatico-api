@@ -56,7 +56,7 @@ class UserListView(
             ),
             OpenApiParameter(
                 name="page_size",
-                description="The number of results to return per page (max 100)..",
+                description="The number of results to return per page (max 100).",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
                 default=api_settings.PAGE_SIZE,

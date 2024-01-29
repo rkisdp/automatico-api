@@ -5,29 +5,24 @@ from security.email import send_verification_code
 
 
 class PrivateUserSerializer(serializers.ModelSerializer):
-    services = serializers.IntegerField(
+    services_count = serializers.IntegerField(
         read_only=True,
         source="services.count",
         default=0,
     )
-    vehicles = serializers.IntegerField(
+    vehicles_count = serializers.IntegerField(
         read_only=True,
         source="vehicles.count",
         default=0,
     )
-    workshops = serializers.IntegerField(
+    workshops_count = serializers.IntegerField(
         read_only=True,
         source="workshops.count",
         default=0,
     )
-    workshops_url = serializers.HyperlinkedIdentityField(
-        view_name="users:workshops",
-        lookup_field="id",
-        lookup_url_kwarg="user_id",
-    )
-    photo_url = serializers.ImageField(
+    image_url = serializers.ImageField(
         read_only=True,
-        source="photo",
+        source="image",
         use_url=True,
     )
     url = serializers.HyperlinkedIdentityField(
@@ -46,11 +41,10 @@ class PrivateUserSerializer(serializers.ModelSerializer):
             "email_verified",
             "phone_number",
             "phone_number_verified",
-            "services",
-            "vehicles",
-            "workshops",
-            "workshops_url",
-            "photo_url",
+            "services_count",
+            "vehicles_count",
+            "workshops_count",
+            "image_url",
             "url",
             "date_joined",
             "last_login",

@@ -108,7 +108,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name"]
+    REQUIRED_FIELDS = ("first_name", "last_name")
 
     class Meta:
         verbose_name = _("user")
@@ -120,7 +120,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     def clean(self):
         super().clean()
-        self.email = self.__class__.objects.normalize_email(self.email)
+        self.email = self.objects.normalize_email(self.email)
 
     @property
     def full_name(self) -> str:

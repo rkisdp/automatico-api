@@ -1,20 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from core.fields.v0_9 import HyperLinkSelfField
-
 
 class UserDetailSerializer(serializers.ModelSerializer):
-    workshops = serializers.IntegerField(
-        read_only=True,
-        source="workshops.count",
-        default=0,
-    )
-    workshops_url = HyperLinkSelfField(
-        view_name="users:workshops",
-        lookup_field="id",
-        lookup_url_kwarg="user_id",
-    )
     photo_url = serializers.ImageField(
         read_only=True,
         source="photo",
@@ -35,8 +23,6 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "full_name",
             "email",
             "phone_number",
-            "workshops",
-            "workshops_url",
             "photo_url",
             "url",
         )

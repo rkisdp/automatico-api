@@ -1,10 +1,9 @@
+from core.generics import GenericAPIView
 from drf_spectacular.utils import extend_schema
 from rest_framework import mixins, status
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-from core.generics import GenericAPIView
 
 SCHEMA_TAGS = ("users",)
 
@@ -48,4 +47,4 @@ class UserPhotoView(
         return super().perform_update(serializer)
 
     def perform_destroy(self, instance):
-        instance.photo.delete()
+        instance.image.delete()
