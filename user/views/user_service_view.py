@@ -16,7 +16,7 @@ class UserServiceView(
     queryset = ServiceModel.objects.none()
     permission_classes = (IsAuthenticated,)
     ordering = ("id",)
-    ordering_fields = ("id", "start_date", "end_date")
+    ordering_fields = ("id", "created_at", "closed_at")
     filterset_fields = ("histories__status__name",)
 
     @extend_schema(

@@ -8,7 +8,7 @@ from vehicles.models import VehicleModel
 from vehicles.serializers.v0_9 import VehicleSerializer
 
 
-class WorkshopServiceListSerializer(serializers.ModelSerializer):
+class PrivateServiceSerializer(serializers.ModelSerializer):
     vehicle = VehicleSerializer(
         read_only=True,
         help_text=_("Vehicle data."),
@@ -28,9 +28,11 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         model = ServiceModel
         fields = (
             "id",
+            "number",
+            "title",
+            "description",
             "vehicle",
             "requested_by",
-            "description",
             "created_at",
             "closed_at",
             "url",

@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -53,8 +54,12 @@ class ReviewModel(models.Model):
         max_digits=2,
         decimal_places=1,
         default=4.5,
+        validators=(
+            MinValueValidator(0.0),
+            MaxValueValidator(5.0),
+        ),
     )
-    reviewed_at = models.DateTimeField(
+    created_at = models.DateTimeField(
         verbose_name=_("responded at"),
         help_text=_("Responded at"),
         auto_now_add=True,

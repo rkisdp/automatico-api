@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.fields import empty
+
 from services.models import (
     ServiceHistoryModel,
     ServiceModel,
@@ -60,7 +61,7 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
         if (
             status
             and service.current_status_id in [4, 5, 7]
-            and service.end_date
+            and service.closed_at
         ):
             raise serializers.ValidationError(
                 {
@@ -102,15 +103,11 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
         history = ServiceHistoryModel.objects.create(**validated_data)
         service = history.service
         if history.status.id in [4, 5, 7]:
-            service.end_date = timezone.now()
+            service.closed_at = timezone.now()
             service.save()
 
         if history.status.id in [5, 7]:
             history.responsable = self.context["request"].user
             history.save()
-
-        if not service.response_description:
-            service.response_description = history.comment
-            service.save()
 
         return history

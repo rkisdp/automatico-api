@@ -28,27 +28,32 @@ class ServiceModel(models.Model):
         on_delete=models.PROTECT,
         related_name="services",
     )
-    request_description = models.TextField(
+    number = models.IntegerField(
+        verbose_name=_("workshop service number"),
+        help_text=_("Workshop service number"),
+        editable=False,
+        null=True,
+    )
+    title = models.CharField(
+        verbose_name=_("title"),
+        help_text=_("Service title"),
+        max_length=100,
+        null=True,
+    )
+    description = models.TextField(
         verbose_name=_("request description"),
         help_text=_("Request description"),
         max_length=255,
         null=True,
         blank=True,
     )
-    response_description = models.TextField(
-        verbose_name=_("response description"),
-        help_text=_("Response description"),
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    start_date = models.DateTimeField(
+    created_at = models.DateTimeField(
         verbose_name=_("start date"),
         help_text=_("Start date"),
         auto_now_add=True,
         editable=False,
     )
-    end_date = models.DateTimeField(
+    closed_at = models.DateTimeField(
         verbose_name=_("end date"),
         help_text=_("End date"),
         null=True,
@@ -59,10 +64,16 @@ class ServiceModel(models.Model):
     class Meta:
         verbose_name = _("service")
         verbose_name_plural = _("services")
+        unique_together = ("workshop", "number")
         db_table = "service"
 
     def __str__(self) -> str:
         return f"{self.vehicle} - {self.workshop}"
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.number = self.workshop.services.count() + 1
+        super().save(*args, **kwargs)
 
     @property
     def current_status(self) -> str | None:

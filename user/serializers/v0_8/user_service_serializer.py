@@ -45,11 +45,10 @@ class UserServiceSerializer(serializers.ModelSerializer):
             "vehicle_id",
             "workshop",
             "workshop_id",
-            "request_description",
-            "response_description",
+            "description",
             "current_status",
-            "start_date",
-            "end_date",
+            "created_at",
+            "closed_at",
             "url",
         )
-        read_only_fields = ("id", "start_date", "end_date")
+        read_only_fields = ("id", "created_at", "closed_at")

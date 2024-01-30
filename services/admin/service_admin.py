@@ -13,13 +13,12 @@ class ServiceAdmin(ModelAdmin):
     list_display = (
         "vehicle",
         "workshop",
-        "request_description",
-        "response_description",
+        "description",
     )
     search_fields = ("vehicle__plate", "workshop__name")
-    readonly_fields = ("start_date", "end_date")
+    readonly_fields = ("created_at", "closed_at")
 
-    date_hierarchy = "start_date"
+    date_hierarchy = "created_at"
 
     fieldsets = (
         (
@@ -29,8 +28,7 @@ class ServiceAdmin(ModelAdmin):
                 "fields": (
                     "vehicle",
                     "workshop",
-                    "request_description",
-                    "response_description",
+                    "description",
                 ),
             },
         ),
@@ -38,7 +36,7 @@ class ServiceAdmin(ModelAdmin):
             "Service dates",
             {
                 "classes": ("extrapretty",),
-                "fields": ("start_date", "end_date"),
+                "fields": ("created_at", "closed_at"),
             },
         ),
     )
@@ -51,8 +49,7 @@ class ServiceAdmin(ModelAdmin):
                 "fields": (
                     "vehicle",
                     "workshop",
-                    "request_description",
-                    "response_description",
+                    "description",
                 ),
             },
         ),
@@ -70,7 +67,6 @@ class ServiceAdmin(ModelAdmin):
             return self.readonly_fields + (
                 "vehicle",
                 "workshop",
-                "request_description",
-                "response_description",
+                "description",
             )
         return self.readonly_fields

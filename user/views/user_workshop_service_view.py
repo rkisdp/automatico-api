@@ -16,7 +16,7 @@ class UserWorkshopServiceView(
     permission_classes = (IsAuthenticated,)
     queryset = ServiceModel.objects.none()
     ordering = ("id",)
-    ordering_fields = ("id", "start_date", "end_date")
+    ordering_fields = ("id", "created_at", "closed_at")
 
     @extend_schema(
         operation_id="list-the-workshops-services-for-the-authenticated-user",

@@ -102,17 +102,6 @@ class WorkshopServiceView(
         context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
         return context
 
-    def get_serializer_class(self):
-        version = self._get_version()
-        return self._get_versioned_serializer_class(version)
-
-    def _get_version(self):
-        try:
-            version = self.request.version
-        except Exception:
-            version, _ = self.determine_version(self.request)
-        return version
-
     def _get_versioned_serializer_class(self, version):
-        module = self._get_serializer_module(version)
-        return getattr(module, "WorkshopServiceListSerializer")
+        module = self._get_serializer_module(version, "services")
+        return getattr(module, "PrivateServiceSerializer")

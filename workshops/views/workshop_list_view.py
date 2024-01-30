@@ -93,8 +93,8 @@ class WorkshopListView(
         return super().list(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="create-a-workshop-for-the-authenticated-user",
-        summary="Create a workshop for the authenticated user",
+        operation_id="create-a-workshop",
+        summary="Create a workshop",
         description="Creates a new workshop for the authenticated user.",
         deprecated=True,
         tags=(*SCHEMA_TAGS, "deprecated"),
