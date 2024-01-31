@@ -16,9 +16,9 @@ urlpatterns = (
         name="password",
     ),
     re_path(
-        r"^/photo/?$",
+        r"^/image/?$",
         views.UserPhotoView().as_view(),
-        name="photo",
+        name="image",
     ),
     re_path(
         r"^/services/?$",

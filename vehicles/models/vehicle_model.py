@@ -15,7 +15,7 @@ def rename(instance: VehicleModel, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
-    return path.join("vehicles", "photos", filename)
+    return path.join("vehicles", "images", filename)
 
 
 class VehicleModel(models.Model):

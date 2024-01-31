@@ -17,7 +17,7 @@ def rename(instance: WorkshopModel, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
-    return path.join("workshops", "photos", filename)
+    return path.join("workshops", "images", filename)
 
 
 class WorkshopModel(models.Model):
@@ -43,9 +43,9 @@ class WorkshopModel(models.Model):
         max_length=100,
         unique=True,
     )
-    photo = models.ImageField(
-        verbose_name=_("photo"),
-        help_text=_("The workshop photo."),
+    image = models.ImageField(
+        verbose_name=_("image"),
+        help_text=_("The workshop image."),
         upload_to=rename,
         null=True,
         blank=True,

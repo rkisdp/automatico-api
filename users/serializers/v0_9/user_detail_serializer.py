@@ -3,9 +3,9 @@ from rest_framework import serializers
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
-    photo_url = serializers.ImageField(
+    image_url = serializers.ImageField(
         read_only=True,
-        source="photo",
+        source="image",
         use_url=True,
     )
     url = serializers.HyperlinkedIdentityField(
@@ -23,7 +23,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "full_name",
             "email",
             "phone_number",
-            "photo_url",
+            "image_url",
             "url",
         )
 

@@ -13,7 +13,7 @@ def rename(instance: ReviewImageModel, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
-    return path.join("workshops", "reviews", "photos", filename)
+    return path.join("workshops", "reviews", "images", filename)
 
 
 class ReviewImageModel(models.Model):

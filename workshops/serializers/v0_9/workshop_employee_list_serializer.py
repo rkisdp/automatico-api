@@ -17,10 +17,10 @@ class WorkshopEmployeeListSerializer(serializers.ModelSerializer):
         validators=[email_exists],
         help_text=_("User email."),
     )
-    photo = serializers.ImageField(
+    image = serializers.ImageField(
         read_only=True,
         use_url=True,
-        help_text=_("URL to the user's photo."),
+        help_text=_("URL to the user's image."),
     )
     url = HyperLinkSelfField(
         view_name="users:detail",
@@ -36,13 +36,13 @@ class WorkshopEmployeeListSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
-            "photo",
+            "image",
             "phone_number",
             "url",
         )
         read_only_fields = (
             "first_name",
             "last_name",
-            "photo",
+            "image",
             "phone_number",
         )

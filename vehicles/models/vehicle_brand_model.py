@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 def rename(instance: VehicleBrandModel, filename: str) -> str:
     ext = filename.split(".")[-1]
     filename = f"{uuid4()}.{ext}"
-    return path.join("vehicles", "brands", "photos", filename)
+    return path.join("vehicles", "brands", "images", filename)
 
 
 class VehicleBrandModel(models.Model):

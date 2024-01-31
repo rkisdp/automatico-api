@@ -46,13 +46,13 @@ class UserWorkshopSerializer(serializers.ModelSerializer):
             "id",
             "owner",
             "name",
-            "photo",
+            "image",
             "employees",
             "brands",
             "specialities",
             "vehicles",
         )
-        read_only_fields = ("id", "photo")
+        read_only_fields = ("id", "image")
 
     def create(self, validated_data):
         validated_data["owner"] = self.context["request"].user

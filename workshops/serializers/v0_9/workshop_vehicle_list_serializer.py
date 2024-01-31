@@ -12,7 +12,7 @@ class WorkshopVehicleListSerializer(serializers.ModelSerializer):
         lookup_field="id",
         lookup_url_kwarg="brand_id",
     )
-    photo = serializers.ImageField(read_only=True, use_url=True)
+    image = serializers.ImageField(read_only=True, use_url=True)
     url = HyperLinkSelfField(
         view_name="vehicles:detail",
         lookup_field="id",
@@ -29,7 +29,7 @@ class WorkshopVehicleListSerializer(serializers.ModelSerializer):
             "nickname",
             "plate",
             "vin",
-            "photo",
+            "image",
             "url",
         )
         read_only_fields = (

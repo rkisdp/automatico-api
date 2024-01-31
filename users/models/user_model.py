@@ -16,7 +16,7 @@ def rename(instance: UserModel, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
-    return path.join("users", "photos", filename)
+    return path.join("users", "images", filename)
 
 
 class UserModel(AbstractBaseUser, PermissionsMixin):

@@ -23,13 +23,13 @@ class ReviewPhotoViewSet(
     ordering_fields = ("review",)
 
     @extend_schema(
-        description="Use `/reviews/{review_id}/photo/` instead.",
+        description="Use `/reviews/{review_id}/image/` instead.",
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
     @extend_schema(
-        description="Use `/reviews/{review_id}/photo/` instead.",
+        description="Use `/reviews/{review_id}/image/` instead.",
     )
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)

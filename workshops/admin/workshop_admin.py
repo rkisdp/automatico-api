@@ -52,7 +52,7 @@ class WorkshopAdmin(ModelAdmin):
             "Other information",
             {
                 "classes": ("extrapretty",),
-                "fields": ("photo",),
+                "fields": ("image",),
             },
         ),
     )

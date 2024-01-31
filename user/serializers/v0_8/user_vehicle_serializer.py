@@ -15,7 +15,7 @@ class UserVehicleSerializer(serializers.ModelSerializer):
         source="brand",
         queryset=VehicleBrandModel.objects.all(),
     )
-    photo = serializers.ImageField(read_only=True, use_url=True)
+    image = serializers.ImageField(read_only=True, use_url=True)
     url = serializers.HyperlinkedIdentityField(
         view_name="vehicles:detail",
         lookup_field="id",
@@ -31,7 +31,7 @@ class UserVehicleSerializer(serializers.ModelSerializer):
             "year",
             "nickname",
             "vin",
-            "photo",
+            "image",
             "url",
         )
         read_only_fields = ("id",)

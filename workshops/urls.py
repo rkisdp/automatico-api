@@ -61,9 +61,9 @@ urlpatterns = (
         name="review-responses",
     ),
     re_path(
-        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_id>\d+)/photos/?$",
+        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_id>\d+)/images/?$",
         views.ReviewPhotoView.as_view(),
-        name="review-photos",
+        name="review-images",
     ),
     re_path(
         r"^/specialities/?$",

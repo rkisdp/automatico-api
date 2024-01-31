@@ -12,9 +12,9 @@ urlpatterns = (
         name="detail",
     ),
     re_path(
-        r"^/(?P<vehicle_id>\d+)/photo/?$",
+        r"^/(?P<vehicle_id>\d+)/image/?$",
         views.VehiclePhotoView.as_view(),
-        name="photo",
+        name="image",
     ),
     re_path(
         r"^/brands/?$",

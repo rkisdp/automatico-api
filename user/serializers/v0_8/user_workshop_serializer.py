@@ -40,7 +40,7 @@ class UserWorkshopSerializer(serializers.ModelSerializer):
         lookup_field="id",
         view_name="vehicles:detail",
     )
-    photo = serializers.ImageField(read_only=True, use_url=True)
+    image = serializers.ImageField(read_only=True, use_url=True)
     url = HyperLinkSelfField(
         view_name="workshops:detail",
         lookup_field="id",
@@ -52,7 +52,7 @@ class UserWorkshopSerializer(serializers.ModelSerializer):
             "id",
             "owner",
             "name",
-            "photo",
+            "image",
             "employees",
             "brands",
             "specialities",

@@ -6,7 +6,7 @@ from users.models import UserModel
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    photo = serializers.ImageField(use_url=True, read_only=True)
+    image = serializers.ImageField(use_url=True, read_only=True)
     url = serializers.HyperlinkedIdentityField(
         view_name="users:users-detail",
         lookup_field="id",
@@ -20,7 +20,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "email_verified",
-            "photo",
+            "image",
             "phone_number",
             "phone_number_verified",
             "url",

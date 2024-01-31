@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 
 class UserPhotoSerializer(serializers.ModelSerializer):
-    photo = serializers.ImageField(
+    image = serializers.ImageField(
         allow_empty_file=False,
         allow_null=False,
         required=True,
@@ -12,4 +12,4 @@ class UserPhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ("photo",)
+        fields = ("image",)

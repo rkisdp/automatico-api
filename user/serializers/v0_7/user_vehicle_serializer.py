@@ -21,9 +21,9 @@ class UserVehicleSerializer(serializers.ModelSerializer):
             "year",
             "nickname",
             "vin",
-            "photo",
+            "image",
         )
-        read_only_fields = ("id", "photo")
+        read_only_fields = ("id", "image")
 
     def create(self, validated_data):
         validated_data["owner"] = self.context["request"].user

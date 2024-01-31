@@ -14,7 +14,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "email_verified",
-            "photo",
+            "image",
             "phone_number",
             "phone_number_verified",
             "is_active",
@@ -25,7 +25,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "id",
             "email_verified",
-            "photo",
+            "image",
             "phone_number_verified",
             "is_active",
             "is_staff",
