@@ -28,7 +28,7 @@ class ServiceModel(models.Model):
         on_delete=models.PROTECT,
         related_name="services",
     )
-    number = models.IntegerField(
+    number = models.PositiveIntegerField(
         verbose_name=_("workshop service number"),
         help_text=_("Workshop service number"),
         editable=False,

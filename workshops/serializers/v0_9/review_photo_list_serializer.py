@@ -3,27 +3,11 @@ from rest_framework import serializers
 
 from workshops.models import ReviewImageModel
 
+from .review_photo_serializer import ReviewPhotoSerializer
 
-class ReviewPhotoSerializer(serializers.ModelSerializer):
-    images = serializers.ListField(
-        write_only=True,
-        child=serializers.ImageField(
-            allow_empty_file=False,
-            allow_null=False,
-            required=False,
-        ),
-    )
-    image_urls = serializers.ListField(
-        read_only=True,
-        child=serializers.ImageField(use_url=True),
-    )
 
-    class Meta:
-        model = ReviewImageModel
-        fields = (
-            "images",
-            "image_urls",
-        )
+class ReviewPhotoListSerializer(serializers.ListSerializer):
+    child = ReviewPhotoSerializer()
 
     def validate_images(self, value):
         if len(value) > 5:
@@ -34,12 +18,12 @@ class ReviewPhotoSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        images = []
+        images = {"images_url": []}
         review_id = self.context["review_id"]
         for image in validated_data["images"]:
             image = ReviewImageModel.objects.create(
                 review_id=review_id,
                 image=image,
             )
-            images.append(image.image)
-        return {"image_urls": images}
+            images["images_url"].append(image.image.url)
+        return images

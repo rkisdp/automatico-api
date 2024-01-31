@@ -62,7 +62,7 @@ urlpatterns = (
     ),
     re_path(
         r"^/(?P<workshop_id>\d+)/reviews/(?P<review_id>\d+)/photos/?$",
-        views.ReviewResponseView.as_view(),
+        views.ReviewPhotoView.as_view(),
         name="review-photos",
     ),
     re_path(

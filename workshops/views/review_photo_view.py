@@ -1,52 +1,43 @@
-from importlib import import_module
-
 from drf_spectacular.utils import extend_schema
 from rest_framework import mixins
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.parsers import FormParser, MultiPartParser
 
-from workshops.models import ReviewPhotoModel
+from core.generics import GenericAPIView
+from core.mixins import MultipleFieldLookupMixin
+from workshops.models import ReviewModel
 
 SCHEMA_TAGS = ("reviews",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
 class ReviewPhotoView(
+    MultipleFieldLookupMixin,
     mixins.DestroyModelMixin,
     mixins.CreateModelMixin,
-    GenericViewSet,
+    GenericAPIView,
 ):
-    queryset = ReviewPhotoModel.objects.all()
-    lookup_field = "id"
+    queryset = ReviewModel.objects.all()
+    parser_classes = (MultiPartParser, FormParser)
+    lookup_fields = ("workshop_id", "id")
+    lookup_url_kwargs = ("workshop_id", "review_id")
     ordering = ("id",)
     filterset_fields = ("review",)
     search_fields = ("review",)
     ordering_fields = ("review",)
 
-    @extend_schema(
-        description="Use `/reviews/{review_id}/photo/` instead.",
-    )
-    def create(self, request, *args, **kwargs):
+    @extend_schema()
+    def post(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
-    @extend_schema(
-        description="Use `/reviews/{review_id}/photo/` instead.",
-    )
-    def destroy(self, request, *args, **kwargs):
+    @extend_schema()
+    def delete(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
 
-    def get_serializer_class(self):
-        version = self._get_version()
-        return self._get_versioned_serializer_class(version)
-
-    def _get_version(self):
-        try:
-            version = self.request.version
-        except Exception:
-            version, _ = self.determine_version(self.request)
-        return version
-
     def _get_versioned_serializer_class(self, version):
-        module = import_module(
-            f"workshops.serializers.{version.replace('.', '_')}"
-        )
+        module = self._get_serializer_module(version)
         return getattr(module, "ReviewPhotoSerializer")
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["review_id"] = self.kwargs[self.lookup_url_kwargs[1]]
+        return context

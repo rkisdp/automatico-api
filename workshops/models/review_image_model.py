@@ -9,14 +9,14 @@ from django.utils.translation import gettext_lazy as _
 from .review_model import ReviewModel
 
 
-def rename(instance: ReviewPhotoModel, filename: str) -> str:
+def rename(instance: ReviewImageModel, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
-    return path.join("workshops", "photos", filename)
+    return path.join("workshops", "reviews", "photos", filename)
 
 
-class ReviewPhotoModel(models.Model):
+class ReviewImageModel(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Vehicle brand id"),
@@ -29,18 +29,18 @@ class ReviewPhotoModel(models.Model):
         help_text=_("Review"),
         to=ReviewModel,
         on_delete=models.PROTECT,
-        related_name="reviews",
+        related_name="images",
     )
-    photo = models.ImageField(
-        verbose_name=_("photo"),
-        help_text=_("Photo"),
+    image = models.ImageField(
+        verbose_name=_("image"),
+        help_text=_("Image"),
         upload_to=rename,
     )
 
     class Meta:
-        verbose_name = _("review photo")
-        verbose_name_plural = _("review photos")
-        db_table = "review_photo"
+        verbose_name = _("review image")
+        verbose_name_plural = _("review images")
+        db_table = "review_image"
 
     def __str__(self) -> str:
-        return f"{self.review} - {self.photo}"
+        return f"{self.review} - {self.image}"

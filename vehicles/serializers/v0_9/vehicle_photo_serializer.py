@@ -4,14 +4,22 @@ from vehicles.models import VehicleModel
 
 
 class VehiclePhotoSerializer(serializers.ModelSerializer):
-    image_url = serializers.ImageField(
+    image = serializers.ImageField(
+        write_only=True,
         allow_empty_file=False,
         allow_null=False,
         required=True,
+        use_url=True,
+    )
+    image_url = serializers.ImageField(
+        read_only=True,
         source="image",
         use_url=True,
     )
 
     class Meta:
         model = VehicleModel
-        fields = ("image_url",)
+        fields = (
+            "image",
+            "image_url",
+        )

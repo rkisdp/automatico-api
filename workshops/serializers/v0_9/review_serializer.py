@@ -1,4 +1,4 @@
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.fields import empty
 
@@ -12,6 +12,7 @@ from workshops.models import ReviewModel
 class ReviewSerializer(serializers.ModelSerializer):
     service = ServiceSerializer(read_only=True)
     client = UserListSerializer(read_only=True)
+    image_urls = serializers.SerializerMethodField()
     workshop_url = serializers.HyperlinkedRelatedField(
         view_name="workshops:detail",
         lookup_field="id",
@@ -28,21 +29,36 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = ReviewModel
         fields = (
             "id",
+            "number",
+            "message",
+            "score",
             "service",
             "client",
-            "review",
-            "score",
             "created_at",
+            "image_urls",
             "workshop_url",
             "url",
         )
-        read_only_fields = ("id", "created_at")
+        read_only_fields = ("id", "number", "created_at")
 
     def __init__(self, instance=None, data=empty, **kwargs):
         super().__init__(instance, data, **kwargs)
 
         if self.context and self.context["request"].method != "GET":
-            self.fields["service"] = serializers.IntegerField(write_only=True)
+            self.fields["service"] = serializers.IntegerField(
+                write_only=True,
+                required=False,
+            )
+
+    def get_image_urls(
+        self, obj
+    ) -> serializers.ListField(child=serializers.URLField()):
+        request = self.context.get("request", None)
+        images = []
+        for image in obj.images.all():
+            if image.image is not None:
+                images.append(request.build_absolute_uri(image.image.url))
+        return images
 
     def run_validation(self, data=empty):
         validated_data = super().run_validation(data)
@@ -63,6 +79,5 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data["workshop_id"] = self.context["workshop_id"]
-        # validated_data["service_id"] = self.context["service_id"]
         validated_data["client"] = self.context["request"].user
         return super().create(validated_data)

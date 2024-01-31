@@ -43,8 +43,14 @@ class ReviewModel(models.Model):
         null=True,
         blank=True,
     )
-    review = models.TextField(
-        verbose_name=_("review"),
+    number = models.PositiveIntegerField(
+        verbose_name=_("number"),
+        help_text=_("Number"),
+        editable=False,
+        null=True,
+    )
+    message = models.TextField(
+        verbose_name=_("message"),
         help_text=_("Review message"),
         max_length=255,
     )
@@ -67,9 +73,14 @@ class ReviewModel(models.Model):
     )
 
     class Meta:
-        verbose_name = _("review")
+        verbose_name = _("message")
         verbose_name_plural = _("reviews")
-        db_table = "review"
+        db_table = "message"
 
     def __str__(self) -> str:
         return f"{self.client} - {self.workshop}"
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.number = self.workshop.reviews.count() + 1
+        super().save(*args, **kwargs)
