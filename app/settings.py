@@ -70,7 +70,7 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("core.renderers.AutoMaticoJSONRenderer",),
     "DEFAULT_VERSIONING_CLASS": "core.versioning.XAutoMaticoAPIVersioning",
     "DEFAULT_VERSION": "v0.9",
-    "ALLOWED_VERSIONS": ("v0.9", "v0.8"),
+    "ALLOWED_VERSIONS": ("v0.9",),
     "VERSION_PARAM": "version",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -87,6 +87,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 25,
     "COERCE_DECIMAL_TO_STRING": False,
     "URL_FIELD_NAME": "url",
+    "UPLOADED_FILES_USE_URL": True,
 }
 
 SIMPLE_JWT = {
@@ -308,3 +309,4 @@ AUTH_USER_MODEL = "users.UserModel"
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 APPEND_SLASH = False
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 50000
