@@ -50,13 +50,6 @@ class WorkshopModel(models.Model):
         null=True,
         blank=True,
     )
-    image = models.ImageField(
-        verbose_name=_("image"),
-        help_text=_("The workshop image."),
-        upload_to=rename,
-        null=True,
-        blank=True,
-    )
     employees = models.ManyToManyField(
         verbose_name=_("employees"),
         help_text=_("The workshop employees"),
