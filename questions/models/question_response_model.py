@@ -39,12 +39,12 @@ class QuestionResponseModel(models.Model):
         on_delete=models.PROTECT,
         related_name="responses",
     )
-    response = models.TextField(
+    body = models.TextField(
         verbose_name=_("response"),
         help_text=_("Questioned at"),
         max_length=255,
     )
-    responded_at = models.DateTimeField(
+    created_at = models.DateTimeField(
         verbose_name=_("responded at"),
         help_text=_("Responded at"),
         auto_now_add=True,

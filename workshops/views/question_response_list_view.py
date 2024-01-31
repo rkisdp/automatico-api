@@ -1,8 +1,7 @@
-from importlib import import_module
-
 from drf_spectacular.utils import extend_schema
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
 
+from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
 from questions.models import QuestionResponseModel
 
@@ -10,7 +9,12 @@ SCHEMA_TAGS = ("questions",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
-class QuestionResponseViewSet(MultipleFieldLookupMixin, ModelViewSet):
+class QuestionResponseListView(
+    MultipleFieldLookupMixin,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    GenericAPIView,
+):
     queryset = QuestionResponseModel.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "question_id"
@@ -25,22 +29,16 @@ class QuestionResponseViewSet(MultipleFieldLookupMixin, ModelViewSet):
         operation_id="List question responses",
         description="List question responses",
     )
-    def list(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    def get_serializer_class(self):
-        version = self._get_version()
-        return self._get_versioned_serializer_class(version)
-
-    def _get_version(self):
-        try:
-            version = self.request.version
-        except Exception:
-            version, _ = self.determine_version(self.request)
-        return version
+    @extend_schema(
+        operation_id="Create question response",
+        description="Create question response",
+    )
+    def post(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
     def _get_versioned_serializer_class(self, version):
-        module = import_module(
-            f"questions.serializers.{version.replace('.', '_')}"
-        )
+        module = self._get_versioned_module(version, "questions")
         return getattr(module, "QuestionResponseSerializer")

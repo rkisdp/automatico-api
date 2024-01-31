@@ -23,7 +23,6 @@ urlpatterns = (
     path("admin/", admin.site.urls, name="admin"),
     path("auth", include("security.urls"), name="auth"),
     path("documentation", include("documentation.urls"), name="documentation"),
-    path("questions", include("questions.urls"), name="questions"),
     path("services", include("services.urls"), name="services"),
     path("user", include("user.urls"), name="user"),
     path("users", include("users.urls"), name="users"),

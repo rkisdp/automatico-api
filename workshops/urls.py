@@ -51,9 +51,19 @@ urlpatterns = (
         name="contact-detail",
     ),
     re_path(
+        r"^/(?P<workshop_id>\d+)/questions/?$",
+        views.QuestionListView.as_view(),
+        name="questions",
+    ),
+    re_path(
         r"^/(?P<workshop_id>\d+)/reviews/?$",
         views.ReviewListView.as_view(),
         name="reviews",
+    ),
+    re_path(
+        r"^/(?P<workshop_id>\d+)/questions/(?P<question_id>\d+)/responses/?$",
+        views.QuestionResponseListView.as_view(),
+        name="question-responses",
     ),
     re_path(
         r"^/(?P<workshop_id>\d+)/reviews/(?P<review_id>\d+)/responses/?$",

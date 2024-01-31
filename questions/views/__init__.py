@@ -1,2 +1,0 @@
-from .question_response_viewset import QuestionResponseViewSet
-from .question_viewset import QuestionViewSet

@@ -8,10 +8,21 @@ from workshops.models import WorkshopModel
 class QuestionModel(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
-        help_text=_("Question id"),
+        help_text=_("The unique identifier of the question."),
         primary_key=True,
         unique=True,
         editable=False,
+    )
+    number = models.PositiveIntegerField(
+        verbose_name=_("number"),
+        help_text=_("Question number"),
+        editable=False,
+        null=True,
+    )
+    body = models.CharField(
+        verbose_name=_("question"),
+        help_text=_("Question asked by the client"),
+        max_length=50,
     )
     client = models.ForeignKey(
         verbose_name=_("client"),
@@ -27,14 +38,9 @@ class QuestionModel(models.Model):
         on_delete=models.PROTECT,
         related_name="questions",
     )
-    question = models.CharField(
-        verbose_name=_("question"),
-        help_text=_("Question asked by the client"),
-        max_length=50,
-    )
-    questioned_at = models.DateTimeField(
-        verbose_name=_("questioned at"),
-        help_text=_("Questioned at"),
+    created_at = models.DateTimeField(
+        verbose_name=_("created at"),
+        help_text=_("Created at"),
         auto_now_add=True,
         editable=False,
     )
@@ -46,3 +52,8 @@ class QuestionModel(models.Model):
 
     def __str__(self) -> str:
         return f"{self.client} - {self.workshop}"
+
+    def save(self, *args, **kwargs):
+        if not self.number:
+            self.number = self.workshop.questions.count() + 1
+        super().save(*args, **kwargs)

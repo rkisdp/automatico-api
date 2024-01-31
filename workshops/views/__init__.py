@@ -1,5 +1,5 @@
-from .question_response_viewset import QuestionResponseViewSet
-from .question_viewset import QuestionViewSet
+from .question_list_view import QuestionListView
+from .question_response_list_view import QuestionResponseListView
 from .review_list_view import ReviewListView
 from .review_photo_view import ReviewPhotoView
 from .review_photo_viewset import ReviewPhotoViewSet

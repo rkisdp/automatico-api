@@ -1,34 +1,18 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from core.fields.v0_8 import HyperLinkSelfField
-from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
 from questions.models import QuestionModel
-from workshops.models import WorkshopModel
+from users.serializers.v0_9 import UserListSerializer
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    client = StringRelatedHyperLinkSerializer(
-        read_only=True,
-        view_name="users:users-detail",
-        lookup_field="id",
-        lookup_url_kwarg="user_id",
-    )
-    client_id = serializers.PrimaryKeyRelatedField(
-        source="client",
-        queryset=get_user_model().objects.all(),
-        write_only=True,
-    )
-    workshop = StringRelatedHyperLinkSerializer(
+    client = UserListSerializer(read_only=True)
+    workshop_url = serializers.HyperlinkedRelatedField(
         read_only=True,
         view_name="workshops:detail",
         lookup_field="id",
         lookup_url_kwarg="workshop_id",
-    )
-    workshop_id = serializers.PrimaryKeyRelatedField(
         source="workshop",
-        queryset=WorkshopModel.objects.all(),
-        write_only=True,
     )
     url = HyperLinkSelfField(
         view_name="questions:detail",
@@ -40,12 +24,11 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = QuestionModel
         fields = (
             "id",
+            "number",
+            "body",
             "client",
-            "client_id",
-            "workshop",
-            "workshop_id",
-            "question",
-            "questioned_at",
+            "created_at",
+            "workshop_url",
             "url",
         )
-        read_only_fields = ("id", "questioned_at")
+        read_only_fields = ("id", "number", "created_at")
