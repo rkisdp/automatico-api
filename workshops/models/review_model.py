@@ -47,7 +47,6 @@ class ReviewModel(models.Model):
         verbose_name=_("number"),
         help_text=_("Number"),
         editable=False,
-        null=True,
     )
     message = models.TextField(
         verbose_name=_("message"),

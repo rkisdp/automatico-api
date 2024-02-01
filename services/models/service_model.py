@@ -32,13 +32,11 @@ class ServiceModel(models.Model):
         verbose_name=_("workshop service number"),
         help_text=_("Workshop service number"),
         editable=False,
-        null=True,
     )
     title = models.CharField(
         verbose_name=_("title"),
         help_text=_("Service title"),
         max_length=100,
-        null=True,
     )
     description = models.TextField(
         verbose_name=_("request description"),
@@ -57,7 +55,6 @@ class ServiceModel(models.Model):
         verbose_name=_("end date"),
         help_text=_("End date"),
         null=True,
-        blank=True,
         editable=False,
     )
 

@@ -17,7 +17,6 @@ class QuestionModel(models.Model):
         verbose_name=_("number"),
         help_text=_("Question number"),
         editable=False,
-        null=True,
     )
     body = models.CharField(
         verbose_name=_("question"),
