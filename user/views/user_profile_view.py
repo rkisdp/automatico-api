@@ -36,17 +36,6 @@ class UserProfileView(
     def patch(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
-    @extend_schema(
-        operation_id="delete-the-authenticated-user",
-        summary="Delete the authenticated user",
-        description="Delete the account of the currently authenticated user.",
-        responses={204: None},
-        deprecated=True,
-        tags=(*SCHEMA_TAGS, "deprecated"),
-    )
-    def delete(self, request, *args, **kwargs):
-        return super().delete(request, *args, **kwargs)
-
     def get_object(self):
         return self.request.user
 

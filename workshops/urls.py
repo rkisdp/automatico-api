@@ -46,11 +46,6 @@ urlpatterns = (
         name="vehicles",
     ),
     re_path(
-        r"^/(?P<workshop_id>\d+)/contacts/(?P<contact_id>\d+)/?$",
-        views.WorkshopContactDetailView.as_view(),
-        name="contact-detail",
-    ),
-    re_path(
         r"^/(?P<workshop_id>\d+)/questions/?$",
         views.QuestionListView.as_view(),
         name="questions",
@@ -79,10 +74,5 @@ urlpatterns = (
         r"^/specialities/?$",
         views.SpecialityListView.as_view(),
         name="speciality-list",
-    ),
-    re_path(
-        r"^/specialities/(?P<speciality_id>\d+)/?$",
-        views.SpecialityDetailView.as_view(),
-        name="speciality-detail",
     ),
 )

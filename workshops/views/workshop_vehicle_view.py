@@ -1,11 +1,12 @@
 from importlib import import_module
 
-from core.generics import GenericAPIView
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import mixins
 from rest_framework.generics import get_object_or_404
 from rest_framework.settings import api_settings
+
+from core.generics import GenericAPIView
 from vehicles.models import VehicleModel
 from workshops.models import WorkshopModel
 
@@ -68,57 +69,6 @@ class WorkshopVehicleView(
     )
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
-
-    @extend_schema(
-        operation_id="update_workshop_vehicles",
-        description="Update workshop vehicles",
-        summary="Update workshop vehicles by workshop id",
-        deprecated=True,
-        tags=(*SCHEMA_TAGS, "deprecated"),
-        parameters=(
-            OpenApiParameter(
-                name="workshop_id",
-                description="Workshop id.",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.PATH,
-                required=True,
-            ),
-            OpenApiParameter(
-                name="ordering",
-                description="Which field to use when ordering the results.",
-                type=OpenApiTypes.STR,
-                many=True,
-                explode=False,
-                enum=(
-                    field
-                    for pair in zip(
-                        ordering, (f"-{field}" for field in ordering)
-                    )
-                    for field in pair
-                ),
-                default="id",
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page",
-                description="The page number of the results to fetch.",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=1,
-                exclude=True,
-            ),
-            OpenApiParameter(
-                name="page_size",
-                description="The number of results to return per page (max 100)..",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.QUERY,
-                default=api_settings.PAGE_SIZE,
-                exclude=True,
-            ),
-        ),
-    )
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
 
     def get_object(self):
         workshop_id = self.kwargs[self.lookup_url_kwarg]

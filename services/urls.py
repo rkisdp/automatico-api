@@ -20,9 +20,4 @@ urlpatterns = (
         views.ServiceStatusListView.as_view(),
         name="status-list",
     ),
-    re_path(
-        r"^/statuses/(?P<status_id>\d+)/?$",
-        views.ServiceStatusDetailView.as_view(),
-        name="status-detail",
-    ),
 )

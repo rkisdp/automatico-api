@@ -91,13 +91,3 @@ class WorkshopListView(
     )
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
-
-    @extend_schema(
-        operation_id="create-a-workshop",
-        summary="Create a workshop",
-        description="Creates a new workshop for the authenticated user.",
-        deprecated=True,
-        tags=(*SCHEMA_TAGS, "deprecated"),
-    )
-    def post(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)

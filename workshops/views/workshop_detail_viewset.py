@@ -90,31 +90,6 @@ class WorkshopDetailView(
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
 
-    @extend_schema(
-        operation_id="deactivate-a-workshop",
-        summary="Deactivate a workshop",
-        description=(
-            "Deactivates a workshop. The authenticated user must be the owner "
-            "of the workshop."
-            "\n\n"
-            "**Note**: Deactivated workshops cannot receive nor accept new "
-            "service requests."
-        ),
-        deprecated=True,
-        tags=(*SCHEMA_TAGS, "deprecated"),
-        parameters=(
-            OpenApiParameter(
-                name="workshop_id",
-                description="The workshop ID.",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.PATH,
-                required=True,
-            ),
-        ),
-    )
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
     def perform_destroy(self, instance):
         if not instance.is_active:
             return
