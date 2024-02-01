@@ -27,8 +27,8 @@ class WorkshopBrandListView(
 
     @extend_schema(
         operation_id="list-workshop-brands",
-        description="List workshop brands",
-        summary="List workshop brands by workshop id",
+        summary="List workshop brands",
+        description="Lists the brands that a workshop works with.",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
@@ -73,9 +73,9 @@ class WorkshopBrandListView(
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="add-workshop-brand",
-        summary="Add workshop brand",
-        description="Adds a workshop brand.",
+        operation_id="add-brands-to-a-workshop",
+        summary="Add brands to a workshop",
+        description="Adds brands that a workshop works with.",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
@@ -95,7 +95,12 @@ class WorkshopBrandListView(
     @extend_schema(
         operation_id="replace-all-workshop-brands",
         summary="Replace all workshop brands",
-        description="Replaces all workshop brands.",
+        description=(
+            "Replaces all brands that a workshop works with. This will remove "
+            "all existing brands and add the new ones."
+            "\n\n"
+            "If you pass an empty list, it will remove all brands."
+        ),
         parameters=(
             OpenApiParameter(
                 name="workshop_id",

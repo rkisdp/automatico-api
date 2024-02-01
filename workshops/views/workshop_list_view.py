@@ -15,7 +15,6 @@ SCHEMA_TAGS = ("workshops",)
 @extend_schema(tags=SCHEMA_TAGS)
 class WorkshopListView(
     mixins.ListModelMixin,
-    mixins.CreateModelMixin,
     GenericAPIView,
 ):
     queryset = WorkshopModel.objects.all()
@@ -81,7 +80,7 @@ class WorkshopListView(
             OpenApiParameter(
                 name="page_size",
                 description=(
-                    "The The number of results to return per page (max 100). (max 100)."
+                    "The The number of results to return per page (max 100)."
                 ),
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,

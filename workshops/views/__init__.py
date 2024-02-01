@@ -2,9 +2,7 @@ from .question_list_view import QuestionListView
 from .question_response_list_view import QuestionResponseListView
 from .review_list_view import ReviewListView
 from .review_photo_view import ReviewPhotoView
-from .review_photo_viewset import ReviewPhotoViewSet
 from .review_response_view import ReviewResponseView
-from .review_response_viewset import ReviewResponseViewSet
 from .review_viewset import ReviewViewSet
 from .speciality_detail_view import SpecialityDetailView
 from .speciality_list_view import SpecialityListView

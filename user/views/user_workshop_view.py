@@ -20,10 +20,10 @@ class UserWorkshopView(
     ordering_fields = ("id", "name")
 
     @extend_schema(
-        operation_id="list-the-workshops-for-the-authenticated-user",
-        summary="List the workshops for the authenticated user",
+        operation_id="list-workshops-for-the-authenticated-user",
+        summary="List workshops for the authenticated user",
         description=(
-            "Lists the workshops for the currently authenticated user."
+            "Lists workshops that the authenticated user is owner of."
             "\n\n"
             "**Note**: Pagination is powered exclusively by the `page` parameter. "
             "Use the [Link header]"
@@ -37,7 +37,7 @@ class UserWorkshopView(
     @extend_schema(
         operation_id="create-a-workshop-for-the-authenticated-user",
         summary="Create a workshop for the authenticated user",
-        description="Creates a workshop for the currently authenticated user.",
+        description="Creates a workshop for the authenticated user.",
     )
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
