@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from workshops.models import WorkshopModel
 
 from .question_model import QuestionModel
 
@@ -14,23 +13,18 @@ class QuestionResponseModel(models.Model):
         unique=True,
         editable=False,
     )
-    client = models.ForeignKey(
+    body = models.TextField(
+        verbose_name=_("response"),
+        help_text=_("Questioned at"),
+        max_length=1000,
+    )
+    user = models.ForeignKey(
         verbose_name=_("client"),
-        help_text=_("Client who asked the question"),
+        help_text=_("Client who answered the question."),
         to=settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
         related_name="question_responses",
-        null=True,
-        blank=True,
-    )
-    workshop = models.ForeignKey(
-        verbose_name=_("workshop"),
-        help_text=_("Workshop who the question was asked"),
-        to=WorkshopModel,
-        on_delete=models.PROTECT,
-        related_name="question_responses",
-        null=True,
-        blank=True,
+        editable=False,
     )
     question = models.ForeignKey(
         verbose_name=_("question"),
@@ -38,11 +32,7 @@ class QuestionResponseModel(models.Model):
         to=QuestionModel,
         on_delete=models.PROTECT,
         related_name="responses",
-    )
-    body = models.TextField(
-        verbose_name=_("response"),
-        help_text=_("Questioned at"),
-        max_length=255,
+        editable=False,
     )
     created_at = models.DateTimeField(
         verbose_name=_("responded at"),
@@ -57,4 +47,4 @@ class QuestionResponseModel(models.Model):
         db_table = "question_response"
 
     def __str__(self) -> str:
-        return f"{self.client} - {self.workshop}"
+        return f"{self.question.number} - {self.question}"

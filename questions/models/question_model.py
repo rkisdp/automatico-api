@@ -22,14 +22,15 @@ class QuestionModel(models.Model):
     body = models.CharField(
         verbose_name=_("question"),
         help_text=_("Question asked by the client"),
-        max_length=50,
+        max_length=200,
     )
-    client = models.ForeignKey(
+    user = models.ForeignKey(
         verbose_name=_("client"),
         help_text=_("Client who asked the question"),
         to=settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
         related_name="questions",
+        editable=False,
     )
     workshop = models.ForeignKey(
         verbose_name=_("workshop"),
@@ -37,6 +38,7 @@ class QuestionModel(models.Model):
         to=WorkshopModel,
         on_delete=models.PROTECT,
         related_name="questions",
+        editable=False,
     )
     created_at = models.DateTimeField(
         verbose_name=_("created at"),
@@ -51,7 +53,7 @@ class QuestionModel(models.Model):
         db_table = "question"
 
     def __str__(self) -> str:
-        return f"{self.client} - {self.workshop}"
+        return f"{self.body} #{self.number} - {self.workshop}"
 
     def save(self, *args, **kwargs):
         if not self.number:

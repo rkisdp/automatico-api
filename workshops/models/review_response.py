@@ -42,7 +42,7 @@ class ReviewResponseModel(models.Model):
     response = models.TextField(
         verbose_name=_("response"),
         help_text=_("reviewed at"),
-        max_length=255,
+        max_length=5000,
     )
     responded_at = models.DateTimeField(
         verbose_name=_("responded at"),

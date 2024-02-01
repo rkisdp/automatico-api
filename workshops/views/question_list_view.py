@@ -1,10 +1,9 @@
-from importlib import import_module
-
 from drf_spectacular.utils import extend_schema
 from rest_framework import mixins
+from rest_framework.generics import get_object_or_404
 
 from core.generics import GenericAPIView
-from questions.models import QuestionModel
+from workshops.models import WorkshopModel
 
 SCHEMA_TAGS = ("questions",)
 
@@ -15,12 +14,9 @@ class QuestionListView(
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
-    queryset = QuestionModel.objects.all()
     lookup_field = "id"
-    lookup_url_kwarg = "question_id"
+    lookup_url_kwarg = "workshop_id"
     ordering = ("id",)
-    filterset_fields = ("workshop", "question")
-    search_fields = ("workshop", "question")
     ordering_fields = ("workshop", "question")
 
     @extend_schema(
@@ -37,6 +33,19 @@ class QuestionListView(
     def post(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    def get_object(self):
+        workshop_id = self.kwargs[self.lookup_url_kwarg]
+        return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
+
+    def get_queryset(self):
+        workshop = self.get_object()
+        return workshop.questions.all()
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
+        return context
+
     def _get_versioned_serializer_class(self, version):
-        module = self._get_versioned_module(version, "questions")
+        module = self._get_serializer_module(version, "questions")
         return getattr(module, "QuestionSerializer")

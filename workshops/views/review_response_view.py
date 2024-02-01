@@ -1,5 +1,3 @@
-from importlib import import_module
-
 from drf_spectacular.utils import extend_schema
 
 from core.generics import GenericAPIView
@@ -42,7 +40,5 @@ class ReviewResponseView(
         return version
 
     def _get_versioned_serializer_class(self, version):
-        module = import_module(
-            f"workshops.serializers.{version.replace('.', '_')}"
-        )
+        module = self._get_serializer_module(version)
         return getattr(module, "ReviewResponseSerializer")

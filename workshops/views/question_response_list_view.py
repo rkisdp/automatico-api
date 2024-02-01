@@ -21,9 +21,8 @@ class QuestionResponseListView(
     lookup_fields = ("question_id", "id")
     lookup_url_kwargs = ("question_id", "response_id")
     ordering = ("id",)
-    filterset_fields = ("question", "response")
-    search_fields = ("question", "response")
-    ordering_fields = ("question", "response")
+    search_fields = ("body",)
+    ordering_fields = ("id",)
 
     @extend_schema(
         operation_id="List question responses",
@@ -39,6 +38,11 @@ class QuestionResponseListView(
     def post(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["question_id"] = self.kwargs.get("question_id")
+        return context
+
     def _get_versioned_serializer_class(self, version):
-        module = self._get_versioned_module(version, "questions")
+        module = self._get_serializer_module(version, "questions")
         return getattr(module, "QuestionResponseSerializer")

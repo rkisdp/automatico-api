@@ -48,6 +48,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             self.fields["service"] = serializers.IntegerField(
                 write_only=True,
                 required=False,
+                allow_null=True,
             )
 
     def get_image_urls(
@@ -68,6 +69,8 @@ class ReviewSerializer(serializers.ModelSerializer):
     def validate_service(self, value):
         try:
             workshop_id = self.context["workshop_id"]
+            if value is None:
+                return None
             return ServiceModel.objects.get(
                 number__iexact=value,
                 workshop_id=workshop_id,
