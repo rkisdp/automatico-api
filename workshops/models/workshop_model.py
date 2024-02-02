@@ -4,7 +4,7 @@ from os import path
 from uuid import uuid4
 
 from django.conf import settings
-from django.db import models
+from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
@@ -47,6 +47,12 @@ class WorkshopModel(models.Model):
         verbose_name=_("image"),
         help_text=_("The workshop image."),
         upload_to=rename,
+        null=True,
+        blank=True,
+    )
+    location = models.PointField(
+        verbose_name=_("location"),
+        help_text=_("The workshop location."),
         null=True,
         blank=True,
     )

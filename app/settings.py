@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     "corsheaders",
     "django_filters",
     "drf_spectacular",
@@ -228,7 +229,9 @@ WSGI_APPLICATION = "app.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": env.str("DB_ENGINE", default="django.db.backends.sqlite3"),
+        "ENGINE": env.str(
+            "DB_ENGINE", default="django.contrib.gis.db.backends.spatialite"
+        ),
         "NAME": env.str("DB_NAME", default="db.sqlite3"),
         "USER": env.str("DB_USER", default=None),
         "PASSWORD": env.str("DB_PASSWORD", default=None),
