@@ -18,6 +18,12 @@ class QuestionResponseModel(models.Model):
         help_text=_("Questioned at"),
         max_length=1000,
     )
+    votes = models.PositiveIntegerField(
+        verbose_name=_("votes"),
+        help_text=_("Number of votes"),
+        default=0,
+        editable=False,
+    )
     user = models.ForeignKey(
         verbose_name=_("client"),
         help_text=_("Client who answered the question."),
@@ -31,7 +37,7 @@ class QuestionResponseModel(models.Model):
         help_text=_("Question asked"),
         to=QuestionModel,
         on_delete=models.PROTECT,
-        related_name="responses",
+        related_name="answers",
         editable=False,
     )
     created_at = models.DateTimeField(

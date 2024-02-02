@@ -23,6 +23,12 @@ class QuestionModel(models.Model):
         help_text=_("Question asked by the client"),
         max_length=200,
     )
+    votes = models.PositiveIntegerField(
+        verbose_name=_("votes"),
+        help_text=_("Number of votes"),
+        default=0,
+        editable=False,
+    )
     user = models.ForeignKey(
         verbose_name=_("client"),
         help_text=_("Client who asked the question"),
@@ -58,3 +64,7 @@ class QuestionModel(models.Model):
         if not self.number:
             self.number = self.workshop.questions.count() + 1
         super().save(*args, **kwargs)
+
+    @property
+    def answer(self):
+        return self.answers.order_by("votes", "-created_at").first()
