@@ -113,7 +113,7 @@ class WorkshopEmployeeListView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
+        context["workshop"] = self.get_object()
         return context
 
     def get_serializer_class(self):

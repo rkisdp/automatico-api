@@ -31,6 +31,6 @@ class QuestionSerializer(serializers.ModelSerializer):
         read_only_fields = ("id", "number", "created_at")
 
     def create(self, validated_data):
-        validated_data["workshop_id"] = self.context["workshop_id"]
+        validated_data["workshop"] = self.context["workshop"]
         validated_data["user"] = self.context["request"].user
         return super().create(validated_data)

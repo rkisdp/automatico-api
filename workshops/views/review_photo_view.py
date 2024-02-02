@@ -39,5 +39,5 @@ class ReviewPhotoView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["review_id"] = self.kwargs[self.lookup_url_kwargs[1]]
+        context["review"] = self.get_object()
         return context

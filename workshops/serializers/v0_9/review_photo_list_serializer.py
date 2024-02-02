@@ -19,11 +19,8 @@ class ReviewPhotoListSerializer(serializers.ListSerializer):
 
     def create(self, validated_data):
         images = {"images_url": []}
-        review_id = self.context["review_id"]
+        review = self.context["review"]
         for image in validated_data["images"]:
-            image = ReviewImageModel.objects.create(
-                review_id=review_id,
-                image=image,
-            )
+            image = ReviewImageModel.objects.create(review=review, image=image)
             images["images_url"].append(image.image.url)
         return images

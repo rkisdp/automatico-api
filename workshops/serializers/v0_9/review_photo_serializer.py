@@ -35,10 +35,10 @@ class ReviewPhotoSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         images = []
-        review_id = self.context["review_id"]
+        review = self.context["review"]
         for image in validated_data["images"]:
             image = ReviewImageModel.objects.create(
-                review_id=review_id,
+                review=review,
                 image=image,
             )
             images.append(image.image)

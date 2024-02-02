@@ -68,12 +68,12 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def validate_service(self, value):
         try:
-            workshop_id = self.context["workshop_id"]
+            workshop = self.context["workshop"]
             if value is None:
                 return None
             return ServiceModel.objects.get(
                 number__iexact=value,
-                workshop_id=workshop_id,
+                workshop=workshop,
             )
         except ServiceModel.DoesNotExist:
             raise serializers.ValidationError(
@@ -81,6 +81,6 @@ class ReviewSerializer(serializers.ModelSerializer):
             )
 
     def create(self, validated_data):
-        validated_data["workshop_id"] = self.context["workshop_id"]
+        validated_data["workshop"] = self.context["workshop"]
         validated_data["client"] = self.context["request"].user
         return super().create(validated_data)

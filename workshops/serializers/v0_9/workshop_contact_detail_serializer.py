@@ -1,8 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from workshops.models import WorkshopModel
-
 from .workshop_contact_list_serializer import WorkshopContactListSerializer
 
 
@@ -18,9 +16,8 @@ class WorkshopContactDetailSerializer(serializers.ListSerializer):
         return attrs
 
     def create(self, validated_data):
-        workshop = WorkshopModel.objects.get(id=self.context.get("workshop_id"))
+        workshop = self.context["workshop"]
         for item in validated_data:
-            item["workshop_id"] = workshop
             workshop.contacts.update_or_create(
                 name=item.get("name"),
                 defaults={"value": item.get("value")},

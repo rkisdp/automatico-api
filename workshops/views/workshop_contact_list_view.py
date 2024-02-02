@@ -14,6 +14,7 @@ SCHEMA_TAGS = ("workshops",)
 @extend_schema(tags=SCHEMA_TAGS)
 class WorkshopContactListView(
     mixins.ListModelMixin,
+    mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
@@ -117,7 +118,7 @@ class WorkshopContactListView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
+        context["workshop"] = self.get_object()
         return context
 
     def _get_versioned_serializer_class(self, version):

@@ -17,6 +17,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Activate a workshop.
 - Removed "Paginated*" object schemas.
 - Authorization with 3rd party (Google and Facebook).
+- Enable `POST /image` to upload an image and return it's ID.
+- Protect workshop management routes. This routes should need a workshop_id claim.
+
+## [0.9.1] - 2024-02-02
+
+## Fixed
+
+- Vehicle serializer crashing because of non existing route.
+- Only `GET` requests were checking if the resource (on path) exists.
+
+## [0.9.0] - 2024-01-26
+
+## Changed
+
+- Everything.
+
+## Removed
+
+- A lot.
 
 ## [0.8.1] - 2024-01-22
 

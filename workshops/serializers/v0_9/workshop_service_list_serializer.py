@@ -62,8 +62,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
             )
 
     def create(self, validated_data):
-        workshop_id = self.context["workshop_id"]
-        validated_data["workshop_id"] = workshop_id
+        validated_data["workshop"] = self.context["workshop"]
         service = super().create(validated_data)
         service.histories.create(
             status=ServiceStatusModel.objects.get(name__iexact="Solicitado"),

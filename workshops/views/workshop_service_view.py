@@ -27,12 +27,12 @@ class WorkshopServiceView(
 
     @extend_schema(
         operation_id="list_workshop_services",
-        description="List workshop services",
-        summary="List workshop services by workshop id",
+        summary="List workshop services",
+        description="Lists workshop services",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -62,7 +62,7 @@ class WorkshopServiceView(
             ),
             OpenApiParameter(
                 name="page_size",
-                description="The number of results to return per page (max 100)..",
+                description="The number of results to return per page (max 100).",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
                 default=api_settings.PAGE_SIZE,
@@ -73,13 +73,13 @@ class WorkshopServiceView(
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="create_workshop_services",
-        description="Request a workshop service",
-        summary="Request workshop service by workshop id",
+        operation_id="create_service",
+        summary="Request a service",
+        description="Requests a service",
         parameters=(
             OpenApiParameter(
                 name="workshop_id",
-                description="Workshop id.",
+                description="The workshop ID.",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.PATH,
                 required=True,
@@ -99,7 +99,7 @@ class WorkshopServiceView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
+        context["workshop"] = self.get_object()
         return context
 
     def _get_versioned_serializer_class(self, version):

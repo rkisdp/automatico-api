@@ -124,7 +124,7 @@ class WorkshopBrandListView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop_id"] = self.kwargs[self.lookup_url_kwarg]
+        context["workshop"] = self.get_object()
         return context
 
     def _get_versioned_serializer_class(self, version):

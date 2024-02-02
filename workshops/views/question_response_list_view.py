@@ -40,7 +40,7 @@ class QuestionResponseListView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["question_id"] = self.kwargs.get("question_id")
+        context["question"] = self.get_object()
         return context
 
     def _get_versioned_serializer_class(self, version):

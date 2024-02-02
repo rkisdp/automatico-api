@@ -27,5 +27,5 @@ class QuestionResponseSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data["user"] = self.context["request"].user
-        validated_data["question_id"] = self.context["question_id"]
+        validated_data["question"] = self.context["question"]
         return super().create(validated_data)

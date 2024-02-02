@@ -6,7 +6,6 @@ from rest_framework.fields import empty
 
 from services.models import (
     ServiceHistoryModel,
-    ServiceModel,
     ServiceStatusModel,
 )
 from users.serializers.v0_9 import UserListSerializer
@@ -56,8 +55,7 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         status = attrs.get("status")
-        service_id = self.context["service_id"]
-        service = ServiceModel.objects.get(id=service_id)
+        service = self.context["service"]
         if (
             status
             and service.current_status_id in [4, 5, 7]
@@ -99,7 +97,7 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        validated_data["service_id"] = self.context["service_id"]
+        validated_data["service"] = self.context["service"]
         history = ServiceHistoryModel.objects.create(**validated_data)
         service = history.service
         if history.status.id in [4, 5, 7]:
