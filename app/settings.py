@@ -69,8 +69,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": ("core.parsers.AutoMaticoJSONParser",),
     "DEFAULT_RENDERER_CLASSES": ("core.renderers.AutoMaticoJSONRenderer",),
     "DEFAULT_VERSIONING_CLASS": "core.versioning.XAutoMaticoAPIVersioning",
-    "DEFAULT_VERSION": "v0.9",
-    "ALLOWED_VERSIONS": ("v0.9",),
+    "DEFAULT_VERSION": "v0.10",
+    "ALLOWED_VERSIONS": ("v0.10", "v0.9"),
     "VERSION_PARAM": "version",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -119,7 +119,7 @@ CSRF_TRUSTED_ORIGINS = env.tuple("CSRF_TRUSTED_ORIGINS", default=())
 SPECTACULAR_SETTINGS = {
     "TITLE": "AutoMático API",
     "DESCRIPTION": "AutoMático API",
-    "VERSION": "v0.9.3",
+    "VERSION": "v0.10.0",
     "TOS": None,
     "LICENSE": None,
     "SERVE_INCLUDE_SCHEMA": False,
@@ -134,17 +134,19 @@ SPECTACULAR_SETTINGS = {
     },
     "COMPONENT_SPLIT_REQUEST": True,
     "SERVERS": (
-        {
-            "url": "http://localhost:8000",
-            "description": "Local development server",
-        },
-    )
-    if DEBUG
-    else (
-        {
-            "url": "https://api.automatico.onunez.me",
-            "description": "Production server",
-        },
+        (
+            {
+                "url": "http://localhost:8000",
+                "description": "Local development server",
+            },
+        )
+        if DEBUG
+        else (
+            {
+                "url": "https://api.automatico.onunez.me",
+                "description": "Production server",
+            },
+        )
     ),
     "CONTACT": {
         "name": "AutoMático Team",
