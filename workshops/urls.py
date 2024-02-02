@@ -56,7 +56,7 @@ urlpatterns = (
         name="reviews",
     ),
     re_path(
-        r"^/(?P<workshop_id>\d+)/questions/(?P<question_id>\d+)/responses/?$",
+        r"^/(?P<workshop_id>\d+)/questions/(?P<question_number>\d+)/responses/?$",
         views.QuestionResponseListView.as_view(),
         name="question-responses",
     ),

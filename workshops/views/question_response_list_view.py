@@ -1,9 +1,8 @@
-from drf_spectacular.utils import extend_schema
-from rest_framework import mixins
-
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
-from questions.models import QuestionResponseModel
+from drf_spectacular.utils import extend_schema
+from questions.models import QuestionModel
+from rest_framework import mixins
 
 SCHEMA_TAGS = ("questions",)
 
@@ -15,28 +14,32 @@ class QuestionResponseListView(
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
-    queryset = QuestionResponseModel.objects.all()
-    lookup_field = "id"
-    lookup_url_kwarg = "question_id"
-    lookup_fields = ("question_id", "id")
-    lookup_url_kwargs = ("question_id", "response_id")
+    queryset = QuestionModel.objects.all()
+    lookup_fields = ("workshop_id", "number")
+    lookup_url_kwargs = ("workshop_id", "question_number")
     ordering = ("id",)
     search_fields = ("body",)
     ordering_fields = ("id",)
 
     @extend_schema(
-        operation_id="List question responses",
-        description="List question responses",
+        operation_id="list-a-question-answers",
+        summary="List a question answers",
+        description="Lists a question answers",
     )
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="Create question response",
-        description="Create question response",
+        operation_id="answer-a-question",
+        summary="Answer a question",
+        description="Answers a question",
     )
     def post(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+    def get_queryset(self):
+        question = self.get_object()
+        return question.answers.all()
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
