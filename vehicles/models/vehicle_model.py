@@ -4,7 +4,11 @@ from os import path
 from uuid import uuid4
 
 from django.conf import settings
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import (
+    MaxValueValidator,
+    MinValueValidator,
+    RegexValidator,
+)
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -65,9 +69,15 @@ class VehicleModel(models.Model):
     plate = models.CharField(
         verbose_name=_("plate"),
         help_text=_("Plate"),
-        max_length=7,
+        max_length=8,
         null=True,
         blank=True,
+        validators=(
+            RegexValidator(
+                regex=r"^(E|e)?[a-zA-Z]\d{6}$",
+                message=_("Plate must be in the format 'A000000'."),
+            ),
+        ),
     )
     vin = models.CharField(
         verbose_name=_("vin"),
@@ -75,6 +85,12 @@ class VehicleModel(models.Model):
         max_length=17,
         null=True,
         blank=True,
+        validators=(
+            RegexValidator(
+                regex=r"^[A-HJ-NPR-Z0-9]{17}$",
+                message=_("VIN must be 17 characters long."),
+            ),
+        ),
     )
     image = models.ImageField(
         verbose_name=_("image"),

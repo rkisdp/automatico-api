@@ -10,16 +10,11 @@ from .vehicle_brand_serializer import VehicleBrandSerializer
 
 class VehicleSerializer(serializers.ModelSerializer):
     brand = VehicleBrandSerializer(read_only=True)
+    owner = UserListSerializer(read_only=True)
     imagen_url = serializers.ImageField(
         read_only=True,
         use_url=True,
         source="image",
-    )
-    owner = UserListSerializer(read_only=True)
-    url = serializers.HyperlinkedIdentityField(
-        view_name="vehicles:detail",
-        lookup_field="id",
-        lookup_url_kwarg="vehicle_id",
     )
 
     class Meta:
@@ -34,7 +29,6 @@ class VehicleSerializer(serializers.ModelSerializer):
             "plate",
             "vin",
             "imagen_url",
-            "url",
         )
         read_only_fields = ("id",)
 
@@ -56,6 +50,48 @@ class VehicleSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 _(f"Vehicle brand '{value}' does not exist.")
             )
+
+    def validate_nickname(self, value):
+        user = self.context["request"].user
+        vehicle_id = self.instance.id if self.instance else None
+        if (
+            user.vehicles.filter(nickname__iexact=value)
+            .exclude(id=vehicle_id)
+            .exists()
+        ):
+            raise serializers.ValidationError(
+                _(f"Vehicle with nickname '{value}' already exists.")
+            )
+
+        return value
+
+    def validate_plate(self, value):
+        user = self.context["request"].user
+        vehicle_id = self.instance.id if self.instance else None
+        if (
+            user.vehicles.filter(plate__iexact=value)
+            .exclude(id=vehicle_id)
+            .exists()
+        ):
+            raise serializers.ValidationError(
+                _(f"Vehicle with plate '{value}' already exists.")
+            )
+
+        return value.upper()
+
+    def validate_vin(self, value):
+        user = self.context["request"].user
+        vehicle_id = self.instance.id if self.instance else None
+        if (
+            user.vehicles.filter(vin__iexact=value)
+            .exclude(id=vehicle_id)
+            .exists()
+        ):
+            raise serializers.ValidationError(
+                _(f"Vehicle with VIN '{value}' already exists.")
+            )
+
+        return value.upper()
 
     def create(self, validated_data):
         validated_data["owner"] = self.context["request"].user
