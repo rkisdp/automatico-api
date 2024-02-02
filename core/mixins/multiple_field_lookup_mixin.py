@@ -8,7 +8,7 @@ class MultipleFieldLookupMixin:
     """
 
     def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = self.filter_queryset(super().get_queryset())
         kwargs = {}
 
         for field, kwarg in zip(self.lookup_fields, self.lookup_url_kwargs):
