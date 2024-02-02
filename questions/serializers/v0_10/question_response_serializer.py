@@ -19,11 +19,12 @@ class QuestionResponseSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "body",
+            "votes",
             "user",
             # "question_url",
             "created_at",
         )
-        read_only_fields = ("id", "created_at")
+        read_only_fields = ("id", "votes", "created_at")
 
     def create(self, validated_data):
         validated_data["user"] = self.context["request"].user
