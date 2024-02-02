@@ -4,9 +4,11 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && \
-    apt-get install -y nano && \
-    apt-get install -y netcat-traditional && \
-    apt-get install -y binutils libproj-dev gdal-bin
+    apt-get install -y nano \
+    netcat-traditional \
+    binutils \
+    libproj-dev \
+    gdal-bin
 
 RUN addgroup --system automatico-api && \
     adduser --system --group automatico-api
@@ -21,8 +23,8 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 
 RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install psycopg2-binary && \
-    pip install gunicorn==21.2.0
+    pip install psycopg2-binary \
+    gunicorn==21.2.0
 
 COPY ./entrypoint.sh .
 RUN sed -i 's/\r$//g' entrypoint.sh

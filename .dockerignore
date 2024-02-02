@@ -157,3 +157,6 @@ venv/
 .dockerignore
 Dockerfile
 docker-compose.yml
+
+# Other
+CHANGELOG.md
