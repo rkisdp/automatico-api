@@ -30,11 +30,8 @@ services:
       - static_volume:/home/automatico-api/app/static
       - media_volume:/home/automatico-api/app/media
       - ./nginx:/etc/nginx/conf.d
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
     ports:
       - "80:80"
-      - "443:443"
     depends_on:
       - automatico-api
 

@@ -5,7 +5,8 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && \
     apt-get install -y nano && \
-    apt-get install -y netcat-traditional
+    apt-get install -y netcat-traditional && \
+    apt-get install -y binutils libproj-dev gdal-bin
 
 RUN addgroup --system automatico-api && \
     adduser --system --group automatico-api
@@ -17,8 +18,9 @@ RUN mkdir -p $APP_HOME/static && \
 WORKDIR $APP_HOME
 
 COPY requirements.txt .
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
+RUN pip install --upgrade pip
+
+RUN pip install --no-cache-dir -r requirements.txt && \
     pip install psycopg2-binary && \
     pip install gunicorn==21.2.0
 
