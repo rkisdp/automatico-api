@@ -20,6 +20,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enable `POST /image` to upload an image and return it's ID.
 - Protect workshop management routes. This routes should need a workshop_id claim.
 
+## [0.9.3] - 2024-02-02
+
+## Fixed
+
+- DB error when trying to search for iexact service number.
+
+## [0.9.2] - 2024-02-02
+
+## Added
+
+- VIN and Plate regex validation.
+
 ## [0.9.1] - 2024-02-02
 
 ## Fixed

@@ -71,10 +71,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             workshop = self.context["workshop"]
             if value is None:
                 return None
-            return ServiceModel.objects.get(
-                number__iexact=value,
-                workshop=workshop,
-            )
+            return ServiceModel.objects.get(number=value, workshop=workshop)
         except ServiceModel.DoesNotExist:
             raise serializers.ValidationError(
                 _(f"Service #{value} does not exist.")
