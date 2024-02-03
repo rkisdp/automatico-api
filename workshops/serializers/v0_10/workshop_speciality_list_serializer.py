@@ -13,8 +13,4 @@ class WorkshopSpecialityListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SpecialityModel
-        fields = (
-            "id",
-            "name",
-            "url",
-        )
+        fields = ("id", "name", "url")

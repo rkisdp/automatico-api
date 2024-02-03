@@ -80,11 +80,20 @@ class WorkshopListView(
             OpenApiParameter(
                 name="page_size",
                 description=(
-                    "The The number of results to return per page (max 100)."
+                    "The number of results to return per page (max 100)."
                 ),
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
                 default=api_settings.PAGE_SIZE,
+            ),
+            OpenApiParameter(
+                name="X-User-Location",
+                description=(
+                    "The user's location in the format `<latitude>,<longitude>`."
+                ),
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                pattern=r"^-?\d+(\.\d+)?,-?\d+(\.\d+)?$",
             ),
         ),
     )
