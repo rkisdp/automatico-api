@@ -20,10 +20,6 @@ class ReviewPhotoView(
     parser_classes = (MultiPartParser, FormParser)
     lookup_fields = ("workshop_id", "id")
     lookup_url_kwargs = ("workshop_id", "review_id")
-    ordering = ("id",)
-    filterset_fields = ("review",)
-    search_fields = ("review",)
-    ordering_fields = ("review",)
 
     @extend_schema()
     def post(self, request, *args, **kwargs):
