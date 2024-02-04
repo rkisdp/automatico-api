@@ -120,7 +120,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     def clean(self):
         super().clean()
-        self.email = self.objects.normalize_email(self.email)
+        self.email = self.__class__.objects.normalize_email(self.email)
 
     @property
     def full_name(self) -> str:
