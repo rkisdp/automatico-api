@@ -13,6 +13,7 @@ SCHEMA_TAGS = ("workshops",)
 @extend_schema(tags=SCHEMA_TAGS)
 class WorkshopSpecialityView(
     mixins.ListModelMixin,
+    mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
@@ -58,7 +59,7 @@ class WorkshopSpecialityView(
             ),
             OpenApiParameter(
                 name="page_size",
-                description="The number of results to return per page (max 100)..",
+                description="The number of results to return per page (max 100).",
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
                 default=api_settings.PAGE_SIZE,

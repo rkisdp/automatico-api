@@ -16,7 +16,7 @@ class WorkshopSpecialityDetailSerializer(serializers.ListSerializer):
         return self._clean_specialities(specialities)
 
     def create(self, validated_data):
-        workshop = WorkshopModel.objects.get(id=self.context.get("workshop_id"))
+        workshop = self.context["workshop"]
         for item in validated_data:
             try:
                 speciality = SpecialityModel.objects.get(
