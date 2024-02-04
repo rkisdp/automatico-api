@@ -10,15 +10,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix `DELETE /vehicles/{id}/` with related services returns 500.
 - Add workshop to favorite.
 - Fix responsable not added when accepting a service.
-- Change Q/A and reviews endpoints.
 - Add service request (model, endpoints). This allows to have a chat on a request, not just two messages and more details about the request itself.
-- Change "response" to "message" (QuestionResponse model).
 - Deactivate a workshop.
 - Activate a workshop.
 - Removed "Paginated*" object schemas.
 - Authorization with 3rd party (Google and Facebook).
 - Enable `POST /image` to upload an image and return it's ID.
 - Protect workshop management routes. This routes should need a workshop_id claim.
+- Translate all error messages.
+- Archive vehicles.
+
+## [0.10.0] - 2024-02-03
+
+## Added
+
+- 'answer' field to question response.
+- Workshop location (GeoJSON).
+- Filter workshops by distance.
+- 'vehicle' and 'workshop' fields to private service serializer.
+- Vehicles are editable.
+- 'archived' field to vehicle serializer.
+
+## Changed
+
+- Plate validation regex.
+
+## Fixed
+
+- Question responses endpoints.
+- Missing 'current_state' field on service serializer.
+- Crash when trying to add a speciality to a workshop.
 
 ## [0.9.3] - 2024-02-02
 
