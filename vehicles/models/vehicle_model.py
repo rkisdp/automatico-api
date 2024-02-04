@@ -99,6 +99,11 @@ class VehicleModel(models.Model):
         null=True,
         blank=True,
     )
+    archived = models.BooleanField(
+        verbose_name=_("archived"),
+        help_text=_("Archived"),
+        default=False,
+    )
 
     class Meta:
         verbose_name = _("vehicle")
