@@ -5,8 +5,15 @@ from rest_framework import serializers
 
 
 class SignUpSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        label="Password",
+        write_only=True,
+        min_length=9,
+    )
     confirm_password = serializers.CharField(
-        label="Confirm password", write_only=True, min_length=9
+        label="Confirm password",
+        write_only=True,
+        min_length=9,
     )
 
     class Meta:
@@ -16,17 +23,12 @@ class SignUpSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
+            "phone_number",
             "password",
             "confirm_password",
         )
 
         read_only_fields = ("id",)
-        extra_kwargs = {
-            "password": {
-                "write_only": True,
-                "min_length": 9,
-            },
-        }
 
     def validate_username(self, value: str) -> str:
         user = get_user_model().objects.filter(username__iexact=value)

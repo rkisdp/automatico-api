@@ -39,6 +39,7 @@ class UserAdmin(BaseUserAdmin):
                 "fields": (
                     "first_name",
                     "last_name",
+                    "phone_number",
                     "image",
                 ),
             },
@@ -77,6 +78,7 @@ class UserAdmin(BaseUserAdmin):
                 "fields": (
                     "first_name",
                     "last_name",
+                    "phone_number",
                     "image",
                 ),
             },
