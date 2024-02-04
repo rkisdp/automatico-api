@@ -20,6 +20,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Translate all error messages.
 - Archive vehicles.
 
+## [0.10.1] - 2024-02-03
+
+## Changed
+
+- Vehicle plate validation regex.
+
+## Fixed
+
+- Crash when trying to update a user through the admin panel.
+
 ## [0.10.0] - 2024-02-03
 
 ## Added
