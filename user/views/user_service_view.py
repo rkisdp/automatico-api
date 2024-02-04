@@ -39,4 +39,4 @@ class UserServiceView(
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "services")
-        return getattr(module, "ServiceSerializer")
+        return getattr(module, "PrivateServiceSerializer")

@@ -23,3 +23,7 @@ class ServiceView(
     )
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+    def _get_versioned_serializer_class(self, version):
+        module = self._get_serializer_module(version)
+        return getattr(module, "PrivateServiceSerializer")

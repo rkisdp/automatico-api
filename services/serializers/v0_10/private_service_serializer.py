@@ -3,15 +3,20 @@ from rest_framework import serializers
 from rest_framework.fields import empty
 
 from services.models import ServiceModel, ServiceStatusModel
-from users.serializers.v0_9 import UserListSerializer
+from users.serializers.v0_10 import UserListSerializer
 from vehicles.models import VehicleModel
-from vehicles.serializers.v0_9 import VehicleSerializer
+from vehicles.serializers.v0_10 import VehicleSerializer
+from workshops.serializers.v0_10 import WorkshopListSerializer
 
 
 class PrivateServiceSerializer(serializers.ModelSerializer):
     vehicle = VehicleSerializer(
         read_only=True,
         help_text=_("Vehicle data."),
+    )
+    workshop = WorkshopListSerializer(
+        read_only=True,
+        help_text=_("Workshop data."),
     )
     requested_by = UserListSerializer(
         read_only=True,
@@ -31,7 +36,9 @@ class PrivateServiceSerializer(serializers.ModelSerializer):
             "number",
             "title",
             "description",
+            "current_status",
             "vehicle",
+            "workshop",
             "requested_by",
             "created_at",
             "closed_at",

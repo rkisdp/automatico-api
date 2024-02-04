@@ -19,6 +19,7 @@ class ServiceSerializer(serializers.ModelSerializer):
             "number",
             "title",
             "description",
+            "current_status",
             "created_at",
             "closed_at",
             "url",
