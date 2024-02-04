@@ -1,14 +1,15 @@
 from django.utils.translation import gettext_lazy as _
 from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
+from rest_framework_gis.serializers import GeoModelSerializer
 
 from core.fields.v0_9 import HyperLinkSelfField
 from users.serializers.v0_9 import UserListSerializer
 from workshops.models import WorkshopModel
 
 
-@extend_schema_serializer(component_name="Workshop List")
-class WorkshopListSerializer(serializers.ModelSerializer):
+@extend_schema_serializer(component_name="MinimalWorkshop")
+class WorkshopListSerializer(GeoModelSerializer):
     owner = UserListSerializer(
         read_only=True,
         help_text=_("The account owner of the workshop."),
@@ -76,6 +77,7 @@ class WorkshopListSerializer(serializers.ModelSerializer):
             "owner",
             "name",
             "image_url",
+            "location",
             "brands",
             "specialities",
             "brands_count",
@@ -87,6 +89,7 @@ class WorkshopListSerializer(serializers.ModelSerializer):
             "url",
         )
         read_only_fields = ("id",)
+        geo_field = "location"
 
     def create(self, validated_data):
         validated_data["owner"] = self.context["request"].user

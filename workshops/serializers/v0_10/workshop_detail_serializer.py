@@ -1,11 +1,12 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
+from rest_framework_gis.serializers import GeoModelSerializer
 
 from users.serializers.v0_9 import UserListSerializer
 from workshops.models import WorkshopModel
 
 
-class WorkshopDetailSerializer(serializers.ModelSerializer):
+class WorkshopDetailSerializer(GeoModelSerializer):
     owner = UserListSerializer(
         help_text=_("The account owner of the workshop."),
         read_only=True,
@@ -49,6 +50,7 @@ class WorkshopDetailSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "owner",
+            "location",
             "brands",
             "specialities",
             "brands_count",
@@ -57,3 +59,4 @@ class WorkshopDetailSerializer(serializers.ModelSerializer):
             "url",
         )
         read_only_fields = ("id",)
+        geo_field = "location"
