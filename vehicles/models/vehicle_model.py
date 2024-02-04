@@ -74,7 +74,8 @@ class VehicleModel(models.Model):
         blank=True,
         validators=(
             RegexValidator(
-                regex=r"^(E|e)?[a-zA-Z]\d{6}$",
+                regex=r"^(A{1,2}|B|C|D|F|G|L|H|I|T|P|U|J|R|S|M|OE|OF|OM|OP|E"
+                r"[AGLMEID]|VC|WD|OI|EX|YX|Z|NZ|DD|PP|K)-\d{1,6}$",
                 message=_("Plate must be in the format 'A000000'."),
             ),
         ),
