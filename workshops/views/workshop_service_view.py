@@ -23,7 +23,13 @@ class WorkshopServiceView(
     ordering = ("id",)
     filterset_fields = ("vehicle__plate", "vehicle__vin")
     search_fields = ("vehicle__plate", "vehicle__vin")
-    ordering_fields = ("vehicle__plate", "vehicle__vin")
+    ordering_fields = (
+        "vehicle__plate",
+        "vehicle__vin",
+        "number",
+        "created_at",
+        "closed_at",
+    )
 
     @extend_schema(
         operation_id="list_workshop_services",
