@@ -1,8 +1,9 @@
+from drf_spectacular.utils import extend_schema
+from rest_framework import mixins
+
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
-from drf_spectacular.utils import extend_schema
 from questions.models import QuestionModel
-from rest_framework import mixins
 
 SCHEMA_TAGS = ("questions",)
 

@@ -61,12 +61,12 @@ urlpatterns = (
         name="question-responses",
     ),
     re_path(
-        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_id>\d+)/responses/?$",
+        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_number>\d+)/responses/?$",
         views.ReviewResponseView.as_view(),
         name="review-responses",
     ),
     re_path(
-        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_id>\d+)/images/?$",
+        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_number>\d+)/images/?$",
         views.ReviewPhotoView.as_view(),
         name="review-images",
     ),

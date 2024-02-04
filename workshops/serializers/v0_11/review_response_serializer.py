@@ -1,21 +1,32 @@
 from rest_framework import serializers
 
-from core.fields.v0_8 import HyperLinkSelfField
+from users.serializers.v0_11 import UserListSerializer
 from workshops.models import ReviewResponseModel
 
 
 class ReviewResponseSerializer(serializers.ModelSerializer):
-    url = HyperLinkSelfField(view_name="workshops:review-responses")
+    user = UserListSerializer(read_only=True, source="review.workshop.owner")
+    workshop_url = serializers.HyperlinkedRelatedField(
+        read_only=True,
+        view_name="workshops:detail",
+        lookup_field="id",
+        lookup_url_kwarg="workshop_id",
+        source="review.workshop",
+    )
+    # review_url = serializers.HyperlinkedRelatedField(read_only=True)
 
     class Meta:
         model = ReviewResponseModel
         fields = (
             "id",
-            "client",
-            "workshop",
-            "review",
-            "response",
-            "responded_at",
-            "url",
+            "body",
+            "user",
+            "created_at",
+            # "review_url",
+            "workshop_url",
         )
-        read_only_fields = ("id", "responded_at")
+        read_only_fields = ("id", "created_at")
+
+    def create(self, validated_data):
+        validated_data["review"] = self.context["review"]
+        return super().create(validated_data)
