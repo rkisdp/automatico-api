@@ -12,7 +12,7 @@ SCHEMA_TAGS = ("vehicles",)
 class VehicleView(
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
+    # mixins.DestroyModelMixin,
     GenericAPIView,
 ):
     queryset = VehicleModel.objects.all()
@@ -39,28 +39,6 @@ class VehicleView(
         return self.retrieve(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="replace-a-vehicle",
-        summary="Replace a vehicle",
-        description=(
-            "Replaces a vehicle. The authenticated user must be the "
-            "owner of the vehicle."
-        ),
-        deprecated=True,
-        tags=(*SCHEMA_TAGS, "deprecated"),
-        parameters=(
-            OpenApiParameter(
-                name="vehicle_id",
-                description="The vehicle ID.",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.PATH,
-                required=True,
-            ),
-        ),
-    )
-    def put(self, request, *args, **kwargs):
-        return self.update(request, partial=True, *args, **kwargs)
-
-    @extend_schema(
         operation_id="update-a-vehicle",
         summary="Update a vehicle",
         description=(
@@ -78,26 +56,26 @@ class VehicleView(
         ),
     )
     def patch(self, request, *args, **kwargs):
-        return self.update(request, partial=True, *args, **kwargs)
+        return self.partial_update(request, partial=True, *args, **kwargs)
 
-    @extend_schema(
-        operation_id="delete-a-vehicle",
-        summary="Delete a vehicle",
-        description=(
-            "Deletes a vehicle. The authenticated user must be the owner of "
-            "the vehicle."
-        ),
-        deprecated=True,
-        tags=(*SCHEMA_TAGS, "deprecated"),
-        parameters=(
-            OpenApiParameter(
-                name="vehicle_id",
-                description="The vehicle ID.",
-                type=OpenApiTypes.INT,
-                location=OpenApiParameter.PATH,
-                required=True,
-            ),
-        ),
-    )
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+    # @extend_schema(
+    #     operation_id="delete-a-vehicle",
+    #     summary="Delete a vehicle",
+    #     description=(
+    #         "Deletes a vehicle. The authenticated user must be the owner of "
+    #         "the vehicle."
+    #     ),
+    #     deprecated=True,
+    #     tags=(*SCHEMA_TAGS, "deprecated"),
+    #     parameters=(
+    #         OpenApiParameter(
+    #             name="vehicle_id",
+    #             description="The vehicle ID.",
+    #             type=OpenApiTypes.INT,
+    #             location=OpenApiParameter.PATH,
+    #             required=True,
+    #         ),
+    #     ),
+    # )
+    # def delete(self, request, *args, **kwargs):
+    #     return self.destroy(request, *args, **kwargs)

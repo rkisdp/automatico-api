@@ -54,7 +54,10 @@ class PrivateServiceSerializer(serializers.ModelSerializer):
         super().__init__(instance, data, **kwargs)
 
         if self.context and self.context["request"].method != "GET":
-            self.fields["vehicle"] = serializers.CharField(write_only=True)
+            self.fields["vehicle"] = serializers.CharField(
+                write_only=True,
+                help_text=_("Vehicle nickname."),
+            )
 
     def run_validation(self, data=empty):
         validated_data = super().run_validation(data)
