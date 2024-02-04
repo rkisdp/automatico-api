@@ -87,7 +87,7 @@ class ServiceHistoryView(
 
     def get_queryset(self):
         service = self.get_object()
-        return ServiceHistoryModel.objects.filter(service=service)
+        return service.histories.all()
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
