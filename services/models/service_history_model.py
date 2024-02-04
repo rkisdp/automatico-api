@@ -41,8 +41,6 @@ class ServiceHistoryModel(models.Model):
         to=settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
         related_name="service_histories",
-        null=True,
-        blank=True,
     )
     created_at = models.DateTimeField(
         verbose_name=_("start date"),
