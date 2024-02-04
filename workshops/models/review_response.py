@@ -1,9 +1,7 @@
-from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from .review_model import ReviewModel
-from .workshop_model import WorkshopModel
 
 
 class ReviewResponseModel(models.Model):
@@ -14,24 +12,6 @@ class ReviewResponseModel(models.Model):
         unique=True,
         editable=False,
     )
-    client = models.ForeignKey(
-        verbose_name=_("client"),
-        help_text=_("Client who asked the question"),
-        to=settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
-        related_name="review_responses",
-        null=True,
-        blank=True,
-    )
-    workshop = models.ForeignKey(
-        verbose_name=_("workshop"),
-        help_text=_("Workshop who the question was asked"),
-        to=WorkshopModel,
-        on_delete=models.PROTECT,
-        related_name="review_responses",
-        null=True,
-        blank=True,
-    )
     review = models.ForeignKey(
         verbose_name=_("review"),
         help_text=_("Review"),
@@ -39,14 +19,14 @@ class ReviewResponseModel(models.Model):
         on_delete=models.PROTECT,
         related_name="responses",
     )
-    response = models.TextField(
-        verbose_name=_("response"),
-        help_text=_("reviewed at"),
+    body = models.TextField(
+        verbose_name=_("body"),
+        help_text=_("Response body"),
         max_length=5000,
     )
-    responded_at = models.DateTimeField(
-        verbose_name=_("responded at"),
-        help_text=_("Responded at"),
+    created_at = models.DateTimeField(
+        verbose_name=_("created at"),
+        help_text=_("Response time"),
         auto_now_add=True,
     )
 
@@ -56,4 +36,4 @@ class ReviewResponseModel(models.Model):
         db_table = "review_response"
 
     def __str__(self) -> str:
-        return f"{self.client} - {self.workshop}"
+        return f"#{self.review.number} - {self.review.workshop}"
