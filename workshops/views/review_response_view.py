@@ -1,5 +1,6 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import mixins
+from rest_framework.response import Response
 
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
@@ -11,7 +12,7 @@ SCHEMA_TAGS = ("reviews",)
 @extend_schema(tags=SCHEMA_TAGS)
 class ReviewResponseView(
     MultipleFieldLookupMixin,
-    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
@@ -22,7 +23,9 @@ class ReviewResponseView(
 
     @extend_schema()
     def get(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance.response)
+        return Response(serializer.data)
 
     @extend_schema()
     def post(self, request, *args, **kwargs):
@@ -30,7 +33,7 @@ class ReviewResponseView(
 
     def get_queryset(self):
         review = self.get_object()
-        return review.responses.all()
+        return review.response
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)

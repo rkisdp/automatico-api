@@ -61,9 +61,9 @@ urlpatterns = (
         name="question-responses",
     ),
     re_path(
-        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_number>\d+)/responses/?$",
+        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_number>\d+)/response/?$",
         views.ReviewResponseView.as_view(),
-        name="review-responses",
+        name="review-response",
     ),
     re_path(
         r"^/(?P<workshop_id>\d+)/reviews/(?P<review_number>\d+)/images/?$",
