@@ -100,7 +100,7 @@ class VehicleModel(models.Model):
         null=True,
         blank=True,
     )
-    archived = models.BooleanField(
+    is_archived = models.BooleanField(
         verbose_name=_("archived"),
         help_text=_("Archived"),
         default=False,
