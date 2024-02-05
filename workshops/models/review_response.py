@@ -12,12 +12,13 @@ class ReviewResponseModel(models.Model):
         unique=True,
         editable=False,
     )
-    review = models.ForeignKey(
+    review = models.OneToOneField(
         verbose_name=_("review"),
         help_text=_("Review"),
         to=ReviewModel,
         on_delete=models.PROTECT,
-        related_name="responses",
+        related_name="response",
+        editable=False,
     )
     body = models.TextField(
         verbose_name=_("body"),
@@ -28,6 +29,7 @@ class ReviewResponseModel(models.Model):
         verbose_name=_("created at"),
         help_text=_("Response time"),
         auto_now_add=True,
+        editable=False,
     )
 
     class Meta:
