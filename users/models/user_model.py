@@ -9,6 +9,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from workshops.models import WorkshopModel
+
 from ..managers import UserManager
 
 
@@ -74,6 +76,13 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         verbose_name=_("phone number verified"),
         help_text=_("User phone number verified"),
         default=False,
+    )
+    favorite_workshops = models.ManyToManyField(
+        to=WorkshopModel,
+        verbose_name=_("favorite workshops"),
+        help_text=_("User favorite workshops"),
+        related_name="favorite_users",
+        blank=True,
     )
     is_active = models.BooleanField(
         verbose_name=_("active"),
