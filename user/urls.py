@@ -36,6 +36,16 @@ urlpatterns = (
         name="workshops",
     ),
     re_path(
+        r"^/workshops/favorites/?$",
+        views.UserFavoriteWorkshopListView().as_view(),
+        name="favorite-workshops",
+    ),
+    re_path(
+        r"^/workshops/favorites/(?P<workshop_id>\d+)/?$",
+        views.UserFavoriteWorkshopView().as_view(),
+        name="favorite-workshops",
+    ),
+    re_path(
         r"^/workshops/services/?$",
         views.UserWorkshopServiceView().as_view(),
         name="workshops-services",

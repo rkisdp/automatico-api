@@ -1,4 +1,6 @@
 from .change_password_view import ChangePasswordView
+from .user_favorite_workshop_list_view import UserFavoriteWorkshopListView
+from .user_favorite_workshop_view import UserFavoriteWorkshopView
 from .user_photo_view import UserPhotoView
 from .user_profile_view import UserProfileView
 from .user_service_view import UserServiceView
