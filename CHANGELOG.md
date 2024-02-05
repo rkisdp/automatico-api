@@ -7,32 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Fix `DELETE /vehicles/{id}/` with related services returns 500.
-- Add workshop to favorite.
 - Fix responsable not added when accepting a service.
-- Add service request (model, endpoints). This allows to have a chat on a request, not just two messages and more details about the request itself.
 - Deactivate a workshop.
 - Activate a workshop.
-- Removed "Paginated*" object schemas.
-- Authorization with 3rd party (Google and Facebook).
 - Enable `POST /image` to upload an image and return it's ID.
-- Protect workshop management routes. This routes should need a workshop_id claim.
-- Translate all error messages.
-- Archive vehicles.
+- Protect workshop management routes. This routes should need a workshop_id claim on the JWT or something like that.
+- Translate error messages.
+- Question and review retrieve, update and delete endpoints.
+- Authorization with 3rd party providers (Google and Facebook).
+- Retrieve workshop and/or customer contact information when accepting a service request.
+- Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
+
+### Suggested by Steven
+
+- Garages of the mount son Los garages con mejores calificaciones en en el mes que se encuentra. Usuario.
+- New garages son los garages nuevos que se han establecido en la aplicación con una fecha de una semana por ejemplo.
+- Garages for you Toma en cuenta los servicios o las marcas del usuario para que aparezcan los talleres que van acorde a el [localización, marca, rating].
+
+## [0.11.0] - 2024-02-05
+
+### Added
+
+- Favorite workshops.
+- Archive vehicles. This allows to keep the vehicle data but not show it on the list of vehicles.
+- User phone number in the admin panel and signup endpoint.
+
+### Changed
+
+- Workshop reviews only accept 1 response. This response is made by the workshop owner. The response cannot be edited or deleted.
+
+## Fixed
+
+- Crash when trying to upload a review image.
+- Error when trying to add a speciality to a workshop if name was exactly the same as one registered.
+
+### Removed
+
+- 'responsable' field from service history request.
 
 ## [0.10.1] - 2024-02-03
 
-## Changed
+### Changed
 
 - Vehicle plate validation regex.
 
-## Fixed
+### Fixed
 
 - Crash when trying to update a user through the admin panel.
 
 ## [0.10.0] - 2024-02-03
 
-## Added
+### Added
 
 - 'answer' field to question response.
 - Workshop location (GeoJSON).
@@ -41,11 +66,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vehicles are editable.
 - 'archived' field to vehicle serializer.
 
-## Changed
+### Changed
 
 - Plate validation regex.
 
-## Fixed
+### Fixed
 
 - Question responses endpoints.
 - Missing 'current_state' field on service serializer.
@@ -53,30 +78,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.9.3] - 2024-02-02
 
-## Fixed
+### Fixed
 
 - DB error when trying to search for iexact service number.
 
 ## [0.9.2] - 2024-02-02
 
-## Added
+### Added
 
 - VIN and Plate regex validation.
 
 ## [0.9.1] - 2024-02-02
 
-## Fixed
+### Fixed
 
 - Vehicle serializer crashing because of non existing route.
 - Only `GET` requests were checking if the resource (on path) exists.
 
 ## [0.9.0] - 2024-01-26
 
-## Changed
+### Changed
 
 - Everything.
 
-## Removed
+### Removed
 
 - A lot.
 
