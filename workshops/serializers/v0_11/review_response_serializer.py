@@ -8,10 +8,10 @@ class ReviewResponseSerializer(serializers.ModelSerializer):
     user = UserListSerializer(read_only=True, source="review.workshop.owner")
     workshop_url = serializers.HyperlinkedRelatedField(
         read_only=True,
+        source="review.workshop",
         view_name="workshops:detail",
         lookup_field="id",
         lookup_url_kwarg="workshop_id",
-        source="review.workshop",
     )
     # review_url = serializers.HyperlinkedRelatedField(read_only=True)
 

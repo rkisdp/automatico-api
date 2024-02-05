@@ -8,10 +8,13 @@ from services.serializers.v0_9 import ServiceSerializer
 from users.serializers.v0_9 import UserListSerializer
 from workshops.models import ReviewModel
 
+from .review_response_serializer import ReviewResponseSerializer
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     service = ServiceSerializer(read_only=True)
     client = UserListSerializer(read_only=True)
+    response = ReviewResponseSerializer(read_only=True)
     image_urls = serializers.SerializerMethodField()
     workshop_url = serializers.HyperlinkedRelatedField(
         view_name="workshops:detail",
@@ -32,6 +35,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             "number",
             "message",
             "score",
+            "response",
             "service",
             "client",
             "created_at",
