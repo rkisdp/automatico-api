@@ -18,6 +18,8 @@ class UserVehicleView(
     queryset = VehicleModel.objects.none()
     ordering = ("id",)
     ordering_fields = ("id", "brand", "model")
+    search_fields = ("brand__name", "model", "nickname", "plate", "vin")
+    filterset_fields = ("brand", "model", "year", "is_archived")
 
     @extend_schema(
         operation_id="list-the-vehicles-for-the-authenticated-user",
@@ -47,4 +49,4 @@ class UserVehicleView(
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "vehicles")
-        return getattr(module, "VehicleSerializer")
+        return getattr(module, "PrivateVehicleSerializer")
