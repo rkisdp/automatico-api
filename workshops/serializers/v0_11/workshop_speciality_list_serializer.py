@@ -5,6 +5,7 @@ from workshops.models import SpecialityModel
 
 
 class WorkshopSpecialityListSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(max_length=50)
     url = HyperLinkSelfField(
         view_name="workshops:specialities",
         lookup_field="id",

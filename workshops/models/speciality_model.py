@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from rest_framework.exceptions import ValidationError
 
 
 class SpecialityModel(models.Model):
@@ -24,3 +25,10 @@ class SpecialityModel(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    @staticmethod
+    def validate_unique_name(name: str) -> None:
+        if SpecialityModel.objects.filter(name__iexact=name).exists():
+            raise ValidationError(
+                {"name": _("Speciality with this name already exists.")}
+            )
