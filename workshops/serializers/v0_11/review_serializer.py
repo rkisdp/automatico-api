@@ -24,8 +24,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only=True,
     )
     url = HyperLinkSelfField(
-        view_name="workshops:reviews",
-        lookup_field="workshop_id",
+        view_name="workshops:review-detail",
+        lookup_fields=("workshop_id", "number"),
+        lookup_url_kwargs=("workshop_id", "review_number"),
     )
 
     class Meta:

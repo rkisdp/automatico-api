@@ -1,9 +1,8 @@
-11from django.contrib.auth import get_user_model
+from core.fields.v0_9 import HyperLinkSelfField
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
-from core.fields.v0_9 import HyperLinkSelfField
 
 
 def email_exists(email):

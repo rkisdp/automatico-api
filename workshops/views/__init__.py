@@ -1,5 +1,6 @@
 from .question_list_view import QuestionListView
 from .question_response_list_view import QuestionResponseListView
+from .review_detail_view import ReviewDetailView
 from .review_list_view import ReviewListView
 from .review_photo_view import ReviewPhotoView
 from .review_response_view import ReviewResponseView
