@@ -4,8 +4,8 @@ from rest_framework.fields import empty
 
 from core.fields.v0_9 import HyperLinkSelfField
 from services.models import ServiceModel
-from services.serializers.v0_9 import ServiceSerializer
-from users.serializers.v0_9 import UserListSerializer
+from services.serializers.v0_11 import ServiceSerializer
+from users.serializers.v0_11 import UserListSerializer
 from workshops.models import ReviewModel
 
 from .review_response_serializer import ReviewResponseSerializer

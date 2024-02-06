@@ -3,6 +3,11 @@ from rest_framework import serializers
 
 
 class UserListSerializer(serializers.ModelSerializer):
+    image_url = serializers.ImageField(
+        read_only=True,
+        source="image",
+        use_url=True,
+    )
     url = serializers.HyperlinkedIdentityField(
         view_name="users:detail",
         lookup_field="id",
@@ -16,6 +21,7 @@ class UserListSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "full_name",
+            "image_url",
             "url",
         )
         read_only_fields = ("id",)

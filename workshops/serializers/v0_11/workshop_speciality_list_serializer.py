@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.fields.v0_8 import HyperLinkSelfField
+from core.fields.v0_9 import HyperLinkSelfField
 from workshops.models import SpecialityModel
 
 

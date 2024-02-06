@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework_gis.serializers import GeoModelSerializer
 
 from core.fields.v0_9 import HyperLinkSelfField
-from users.serializers.v0_9 import UserListSerializer
+from users.serializers.v0_11 import UserListSerializer
 from workshops.models import WorkshopModel
 
 

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from core.fields.v0_8 import HyperLinkSelfField
-from core.serializers.v0_8 import StringRelatedHyperLinkSerializer
+from core.fields.v0_9 import HyperLinkSelfField
+from core.serializers.v0_9 import StringRelatedHyperLinkSerializer
 from vehicles.models import VehicleModel
 
 

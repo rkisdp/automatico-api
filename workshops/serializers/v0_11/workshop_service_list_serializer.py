@@ -3,9 +3,9 @@ from rest_framework import serializers
 from rest_framework.fields import empty
 
 from services.models import ServiceModel, ServiceStatusModel
-from users.serializers.v0_9 import UserListSerializer
+from users.serializers.v0_11 import UserListSerializer
 from vehicles.models import VehicleModel
-from vehicles.serializers.v0_9 import VehicleSerializer
+from vehicles.serializers.v0_11 import VehicleSerializer
 
 
 class WorkshopServiceListSerializer(serializers.ModelSerializer):
