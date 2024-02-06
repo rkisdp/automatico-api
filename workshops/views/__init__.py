@@ -1,3 +1,4 @@
+from .question_detail_view import QuestionDetailView
 from .question_list_view import QuestionListView
 from .question_response_list_view import QuestionResponseListView
 from .review_detail_view import ReviewDetailView

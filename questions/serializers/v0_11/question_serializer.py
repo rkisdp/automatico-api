@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from core.fields.v0_9 import HyperLinkSelfField
 from questions.models import QuestionModel
 from users.serializers.v0_9 import UserListSerializer
 
@@ -16,6 +17,11 @@ class QuestionSerializer(serializers.ModelSerializer):
         lookup_url_kwarg="workshop_id",
         source="workshop",
     )
+    url = HyperLinkSelfField(
+        view_name="workshops:question-detail",
+        lookup_fields=("workshop_id", "number"),
+        lookup_url_kwargs=("workshop_id", "question_number"),
+    )
 
     class Meta:
         model = QuestionModel
@@ -28,6 +34,7 @@ class QuestionSerializer(serializers.ModelSerializer):
             "user",
             "created_at",
             "workshop_url",
+            "url",
         )
         read_only_fields = ("id", "number", "votes", "created_at")
 
