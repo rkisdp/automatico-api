@@ -83,6 +83,7 @@ class WorkshopListSerializer(GeoModelSerializer):
             "brands_count",
             "specialities_count",
             "vehicles_count",
+            "created_at",
             "brands_url",
             "specialities_url",
             "vehicles_url",

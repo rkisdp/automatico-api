@@ -55,6 +55,7 @@ class WorkshopDetailSerializer(GeoModelSerializer):
             "specialities",
             "brands_count",
             "specialities_count",
+            "created_at",
             "image_url",
             "url",
         )

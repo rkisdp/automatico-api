@@ -89,6 +89,11 @@ class WorkshopModel(models.Model):
         help_text=_("Whether the workshop is active or not."),
         default=True,
     )
+    created_at = models.DateTimeField(
+        verbose_name=_("created at"),
+        help_text=_("The date and time the workshop was created."),
+        auto_now_add=True,
+    )
 
     class Meta:
         verbose_name = _("workshop")
