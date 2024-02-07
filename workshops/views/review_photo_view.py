@@ -18,8 +18,8 @@ class ReviewPhotoView(
 ):
     queryset = ReviewModel.objects.all()
     parser_classes = (MultiPartParser, FormParser)
-    lookup_fields = ("workshop_id", "id")
-    lookup_url_kwargs = ("workshop_id", "review_id")
+    lookup_fields = ("workshop_id", "number")
+    lookup_url_kwargs = ("workshop_id", "review_number")
 
     @extend_schema()
     def post(self, request, *args, **kwargs):
