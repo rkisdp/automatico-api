@@ -32,4 +32,4 @@ class WorkshopFilterSet(django_filters.FilterSet):
         user_location = Point(float(lon), float(lat), srid=4326)
         return queryset.annotate(
             distance=Distance("location", user_location)
-        ).filter(distance__lte=value * 1000)
+        ).filter(distance__isnull=False, distance__lte=value * 1000)
