@@ -11,6 +11,21 @@ urlpatterns = (
         name="list",
     ),
     re_path(
+        r"^/new/?$",
+        views.WorkshopListNewView.as_view(),
+        name="new",
+    ),
+    re_path(
+        r"^/trending/?$",
+        views.WorkshopListTrendingView.as_view(),
+        name="trending",
+    ),
+    re_path(
+        r"^/recommended/?$",
+        views.WorkshopListView.as_view(),
+        name="for-you",
+    ),
+    re_path(
         r"^/(?P<workshop_id>\d+)/?$",
         views.WorkshopDetailView.as_view(),
         name="detail",

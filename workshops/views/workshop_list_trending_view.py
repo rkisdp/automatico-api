@@ -1,31 +1,26 @@
 from datetime import timedelta
 
+from django.db.models import Avg
 from django.utils import timezone
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import mixins
-from rest_framework.filters import SearchFilter
 from rest_framework.settings import api_settings
 
 from core.generics import GenericAPIView
 from vehicles.models import VehicleBrandModel
-from workshops.filters import WorkshopFilterSet
 from workshops.models import SpecialityModel, WorkshopModel
 
 SCHEMA_TAGS = ("workshops",)
 
 
 @extend_schema(tags=SCHEMA_TAGS)
-class WorkshopListNewView(
+class WorkshopListTrendingView(
     mixins.ListModelMixin,
     GenericAPIView,
 ):
     queryset = WorkshopModel.objects.all()
-    ordering = ("id",)
-    filterset_class = WorkshopFilterSet
-    filter_backends = api_settings.DEFAULT_FILTER_BACKENDS + [SearchFilter]
-    search_fields = ("name", "specialities__name", "brands__name")
-    ordering_fields = ("id", "name")
+    filter_backends = ()
 
     @extend_schema(
         operation_id="list-workshops",
@@ -56,22 +51,6 @@ class WorkshopListNewView(
                 enum=SpecialityModel.objects.values_list("name", flat=True),
                 many=True,
                 explode=False,
-            ),
-            OpenApiParameter(
-                name="ordering",
-                description="Which field to use when ordering the results.",
-                type=OpenApiTypes.STR,
-                many=True,
-                explode=False,
-                enum=(
-                    field
-                    for pair in zip(
-                        ordering_fields,
-                        (f"-{field}" for field in ordering_fields),
-                    )
-                    for field in pair
-                ),
-                default="id",
             ),
             OpenApiParameter(
                 name="page",
@@ -105,9 +84,14 @@ class WorkshopListNewView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(
-            created_at__gte=timezone.now() - timedelta(days=30)
+        queryset = (
+            queryset.filter(
+                reviews__created_at__gte=timezone.now() - timedelta(days=30),
+            )
+            .annotate(recent_rating=Avg("reviews__rating"))
+            .order_by("-recent_rating")
         )
+        return queryset
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)
