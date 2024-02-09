@@ -53,12 +53,12 @@ class ReviewModel(models.Model):
         help_text=_("Review message"),
         max_length=255,
     )
-    score = models.DecimalField(
-        verbose_name=_("score"),
-        help_text=_("Score"),
+    rating = models.DecimalField(
+        verbose_name=_("rating"),
+        help_text=_("Rating"),
         max_digits=2,
         decimal_places=1,
-        default=4.5,
+        default=4,
         validators=(
             MinValueValidator(0.0),
             MaxValueValidator(5.0),

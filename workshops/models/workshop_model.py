@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from datetime import timedelta
 from os import path
 from uuid import uuid4
 
 from django.conf import settings
 from django.contrib.gis.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
@@ -109,3 +111,24 @@ class WorkshopModel(models.Model):
             raise ValidationError(
                 {"name": _("Workshop with this name already exists.")}
             )
+
+    @property
+    def rating(self) -> float:
+        return (
+            self.reviews.aggregate(rating=models.Avg("rating"))["rating"] or 4
+        )
+
+    @property
+    def recent_rating(self) -> float:
+        if hasattr(self, "_recent_rating"):
+            return self._recent_rating
+        return (
+            self.reviews.filter(
+                created_at__gte=timezone.now() - timedelta(days=30),
+            ).aggregate(rating=models.Avg("rating"))["rating"]
+            or 4
+        )
+
+    @recent_rating.setter
+    def recent_rating(self, value: float) -> None:
+        self._recent_rating = value

@@ -1,7 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
-from rest_framework_gis.serializers import GeoModelSerializer
 
 from core.fields.v0_9 import HyperLinkSelfField
 from users.serializers.v0_11 import UserListSerializer
@@ -9,16 +8,13 @@ from workshops.models import WorkshopModel
 
 
 @extend_schema_serializer(component_name="MinimalWorkshop")
-class WorkshopListSerializer(GeoModelSerializer):
+class WorkshopListSerializer(serializers.ModelSerializer):
     owner = UserListSerializer(
         read_only=True,
         help_text=_("The account owner of the workshop."),
     )
-    image_url = serializers.ImageField(
-        read_only=True,
-        source="image",
-        use_url=True,
-        help_text=_("The image of the workshop."),
+    is_favorite = serializers.SerializerMethodField(
+        help_text=_("Whether the workshop is a favorite of the user."),
     )
     brands = serializers.ListSerializer(
         child=serializers.CharField(),
@@ -44,6 +40,12 @@ class WorkshopListSerializer(GeoModelSerializer):
         source="vehicles.count",
         read_only=True,
         help_text=_("Number of vehicles in the workshop."),
+    )
+    image_url = serializers.ImageField(
+        read_only=True,
+        source="image",
+        use_url=True,
+        help_text=_("The image of the workshop."),
     )
     brands_url = HyperLinkSelfField(
         view_name="workshops:brands",
@@ -76,14 +78,17 @@ class WorkshopListSerializer(GeoModelSerializer):
             "id",
             "owner",
             "name",
-            "image_url",
+            "rating",
+            "recent_rating",
             "location",
+            "is_favorite",
             "brands",
             "specialities",
             "brands_count",
             "specialities_count",
             "vehicles_count",
             "created_at",
+            "image_url",
             "brands_url",
             "specialities_url",
             "vehicles_url",
@@ -95,3 +100,9 @@ class WorkshopListSerializer(GeoModelSerializer):
     def create(self, validated_data):
         validated_data["owner"] = self.context["request"].user
         return super().create(validated_data)
+
+    def get_is_favorite(self, obj):
+        user = self.context["request"].user
+        if not user.is_authenticated:
+            return False
+        return user.favorite_workshops.filter(id=obj.id).exists()

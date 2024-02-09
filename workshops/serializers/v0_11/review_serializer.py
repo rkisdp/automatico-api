@@ -1,4 +1,5 @@
 from django.utils.translation import gettext_lazy as _
+from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
 from rest_framework.fields import empty
 
@@ -11,7 +12,23 @@ from workshops.models import ReviewModel
 from .review_response_serializer import ReviewResponseSerializer
 
 
+@extend_schema_serializer(component_name="Review", deprecate_fields=("score",))
 class ReviewSerializer(serializers.ModelSerializer):
+    rating = serializers.DecimalField(
+        max_digits=2,
+        decimal_places=1,
+        help_text=_("The rating of the review."),
+        required=False,
+        allow_null=True,
+    )
+    score = serializers.DecimalField(
+        source="rating",
+        max_digits=2,
+        decimal_places=1,
+        help_text=_("The score of the review."),
+        required=False,
+        allow_null=True,
+    )
     service = ServiceSerializer(read_only=True)
     client = UserListSerializer(read_only=True)
     response = ReviewResponseSerializer(read_only=True)
@@ -35,6 +52,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             "id",
             "number",
             "message",
+            "rating",
             "score",
             "response",
             "service",
@@ -81,6 +99,23 @@ class ReviewSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 _(f"Service #{value} does not exist.")
             )
+
+    def validate(self, attrs):
+        if self.context["request"].method == "POST":
+            if ReviewModel.objects.filter(
+                service=attrs["service"], client=attrs["client"]
+            ).exists():
+                raise serializers.ValidationError(
+                    _("You have already reviewed this service.")
+                )
+
+        if attrs.get("rating") is None and attrs.get("score") is None:
+            raise serializers.ValidationError(
+                _("Rating or score must be provided.")
+            )
+
+        attrs["rating"] = attrs.get("rating", attrs.get("score"))
+        return super().validate(attrs)
 
     def create(self, validated_data):
         validated_data["workshop"] = self.context["workshop"]
