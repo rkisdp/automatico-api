@@ -22,7 +22,7 @@ urlpatterns = (
     ),
     re_path(
         r"^/recommended/?$",
-        views.WorkshopListView.as_view(),
+        views.WorkshopListRecommendedView.as_view(),
         name="for-you",
     ),
     re_path(

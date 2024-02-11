@@ -20,16 +20,15 @@ class WorkshopFilterSet(django_filters.FilterSet):
 
     def filter_distance(self, queryset, name, value):
         try:
-            lat, lon = (
-                self.request.META.get("HTTP_X_USER_LOCATION").split(",").strip()
-            )
+            lat, lon = self.request.META.get("HTTP_X_USER_LOCATION").split(",")
         except (AttributeError, ValueError):
             lat, lon = None, None
 
-        if not lat or not lon:
+        if lat is None or lon is None:
             return queryset
 
         user_location = Point(float(lon), float(lat), srid=4326)
-        return queryset.annotate(
+        queryset = queryset.annotate(
             distance=Distance("location", user_location)
         ).filter(distance__isnull=False, distance__lte=value * 1000)
+        return queryset
