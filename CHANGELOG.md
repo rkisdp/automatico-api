@@ -7,22 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Fix responsable not added when accepting a service.
 - Deactivate a workshop.
 - Activate a workshop.
-- Enable `POST /image` to upload an image and return it's ID.
 - Protect workshop management routes. This routes should need a workshop_id claim on the JWT or something like that.
 - Translate error messages.
-- Question and review retrieve, update and delete endpoints.
 - Authorization with 3rd party providers (Google and Facebook).
 - Retrieve workshop and/or customer contact information when accepting a service request.
 - Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
+- Enable `POST /image` to upload an image and return it's ID.
 
-### Suggested by Steven
+## [0.11.1] - 2024-02-07
 
-- Garages of the mount son Los garages con mejores calificaciones en en el mes que se encuentra. Usuario.
-- New garages son los garages nuevos que se han establecido en la aplicación con una fecha de una semana por ejemplo.
-- Garages for you Toma en cuenta los servicios o las marcas del usuario para que aparezcan los talleres que van acorde a el [localización, marca, rating].
+### Added
+
+- Garages of the month (based on reviews).
+- New garages (last 30 days).
+- Garages for you (based on your vehicles and location).
+- Question and review retrieve, update and delete endpoints.
+- 'image_url' field to user list serializer.
+- 'url' field to question serializer.
+- 'is_favorite' field to workshop serializer.
+- Workshop rating metadata (average and stars count).
+
+### Fixed
+
+- 'url' field on review serializer.
+- Workshop distance filter. Was retrieving workshops with no location.
+
+### Changed
+
+- Deprecated 'score' field on review serializer. Use 'rating' instead.
 
 ## [0.11.0] - 2024-02-05
 
@@ -36,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Workshop reviews only accept 1 response. This response is made by the workshop owner. The response cannot be edited or deleted.
 
-## Fixed
+### Fixed
 
 - Crash when trying to upload a review image.
 - Error when trying to add a speciality to a workshop if name was exactly the same as one registered.
