@@ -60,7 +60,7 @@ class ReviewModel(models.Model):
         decimal_places=1,
         default=4,
         validators=(
-            MinValueValidator(0.0),
+            MinValueValidator(1.0),
             MaxValueValidator(5.0),
         ),
     )

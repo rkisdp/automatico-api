@@ -74,8 +74,10 @@ class VehicleModel(models.Model):
         blank=True,
         validators=(
             RegexValidator(
-                regex=r"^(A{1,2}|B|C|D|F|G|L|H|I|T|P|U|J|R|S|M|OE|OF|OM|OP|E"
-                r"[AGLMEID]|VC|WD|OI|EX|YX|Z|NZ|DD|PP|K)-\d{1,6}$",
+                regex=(
+                    r"^(A{1,2}|B|C|D{1,2}|F|G|L|H|I|T|P{1,2}|U|J|R|S|M|O[EFMPI]"
+                    r"|E[AGLMEIDX]|VC|WD|YX|N?Z|K)\d{6}$"
+                ),
                 message=_("Plate must be in the format 'A000000'."),
             ),
         ),
@@ -88,7 +90,7 @@ class VehicleModel(models.Model):
         blank=True,
         validators=(
             RegexValidator(
-                regex=r"^[A-HJ-NPR-Z0-9]{17}$",
+                regex=r"^[A-HJ-NPR-Z\\d]{8}[\\dX][A-HJ-NPR-Z\\d]{2}\\d{6}$",
                 message=_("VIN must be 17 characters long."),
             ),
         ),
@@ -118,3 +120,8 @@ class VehicleModel(models.Model):
 
     def __str__(self) -> str:
         return f"{self.brand} {self.model} ({self.year})"
+
+    def save(self, *args, **kwargs) -> None:
+        self.plate = self.plate.upper()
+        self.vin = self.vin.upper()
+        super().save(*args, **kwargs)
