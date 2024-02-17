@@ -1,2 +1,0 @@
-from .user_detail_serializer import UserDetailSerializer
-from .user_list_serializer import UserListSerializer

@@ -1,3 +1,0 @@
-from .change_password_serializer import ChangePasswordSerializer
-from .private_user_serializer import PrivateUserSerializer
-from .user_photo_serializer import UserPhotoSerializer
