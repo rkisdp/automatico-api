@@ -12,9 +12,7 @@ class ListModelMixin(ETagLastModifiedMixin):
             return Response(status=status.HTTP_304_NOT_MODIFIED)
 
         serializer = self.get_serializer(queryset, many=True)
-        headers = {
-            "ETag": etag,
-        }
+        headers = {"ETag": etag}
         return Response(
             serializer.data,
             status=status.HTTP_200_OK,

@@ -16,9 +16,7 @@ class RetrieveModelMixin(ETagLastModifiedMixin):
         ):
             return Response(status=status.HTTP_304_NOT_MODIFIED)
 
-        headers = {
-            "ETag": etag,
-        }
+        headers = {"ETag": etag}
         if last_modified is not None:
             headers["Last-Modified"] = last_modified
         return Response(

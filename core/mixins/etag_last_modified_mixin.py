@@ -1,7 +1,7 @@
 import hashlib
 
 from django.core.cache import cache
-from django.utils.http import http_date
+from django.utils.http import http_date, parse_http_date_safe
 
 
 class ETagLastModifiedMixin:
@@ -30,4 +30,10 @@ class ETagLastModifiedMixin:
         if_modified_since = request.headers.get("If-Modified-Since")
         if last_modified is None or if_modified_since is None:
             return False
-        return if_modified_since == last_modified
+
+        if_modified_since_client = parse_http_date_safe(if_modified_since)
+        if if_modified_since_client is None:
+            return False
+
+        if_modified_since_server = parse_http_date_safe(last_modified)
+        return if_modified_since_client >= if_modified_since_server
