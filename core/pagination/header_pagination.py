@@ -47,34 +47,30 @@ class HeaderPagination(PageNumberPagination):
 
         return links
 
-    def get_paginated_response(self, data) -> Response:
+    def get_paginated_response(self, data, extra_headers=None) -> Response:
         links = self._get_links()
-
         headers = {
             "X-Page-Count": self.page.paginator.num_pages,
             "X-Page-Size": self.page_size,
             "X-Current-Page": self.page.number,
         }
-
         if self.include_count:
             headers.update({"X-Total": self.page.paginator.count})
-
         if links:
             headers.update({"Link": ", ".join(links)})
-
+        if extra_headers is not None:
+            headers.update(extra_headers)
         return Response(data, headers=headers)
 
     def get_first_link(self) -> str | None:
         if not self.page.has_previous():
             return None
-
         url = self.request.build_absolute_uri()
         return remove_query_param(url, self.page_query_param)
 
     def get_last_link(self) -> str | None:
         if not self.page.has_next():
             return None
-
         url = self.request.build_absolute_uri()
         return replace_query_param(
             url,

@@ -1,3 +1,4 @@
+from .create_model_mixin import CreateModelMixin
 from .etag_last_modified_mixin import ETagLastModifiedMixin
 from .list_model_mixin import ListModelMixin
 from .multiple_field_lookup_mixin import MultipleFieldLookupMixin

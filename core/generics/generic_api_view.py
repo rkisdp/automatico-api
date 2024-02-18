@@ -32,3 +32,6 @@ class GenericAPIView(BaseGenericAPIView):
         module = self._get_serializer_module(version)
         serializer_name = self._get_serializer_name()
         return getattr(module, serializer_name)
+
+    def get_paginated_response(self, data, headers=None):
+        return self.paginator.get_paginated_response(data, headers)
