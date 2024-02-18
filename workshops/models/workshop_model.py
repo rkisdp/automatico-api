@@ -96,6 +96,11 @@ class WorkshopModel(models.Model):
         help_text=_("The date and time the workshop was created."),
         auto_now_add=True,
     )
+    updated_at = models.DateTimeField(
+        verbose_name=_("updated at"),
+        help_text=_("The date and time the workshop was last updated."),
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = _("workshop")
