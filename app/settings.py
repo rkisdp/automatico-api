@@ -71,8 +71,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": ("core.parsers.AutoMaticoJSONParser",),
     "DEFAULT_RENDERER_CLASSES": ("core.renderers.AutoMaticoJSONRenderer",),
     "DEFAULT_VERSIONING_CLASS": "core.versioning.XAutoMaticoAPIVersioning",
-    "DEFAULT_VERSION": "v0",
-    "ALLOWED_VERSIONS": ("v0",),
+    "DEFAULT_VERSION": "0",
+    "ALLOWED_VERSIONS": ("0",),
     "VERSION_PARAM": "version",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -121,7 +121,7 @@ CSRF_TRUSTED_ORIGINS = env.tuple("CSRF_TRUSTED_ORIGINS", default=())
 SPECTACULAR_SETTINGS = {
     "TITLE": "AutoMático API",
     "DESCRIPTION": "AutoMático API",
-    "VERSION": "v0.12.0",
+    "VERSION": "0.12.0",
     "TOS": None,
     "LICENSE": None,
     "SERVE_INCLUDE_SCHEMA": False,
