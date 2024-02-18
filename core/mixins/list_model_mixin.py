@@ -7,12 +7,15 @@ from .etag_last_modified_mixin import ETagLastModifiedMixin
 class ListModelMixin(ETagLastModifiedMixin):
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-        etag = self.get_etag(request, str(queryset))
-        if self.check_etag(request, etag):
-            return Response(status=status.HTTP_304_NOT_MODIFIED)
-
         serializer = self.get_serializer(queryset, many=True)
+        etag = self.get_etag(request, str(serializer.data))
         headers = {"ETag": etag}
+        if self.check_etag(request, etag):
+            return Response(
+                status=status.HTTP_304_NOT_MODIFIED,
+                headers=headers,
+            )
+
         return Response(
             serializer.data,
             status=status.HTTP_200_OK,
