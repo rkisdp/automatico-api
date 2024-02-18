@@ -7,7 +7,8 @@ from .etag_last_modified_mixin import ETagLastModifiedMixin
 class RetrieveModelMixin(ETagLastModifiedMixin):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        etag = self.get_etag(request, str(instance))
+        serializer = self.get_serializer(instance)
+        etag = self.get_etag(request, serializer.data)
         last_modified = self.get_last_modified(request, instance)
 
         if self.check_etag(request, etag) or self.check_last_modified(
@@ -15,5 +16,13 @@ class RetrieveModelMixin(ETagLastModifiedMixin):
         ):
             return Response(status=status.HTTP_304_NOT_MODIFIED)
 
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        headers = {
+            "ETag": etag,
+        }
+        if last_modified is not None:
+            headers["Last-Modified"] = last_modified
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+            headers=headers,
+        )
