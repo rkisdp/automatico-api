@@ -18,11 +18,11 @@ class GenericAPIView(BaseGenericAPIView):
         if module_name is None:
             module_name = self.__module__
             return import_module(
-                f"{'.'.join(module_name.split('.')[:-2])}.serializers."
+                f"{'.'.join(module_name.split('.')[:-2])}.serializers.v"
                 + version.replace(".", "_")
             )
         return import_module(
-            f"{module_name}.serializers.{version.replace('.', '_')}"
+            f"{module_name}.serializers.v{version.replace('.', '_')}"
         )
 
     def _get_serializer_name(self):
