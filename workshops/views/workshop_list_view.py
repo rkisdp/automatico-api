@@ -1,10 +1,12 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework import mixins
 from rest_framework.filters import SearchFilter
 from rest_framework.settings import api_settings
 
 from core.generics import GenericAPIView
+from core.mixins import ListModelMixin
 from vehicles.models import VehicleBrandModel
 from workshops.filters import WorkshopFilterSet
 from workshops.models import SpecialityModel, WorkshopModel
@@ -14,7 +16,7 @@ SCHEMA_TAGS = ("workshops",)
 
 @extend_schema(tags=SCHEMA_TAGS)
 class WorkshopListView(
-    mixins.ListModelMixin,
+    ListModelMixin,
     GenericAPIView,
 ):
     queryset = WorkshopModel.objects.all()
@@ -97,5 +99,10 @@ class WorkshopListView(
             ),
         ),
     )
+    @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
+
+    def _get_versioned_serializer_class(self, version):
+        module = self._get_serializer_module(version)
+        return getattr(module, "MinimalWorkshopSerializer")

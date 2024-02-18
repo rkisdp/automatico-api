@@ -12,20 +12,12 @@ from workshops.models import ReviewModel
 from .review_response_serializer import ReviewResponseSerializer
 
 
-@extend_schema_serializer(component_name="Review", deprecate_fields=("score",))
+@extend_schema_serializer(component_name="Review")
 class ReviewSerializer(serializers.ModelSerializer):
     rating = serializers.DecimalField(
         max_digits=2,
         decimal_places=1,
         help_text=_("The rating of the review."),
-        required=False,
-        allow_null=True,
-    )
-    score = serializers.DecimalField(
-        source="rating",
-        max_digits=2,
-        decimal_places=1,
-        help_text=_("The score of the review."),
         required=False,
         allow_null=True,
     )
@@ -53,7 +45,6 @@ class ReviewSerializer(serializers.ModelSerializer):
             "number",
             "message",
             "rating",
-            "score",
             "response",
             "service",
             "client",

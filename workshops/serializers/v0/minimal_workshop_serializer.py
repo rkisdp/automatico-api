@@ -7,8 +7,22 @@ from users.serializers.v0 import UserListSerializer
 from workshops.models import WorkshopModel
 
 
-@extend_schema_serializer(component_name="MinimalWorkshop")
-class WorkshopListSerializer(serializers.ModelSerializer):
+@extend_schema_serializer(
+    component_name="MinimalWorkshop",
+    deprecate_fields=(
+        "owner",
+        "vehicles",
+        "location",
+        "recent_rating",
+        "brands_count",
+        "specialities_count",
+        "vehicles_count",
+        "vehicles_url",
+        "brands_url",
+        "specialities_url",
+    ),
+)
+class MinimalWorkshopSerializer(serializers.ModelSerializer):
     owner = UserListSerializer(
         read_only=True,
         help_text=_("The account owner of the workshop."),

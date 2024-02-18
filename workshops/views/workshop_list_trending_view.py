@@ -23,10 +23,10 @@ class WorkshopListTrendingView(
     filter_backends = ()
 
     @extend_schema(
-        operation_id="list-workshops",
-        summary="List workshops",
+        operation_id="list-trending-workshops",
+        summary="List trending workshops",
         description=(
-            "Lists all workshops in the order that they were created."
+            "Lists trending workshops."
             "\n\n"
             "**Note**: Pagination is powered exclusively by the `page` parameter. "
             "Use the [Link header]"
@@ -95,4 +95,4 @@ class WorkshopListTrendingView(
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)
-        return getattr(module, "WorkshopListSerializer")
+        return getattr(module, "MinimalWorkshopSerializer")

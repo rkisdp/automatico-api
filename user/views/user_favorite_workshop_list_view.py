@@ -38,4 +38,4 @@ class UserFavoriteWorkshopListView(
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "workshops")
-        return getattr(module, "WorkshopListSerializer")
+        return getattr(module, "MinimalWorkshopSerializer")

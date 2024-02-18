@@ -11,7 +11,7 @@ from .speciality_list_view import SpecialityListView
 from .workshop_brand_list_view import WorkshopBrandListView
 from .workshop_contact_detail_view import WorkshopContactDetailView
 from .workshop_contact_list_view import WorkshopContactListView
-from .workshop_detail_viewset import WorkshopDetailView
+from .workshop_detail_view import WorkshopDetailView
 from .workshop_employee_list_view import WorkshopEmployeeListView
 from .workshop_list_new_view import WorkshopListNewView
 from .workshop_list_recommended_view import WorkshopListRecommendedView

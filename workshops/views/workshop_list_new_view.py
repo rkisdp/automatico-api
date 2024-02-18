@@ -28,10 +28,10 @@ class WorkshopListNewView(
     ordering_fields = ("id", "name")
 
     @extend_schema(
-        operation_id="list-workshops",
-        summary="List workshops",
+        operation_id="list-new-workshops",
+        summary="List new workshops",
         description=(
-            "Lists all workshops in the order that they were created."
+            "Lists workshops with less than a month of creation."
             "\n\n"
             "**Note**: Pagination is powered exclusively by the `page` parameter. "
             "Use the [Link header]"
@@ -111,4 +111,4 @@ class WorkshopListNewView(
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)
-        return getattr(module, "WorkshopListSerializer")
+        return getattr(module, "MinimalWorkshopSerializer")
