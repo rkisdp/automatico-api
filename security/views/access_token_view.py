@@ -27,6 +27,6 @@ class AccessTokenView(views.TokenObtainPairView):
 
     def _get_versioned_serializer_class(self, version):
         module = import_module(
-            f"security.serializers.{version.replace('.', '_')}"
+            f"security.serializers.v{version.replace('.', '_')}"
         )
         return getattr(module, "AccessTokenSerializer")

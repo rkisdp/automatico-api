@@ -90,6 +90,14 @@ REST_FRAMEWORK = {
     "COERCE_DECIMAL_TO_STRING": False,
     "URL_FIELD_NAME": "url",
     "UPLOADED_FILES_USE_URL": True,
+    "DEFAULT_THROTTLE_CLASSES": [
+        "security.throttling.AnonRateThrottle",
+        "security.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "50/hour",
+        "user": "100/hour",
+    },
 }
 
 SIMPLE_JWT = {

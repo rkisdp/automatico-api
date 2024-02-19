@@ -35,3 +35,30 @@ class GenericAPIView(BaseGenericAPIView):
 
     def get_paginated_response(self, data, headers=None):
         return self.paginator.get_paginated_response(data, headers)
+
+    def check_throttles(self, request):
+        throttle_durations = []
+        for throttle in self.get_throttles():
+            allowed = throttle.allow_request(request, self)
+            if allowed is None:
+                continue
+            if not allowed:
+                throttle_durations.append(throttle.wait())
+            self.throttle_headers = throttle.get_headers()
+
+        if throttle_durations:
+            durations = [
+                duration
+                for duration in throttle_durations
+                if duration is not None
+            ]
+
+            duration = max(durations, default=None)
+            self.throttled(request, duration)
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(request, response, *args, **kwargs)
+        if hasattr(self, "throttle_headers"):
+            for name, value in self.throttle_headers.items():
+                response[name] = value
+        return response
