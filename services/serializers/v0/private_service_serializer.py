@@ -6,7 +6,7 @@ from services.models import ServiceModel, ServiceStatusModel
 from users.serializers.v0 import UserListSerializer
 from vehicles.models import VehicleModel
 from vehicles.serializers.v0 import VehicleSerializer
-from workshops.serializers.v0 import WorkshopListSerializer
+# from workshops.serializers.v0 import MinimalWorkshopSerializer
 
 
 class PrivateServiceSerializer(serializers.ModelSerializer):
@@ -14,10 +14,10 @@ class PrivateServiceSerializer(serializers.ModelSerializer):
         read_only=True,
         help_text=_("Vehicle data."),
     )
-    workshop = WorkshopListSerializer(
-        read_only=True,
-        help_text=_("Workshop data."),
-    )
+    # workshop = MinimalWorkshopSerializer(
+    #     read_only=True,
+    #     help_text=_("Workshop data."),
+    # )
     requested_by = UserListSerializer(
         read_only=True,
         help_text=_("User data."),

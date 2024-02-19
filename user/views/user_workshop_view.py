@@ -1,7 +1,7 @@
 from drf_spectacular.utils import extend_schema
-from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 
+from core import mixins
 from core.generics import GenericAPIView
 from workshops.models import WorkshopModel
 

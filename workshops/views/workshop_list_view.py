@@ -20,10 +20,10 @@ class WorkshopListView(
     GenericAPIView,
 ):
     queryset = WorkshopModel.objects.all()
-    ordering = ("id",)
     filterset_class = WorkshopFilterSet
     filter_backends = api_settings.DEFAULT_FILTER_BACKENDS + [SearchFilter]
     search_fields = ("name", "specialities__name", "brands__name")
+    ordering = ("id",)
     ordering_fields = ("id", "name")
 
     @extend_schema(
