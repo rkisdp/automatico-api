@@ -7,14 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Retrieve workshop and/or customer contact information when accepting a service request.
+- Enable `POST /image` to upload an image and return it's ID.
+- Fix `DELETE /workshops/{workshop_id}/
+- Delete vehicles.
+
+## [0.12.0] - 2024-02-17
+
+### Added
+
+- Protected workshop management routes. This routes should need a workshop_id claim on the JWT or something like that.
 - Deactivate a workshop.
 - Activate a workshop.
-- Protect workshop management routes. This routes should need a workshop_id claim on the JWT or something like that.
-- Translate error messages.
+- Translate (some) error messages.
 - Authorization with 3rd party providers (Google and Facebook).
-- Retrieve workshop and/or customer contact information when accepting a service request.
 - Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
-- Enable `POST /image` to upload an image and return it's ID.
+- Caching (Cache-Control, ETag and Last Modified headers).
+- Throttling (Rate Limiting).
+
+### Changed
+
+- Only major version number is used as the API version. e.g. `X-AutoMatico-API-Version: 0` instead of `X-AutoMatico-API-Version: v0.12`.
+- 'workshop' field on service serializer is now the workshop id.
 
 ## [0.11.1] - 2024-02-07
 
