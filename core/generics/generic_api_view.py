@@ -16,11 +16,7 @@ class GenericAPIView(BaseGenericAPIView):
 
     def _get_serializer_module(self, version, module_name=None):
         if module_name is None:
-            module_name = self.__module__
-            return import_module(
-                f"{'.'.join(module_name.split('.')[:-2])}.serializers.v"
-                + version.replace(".", "_")
-            )
+            module_name = self.__module__.split(".")[-3]
         return import_module(
             f"{module_name}.serializers.v{version.replace('.', '_')}"
         )
