@@ -90,7 +90,7 @@ class VehicleModel(models.Model):
         blank=True,
         validators=(
             RegexValidator(
-                regex=r"^[A-HJ-NPR-Z\\d]{8}[\\dX][A-HJ-NPR-Z\\d]{2}\\d{6}$",
+                regex=r"^[A-HJ-NPR-Z\d]{8}[\dX][A-HJ-NPR-Z\d]{2}\d{6}$",
                 message=_("VIN must be 17 characters long."),
             ),
         ),
@@ -101,6 +101,11 @@ class VehicleModel(models.Model):
         upload_to=rename,
         null=True,
         blank=True,
+    )
+    is_active = models.BooleanField(
+        verbose_name=_("active"),
+        help_text=_("Active"),
+        default=True,
     )
     is_archived = models.BooleanField(
         verbose_name=_("archived"),

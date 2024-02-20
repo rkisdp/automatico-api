@@ -14,7 +14,7 @@ SCHEMA_TAGS = ("vehicles",)
 class VehicleView(
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
-    # mixins.DestroyModelMixin,
+    mixins.DestroyModelMixin,
     GenericAPIView,
 ):
     queryset = VehicleModel.objects.all()
@@ -61,24 +61,29 @@ class VehicleView(
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, partial=True, *args, **kwargs)
 
-    # @extend_schema(
-    #     operation_id="delete-a-vehicle",
-    #     summary="Delete a vehicle",
-    #     description=(
-    #         "Deletes a vehicle. The authenticated user must be the owner of "
-    #         "the vehicle."
-    #     ),
-    #     deprecated=True,
-    #     tags=(*SCHEMA_TAGS, "deprecated"),
-    #     parameters=(
-    #         OpenApiParameter(
-    #             name="vehicle_id",
-    #             description="The vehicle ID.",
-    #             type=OpenApiTypes.INT,
-    #             location=OpenApiParameter.PATH,
-    #             required=True,
-    #         ),
-    #     ),
-    # )
-    # def delete(self, request, *args, **kwargs):
-    #     return self.destroy(request, *args, **kwargs)
+    @extend_schema(
+        operation_id="delete-a-vehicle",
+        summary="Delete a vehicle",
+        description=(
+            "Deletes a vehicle. The authenticated user must be the owner of "
+            "the vehicle."
+        ),
+        parameters=(
+            OpenApiParameter(
+                name="vehicle_id",
+                description="The vehicle ID.",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.PATH,
+                required=True,
+            ),
+        ),
+    )
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save()
