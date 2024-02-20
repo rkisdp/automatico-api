@@ -8,40 +8,62 @@ from core.exceptions import PreconditionFailed
 
 
 class ETagLastModifiedMixin:
-    def get_last_modified(self, request, obj) -> str:
+    def get_headers(self, request, data, obj=None) -> dict:
+        etag = self.get_etag(request, data)
+        if obj is not None:
+            last_modified = self.get_last_modified(request, obj)
+        headers = {"ETag": etag}
+        if last_modified is not None:
+            headers["Last-Modified"] = last_modified
+        return headers
+
+    def get_last_modified(self, request, obj) -> str | None:
         if not hasattr(obj, "updated_at"):
             return None
 
         last_modified = http_date(obj.updated_at.timestamp())
-        cache_key_last_modified = f"{request.path}-last-modified"
+        request_path = (
+            request.path
+            if not request.path.endswith("/")
+            else request.path[:-1]
+        )
+        cache_key_last_modified = f"{request_path}-last-modified"
         cache.set(cache_key_last_modified, last_modified, timeout=None)
         return last_modified
 
     def get_etag(self, request, data: str) -> str:
         etag = hashlib.sha256(data.encode("utf-8")).hexdigest()
-        cache_key = f"{request.path}-etag"
+        etag = f'W/"{etag}"'
+        request_path = (
+            request.path
+            if not request.path.endswith("/")
+            else request.path[:-1]
+        )
+        cache_key = f"{request_path}-etag"
         cache.set(cache_key, etag, timeout=None)
-        return f'W/"{etag}"'
+        return etag
 
-    def check_etag(self, request, etag) -> bool:
+    def check_etag(self, request) -> bool:
         if request.headers.get("If-Match", None) is not None:
-            return self._check_if_match(request, etag)
+            return self._check_if_match(request)
         if request.headers.get("If-None-Match", None) is not None:
-            return self._check_if_none_match(request, etag)
+            return self._check_if_none_match(request)
         return False
 
-    def check_last_modified(self, request, last_modified) -> bool:
+    def check_last_modified(self, request) -> bool:
         if request.headers.get("If-Modified-Since", None) is not None:
-            return self._check_if_modified_since(request, last_modified)
+            return self._check_if_modified_since(request)
         if request.headers.get("If-Unmodified-Since", None) is not None:
-            return self._check_if_unmodified_since(request, last_modified)
+            return self._check_if_unmodified_since(request)
         return False
 
-    def _check_if_match(self, request, etag) -> bool:
+    def _check_if_match(self, request) -> bool:
         if_match = request.headers.get("If-Match")
         if if_match is None:
             return False
 
+        cache_key = f"{request.path}-etag"
+        etag = cache.get(cache_key)
         if etag not in if_match.split(", "):
             raise PreconditionFailed(
                 detail=_(
@@ -51,11 +73,11 @@ class ETagLastModifiedMixin:
             )
         return True
 
-    def _check_if_none_match(self, request, etag) -> bool:
-        if_none_match = request.headers.get("If-None-Match")
-        if if_none_match is None:
-            return False
+    def _check_if_none_match(self, request) -> bool:
+        cache_key = f"{request.path}-etag"
+        etag = cache.get(cache_key)
 
+        if_none_match = request.headers.get("If-None-Match")
         if request.method in ("GET", "HEAD"):
             return etag in if_none_match.split(", ")
 
@@ -72,32 +94,32 @@ class ETagLastModifiedMixin:
             )
         return False
 
-    def _check_if_modified_since(self, request, last_modified) -> bool:
+    def _check_if_modified_since(self, request) -> bool:
         if_modified_since = request.headers.get("If-Modified-Since")
+        if_modified_since = parse_http_date_safe(if_modified_since)
+        if if_modified_since is None:
+            return False
+
+        cache_key = f"{request.path}-last-modified"
+        last_modified = cache.get(cache_key)
+        last_modified = parse_http_date_safe(last_modified)
         if last_modified is None:
             return False
+        return if_modified_since >= last_modified
 
-        if_modified_since_client = parse_http_date_safe(if_modified_since)
-        if if_modified_since_client is None:
-            return False
-
-        if_modified_since_server = parse_http_date_safe(last_modified)
-        return if_modified_since_client >= if_modified_since_server
-
-    def _check_if_unmodified_since(self, request, last_modified) -> bool:
+    def _check_if_unmodified_since(self, request) -> bool:
         if_unmodified_since = request.headers.get("If-Unmodified-Since")
+        if_unmodified_since = parse_http_date_safe(if_unmodified_since)
+        if if_unmodified_since is None:
+            return False
+
+        cache_key = f"{request.path}-last-modified"
+        last_modified = cache.get(cache_key)
+        last_modified = parse_http_date_safe(last_modified)
         if last_modified is None:
             return False
 
-        if_unmodified_since_client = parse_http_date_safe(if_unmodified_since)
-        if if_unmodified_since_client is None:
-            return False
-
-        if_unmodified_since_server = parse_http_date_safe(last_modified)
-        if if_unmodified_since_server is None:
-            return False
-
-        if if_unmodified_since_client < if_unmodified_since_server:
+        if if_unmodified_since < last_modified:
             raise PreconditionFailed(
                 detail=_(
                     "The resource has been modified after the date specified "

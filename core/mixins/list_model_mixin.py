@@ -9,9 +9,8 @@ class ListModelMixin(ETagLastModifiedMixin):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
-        etag = self.get_etag(request, str(serializer.data))
-        headers = {"ETag": etag}
-        if self.check_etag(request, etag):
+        headers = self.get_headers(request, serializer.data)
+        if self.check_etag(request):
             return Response(
                 status=status.HTTP_304_NOT_MODIFIED,
                 headers=headers,
