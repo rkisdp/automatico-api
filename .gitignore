@@ -134,3 +134,4 @@ dmypy.json
 media/
 !app/.env
 */.env
+docker.env

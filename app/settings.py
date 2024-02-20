@@ -100,6 +100,16 @@ REST_FRAMEWORK = {
     },
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": env.str("REDIS_URL", default="redis://localhost:6379/1"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=180),
     "UPDATE_LAST_LOGIN": True,
@@ -323,3 +333,9 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 APPEND_SLASH = False
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 50000
+
+OAUTH2_GOOGLE_CLIENT_ID = env.str("OAUTH2_GOOGLE_CLIENT_ID", default=None)
+OAUTH2_GOOGLE_CLIENT_SECRET = env.str(
+    "OAUTH2_GOOGLE_CLIENT_SECRET", default=None
+)
+OAUTH2_GOOGLE_PROJECT_ID = env.str("OAUTH2_GOOGLE_PROJECT_ID", default=None)
