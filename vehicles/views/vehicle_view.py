@@ -81,9 +81,6 @@ class VehicleView(
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
-    def get_queryset(self):
-        return super().get_queryset().filter(is_active=True)
-
     def perform_destroy(self, instance):
-        instance.is_active = False
+        instance.is_deleted = True
         instance.save()

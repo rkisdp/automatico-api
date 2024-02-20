@@ -1,6 +1,15 @@
 from importlib import import_module
 
+from django.http import Http404
 from rest_framework.generics import GenericAPIView as BaseGenericAPIView
+from rest_framework.generics import get_object_or_404 as _get_object_or_404
+
+
+def get_object_or_404(queryset, **kwargs):
+    obj = _get_object_or_404(queryset, **kwargs)
+    if hasattr(obj, "is_deleted") and obj.is_deleted:
+        raise Http404
+    return obj
 
 
 class GenericAPIView(BaseGenericAPIView):
@@ -58,3 +67,9 @@ class GenericAPIView(BaseGenericAPIView):
             for name, value in self.throttle_headers.items():
                 response[name] = value
         return response
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if hasattr(queryset.model, "is_deleted"):
+            queryset = queryset.filter(is_deleted=False)
+        return queryset

@@ -2,10 +2,9 @@ from django.db.models import Avg
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from drf_spectacular.utils import extend_schema
-from rest_framework.generics import get_object_or_404
 
 from core import mixins
-from core.generics import GenericAPIView
+from core.generics import GenericAPIView, get_object_or_404
 from workshops.models import WorkshopModel
 
 SCHEMA_TAGS = ("reviews",)
@@ -29,10 +28,7 @@ class ReviewListView(
     )
     @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
-        headers = self._get_rating_headers()
-        response = self._add_headers_to_response(response, headers)
-        return response
+        return super().list(request, *args, **kwargs)
 
     @extend_schema(
         operation_id="create-a-review",
@@ -42,13 +38,19 @@ class ReviewListView(
     def post(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(request, response, *args, **kwargs)
+        headers = self._get_rating_headers()
+        response = self._add_headers_to_response(response, headers)
+        return response
+
     def get_object(self):
         workshop_id = self.kwargs[self.lookup_url_kwarg]
         return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
 
     def get_queryset(self):
         workshop = self.get_object()
-        return workshop.reviews.all()
+        return workshop.reviews.all().filter(is_deleted=False)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

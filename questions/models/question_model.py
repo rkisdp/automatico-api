@@ -45,10 +45,22 @@ class QuestionModel(models.Model):
         related_name="questions",
         editable=False,
     )
+    is_deleted = models.BooleanField(
+        verbose_name=_("is deleted"),
+        help_text=_("Indicates if the question is deleted"),
+        default=False,
+        editable=False,
+    )
     created_at = models.DateTimeField(
         verbose_name=_("created at"),
         help_text=_("Created at"),
         auto_now_add=True,
+        editable=False,
+    )
+    updated_at = models.DateTimeField(
+        verbose_name=_("updated at"),
+        help_text=_("Updated at"),
+        auto_now=True,
         editable=False,
     )
 

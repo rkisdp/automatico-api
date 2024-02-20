@@ -14,13 +14,6 @@ from .review_response_serializer import ReviewResponseSerializer
 
 @extend_schema_serializer(component_name="Review")
 class ReviewSerializer(serializers.ModelSerializer):
-    rating = serializers.DecimalField(
-        max_digits=2,
-        decimal_places=1,
-        help_text=_("The rating of the review."),
-        required=False,
-        allow_null=True,
-    )
     service = ServiceSerializer(read_only=True)
     client = UserListSerializer(read_only=True)
     response = ReviewResponseSerializer(read_only=True)
@@ -92,21 +85,29 @@ class ReviewSerializer(serializers.ModelSerializer):
             )
 
     def validate(self, attrs):
-        if self.context["request"].method == "POST":
-            if ReviewModel.objects.filter(
-                service=attrs["service"], client=attrs["client"]
-            ).exists():
-                raise serializers.ValidationError(
-                    _("You have already reviewed this service.")
-                )
+        if self.context["request"].method != "POST":
+            return attrs
 
-        if attrs.get("rating") is None and attrs.get("score") is None:
+        service = attrs.get("service", None)
+        if service is None:
+            return attrs
+
+        if service.workshop != self.context["workshop"]:
             raise serializers.ValidationError(
-                _("Rating or score must be provided.")
+                _("Service does not belong to this workshop.")
             )
 
-        attrs["rating"] = attrs.get("rating", attrs.get("score"))
-        return super().validate(attrs)
+        if service.vehicle.owner != self.context["request"].user:
+            raise serializers.ValidationError(
+                _("You can only review services for your vehicles.")
+            )
+
+        if ReviewModel.objects.filter(service=service).exists():
+            raise serializers.ValidationError(
+                _("You have already reviewed this service.")
+            )
+
+        return attrs
 
     def create(self, validated_data):
         validated_data["workshop"] = self.context["workshop"]

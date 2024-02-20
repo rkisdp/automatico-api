@@ -4,7 +4,6 @@ from drf_spectacular.utils import extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView
-from core.mixins import MultipleFieldLookupMixin
 from workshops.models import ReviewModel
 
 SCHEMA_TAGS = ("reviews",)
@@ -12,7 +11,7 @@ SCHEMA_TAGS = ("reviews",)
 
 @extend_schema(tags=SCHEMA_TAGS)
 class ReviewDetailView(
-    MultipleFieldLookupMixin,
+    mixins.MultipleFieldLookupMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
@@ -49,9 +48,13 @@ class ReviewDetailView(
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["workshop"] = self.get_object()
+        context["workshop"] = self.get_object().workshop
         return context
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)
         return getattr(module, "ReviewSerializer")
+
+    def perform_destroy(self, instance):
+        instance.is_deleted = True
+        instance.save()

@@ -102,10 +102,10 @@ class VehicleModel(models.Model):
         null=True,
         blank=True,
     )
-    is_active = models.BooleanField(
-        verbose_name=_("active"),
-        help_text=_("Active"),
-        default=True,
+    is_deleted = models.BooleanField(
+        verbose_name=_("is deleted"),
+        help_text=_("Deleted"),
+        default=False,
     )
     is_archived = models.BooleanField(
         verbose_name=_("archived"),

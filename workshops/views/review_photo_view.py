@@ -25,9 +25,9 @@ class ReviewPhotoView(
     def post(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
-    @extend_schema()
-    def delete(self, request, *args, **kwargs):
-        return super().destroy(request, *args, **kwargs)
+    # @extend_schema()
+    # def delete(self, request, *args, **kwargs):
+    #     return super().destroy(request, *args, **kwargs)
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)
