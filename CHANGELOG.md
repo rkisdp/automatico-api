@@ -9,19 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Retrieve workshop and/or customer contact information when accepting a service request.
 - Enable `POST /image` to upload an image and return it's ID.
-- Fix `DELETE /workshops/{workshop_id}/
-- Delete vehicles.
+- Deactivate a workshop.
+- Activate a workshop.
+- Protected workshop management routes. This routes should need a workshop_id claim on the JWT or something like that.
+- Translate (some) error messages.
+- Authorization with 3rd party providers (Google and Facebook).
+- Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
 
 ## [0.12.0] - 2024-02-17
 
 ### Added
 
-- Protected workshop management routes. This routes should need a workshop_id claim on the JWT or something like that.
-- Deactivate a workshop.
-- Activate a workshop.
-- Translate (some) error messages.
-- Authorization with 3rd party providers (Google and Facebook).
-- Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
+- Delete vehicles endpoint (soft-delete).
+- Delete workshop reviews endpoint (soft-delete).
+- Delete workshop questions endpoint (soft-delete).
 - Caching (Cache-Control, ETag and Last Modified headers).
 - Throttling (Rate Limiting).
 
@@ -29,6 +30,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Only major version number is used as the API version. e.g. `X-AutoMatico-API-Version: 0` instead of `X-AutoMatico-API-Version: v0.12`.
 - 'workshop' field on service serializer is now the workshop id.
+
+### Fixed
+
+- `DELETE /workshops/{workshop_id}/questions/{question_id}` endpoint.
+- `POST /workshops/{workshop_id}/reviews` endpoint.
+- `PATCH /workshops/{workshop_id}/reviews/{review_id}` endpoint.
+- `DELETE /workshops/{workshop_id}/reviews/{review_id}` endpoint.
+- `GET /workshops/{workshop_id}/reviews/{review_id}/response` endpoint.
 
 ## [0.11.1] - 2024-02-07
 
