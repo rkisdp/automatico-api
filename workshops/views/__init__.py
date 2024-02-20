@@ -5,7 +5,6 @@ from .review_detail_view import ReviewDetailView
 from .review_list_view import ReviewListView
 from .review_photo_view import ReviewPhotoView
 from .review_response_view import ReviewResponseView
-from .review_viewset import ReviewViewSet
 from .speciality_detail_view import SpecialityDetailView
 from .speciality_list_view import SpecialityListView
 from .workshop_brand_list_view import WorkshopBrandListView

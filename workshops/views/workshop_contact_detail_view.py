@@ -1,7 +1,9 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework import mixins
 
+from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
 from workshops.models import WorkshopContactModel
@@ -42,6 +44,7 @@ class WorkshopContactDetailView(
             ),
         ),
     )
+    @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 

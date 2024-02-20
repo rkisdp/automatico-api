@@ -1,7 +1,7 @@
 from drf_spectacular.utils import extend_schema
-from rest_framework import mixins
 from rest_framework.parsers import FormParser, MultiPartParser
 
+from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
 from workshops.models import ReviewModel

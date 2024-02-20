@@ -1,10 +1,10 @@
 from django.utils.translation import gettext_lazy as _
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework import mixins
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 
+from core import mixins
 from core.generics import GenericAPIView
 from vehicles.models import VehicleModel
 from vehicles.permissions import IsOwnerPermission

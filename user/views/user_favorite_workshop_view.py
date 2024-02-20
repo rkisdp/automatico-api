@@ -1,8 +1,9 @@
 from drf_spectacular.utils import extend_schema
-from rest_framework import mixins, status
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from core import mixins
 from core.generics import GenericAPIView
 from workshops.models import WorkshopModel
 

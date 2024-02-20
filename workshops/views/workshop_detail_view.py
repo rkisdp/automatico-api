@@ -2,8 +2,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework import mixins
 
+from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import RetrieveModelMixin
 from workshops.models import WorkshopModel

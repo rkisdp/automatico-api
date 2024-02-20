@@ -1,7 +1,9 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from drf_spectacular.utils import extend_schema
-from rest_framework import mixins
 from rest_framework.generics import get_object_or_404
 
+from core import mixins
 from core.generics import GenericAPIView
 from workshops.models import WorkshopModel
 
@@ -23,6 +25,7 @@ class QuestionListView(
         operation_id="List questions",
         description="List questions",
     )
+    @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 

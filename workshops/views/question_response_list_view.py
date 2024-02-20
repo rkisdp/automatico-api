@@ -1,6 +1,8 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from drf_spectacular.utils import extend_schema
-from rest_framework import mixins
 
+from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
 from questions.models import QuestionModel
@@ -27,6 +29,7 @@ class QuestionResponseListView(
         summary="List a question answers",
         description="Lists a question answers",
     )
+    @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 

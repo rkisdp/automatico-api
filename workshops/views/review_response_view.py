@@ -1,7 +1,9 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from drf_spectacular.utils import extend_schema
-from rest_framework import mixins
 from rest_framework.response import Response
 
+from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
 from workshops.models import ReviewModel
@@ -22,6 +24,7 @@ class ReviewResponseView(
     ordering = ("id",)
 
     @extend_schema()
+    @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance.response)

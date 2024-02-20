@@ -1,9 +1,11 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework import mixins
 from rest_framework.generics import get_object_or_404
 from rest_framework.settings import api_settings
 
+from core import mixins
 from core.generics import GenericAPIView
 from workshops.models import WorkshopModel
 
@@ -66,6 +68,7 @@ class WorkshopEmployeeListView(
             ),
         ),
     )
+    @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 

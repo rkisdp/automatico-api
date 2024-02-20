@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 
@@ -31,6 +33,7 @@ class UserWorkshopView(
             "to get the URL for the next page of workshops."
         ),
     )
+    @method_decorator(cache_control(private=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 

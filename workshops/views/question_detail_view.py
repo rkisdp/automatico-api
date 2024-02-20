@@ -1,6 +1,8 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from drf_spectacular.utils import extend_schema
-from rest_framework import mixins
 
+from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
 from questions.models import QuestionModel
@@ -25,6 +27,7 @@ class QuestionDetailView(
         summary="Retrieve a question",
         description="Retrieves a question for a workshop",
     )
+    @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
