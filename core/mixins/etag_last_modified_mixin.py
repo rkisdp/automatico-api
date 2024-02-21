@@ -9,15 +9,23 @@ from core.exceptions import PreconditionFailed
 
 class ETagLastModifiedMixin:
     def get_headers(self, request, data, obj=None) -> dict:
-        etag = self._get_etag(request, str(data))
+        etag = self._set_etag(request, str(data))
         if obj is not None:
-            last_modified = self._get_last_modified(request, obj)
+            last_modified = self._set_last_modified(request, obj)
         headers = {"ETag": etag}
         if "last_modified" in locals() and last_modified is not None:
             headers["Last-Modified"] = last_modified
         return headers
 
-    def _get_last_modified(self, request, obj) -> str | None:
+    def get_headers_from_cache(self, request) -> dict:
+        etag = cache.get(f"{request.path}-etag")
+        last_modified = cache.get(f"{request.path}-last-modified")
+        headers = {"ETag": etag}
+        if last_modified is not None:
+            headers["Last-Modified"] = last_modified
+        return headers
+
+    def _set_last_modified(self, request, obj) -> str | None:
         if not hasattr(obj, "updated_at"):
             return None
 
@@ -31,7 +39,7 @@ class ETagLastModifiedMixin:
         cache.set(cache_key_last_modified, last_modified, timeout=None)
         return last_modified
 
-    def _get_etag(self, request, data: str) -> str:
+    def _set_etag(self, request, data: str) -> str:
         etag = hashlib.sha256(data.encode("utf-8")).hexdigest()
         etag = f'W/"{etag}"'
         request_path = (

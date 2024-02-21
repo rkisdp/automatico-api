@@ -22,8 +22,8 @@ class CreateModelMixin(
 
     def get_success_headers(self, data, instance):
         headers = super().get_success_headers(data)
-        headers["ETag"] = self._get_etag(self.request, str(data))
-        headers["Last-Modified"] = self._get_last_modified(
+        headers["ETag"] = self._set_etag(self.request, str(data))
+        headers["Last-Modified"] = self._set_last_modified(
             self.request,
             instance,
         )
