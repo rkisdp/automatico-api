@@ -95,8 +95,8 @@ REST_FRAMEWORK = {
         "security.throttling.UserRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "50/hour",
-        "user": "100/hour",
+        "anon": "500/hour",
+        "user": "1000/hour",
     },
 }
 
