@@ -91,7 +91,7 @@ class VehicleModel(models.Model):
         validators=(
             RegexValidator(
                 regex=r"^[A-HJ-NPR-Z\d]{8}[\dX][A-HJ-NPR-Z\d]{2}\d{6}$",
-                message=_("VIN must be 17 characters long."),
+                message=_("Invalid VIN format."),
             ),
         ),
     )
