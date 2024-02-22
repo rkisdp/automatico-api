@@ -7,11 +7,13 @@ from .review_photo_view import ReviewPhotoView
 from .review_response_view import ReviewResponseView
 from .speciality_detail_view import SpecialityDetailView
 from .speciality_list_view import SpecialityListView
+from .workshop_banner_view import WorkshopBannerView
 from .workshop_brand_list_view import WorkshopBrandListView
 from .workshop_contact_detail_view import WorkshopContactDetailView
 from .workshop_contact_list_view import WorkshopContactListView
 from .workshop_detail_view import WorkshopDetailView
 from .workshop_employee_list_view import WorkshopEmployeeListView
+from .workshop_image_view import WorkshopImageView
 from .workshop_list_new_view import WorkshopListNewView
 from .workshop_list_recommended_view import WorkshopListRecommendedView
 from .workshop_list_trending_view import WorkshopListTrendingView

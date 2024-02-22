@@ -1,7 +1,8 @@
 from django.db.models import Avg
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView, get_object_or_404
@@ -25,6 +26,22 @@ class ReviewListView(
         operation_id="list-workshop-reviews",
         summary="List workshop reviews",
         description="Lists all reviews for a workshop",
+        parameters=(
+            OpenApiParameter(
+                name="ordering",
+                description="Which field to use when ordering the results.",
+                type=OpenApiTypes.STR,
+                many=True,
+                explode=False,
+                enum=(
+                    "-id",
+                    "-rating",
+                    "id",
+                    "rating",
+                ),
+                default="id",
+            ),
+        ),
     )
     @method_decorator(cache_control(public=True, max_age=60, s_maxage=60))
     def get(self, request, *args, **kwargs):
@@ -68,9 +85,12 @@ class ReviewListView(
 
     def _get_rating_headers(self):
         headers = {
-            "X-Rating-Average": self.get_queryset().aggregate(
-                rating_average=Avg("rating")
-            )["rating_average"],
+            "X-Rating-Average": round(
+                self.get_queryset().aggregate(rating_average=Avg("rating"))[
+                    "rating_average"
+                ],
+                1,
+            ),
             "X-5-Star-Rating": self.get_queryset().filter(rating=5).count(),
             "X-4-Star-Rating": self.get_queryset()
             .filter(rating__gte=4, rating__lt=5)

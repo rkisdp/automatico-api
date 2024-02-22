@@ -1,25 +1,24 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from workshops.models import ReviewImageModel
+from workshops.models import WorkshopModel
 
 
 class WorkshopImageSerializer(serializers.ModelSerializer):
-    image = serializers.ListField(
+    image = serializers.ImageField(
         write_only=True,
-        child=serializers.ImageField(
-            allow_empty_file=False,
-            allow_null=False,
-            required=False,
-        ),
+        allow_empty_file=False,
+        allow_null=False,
+        required=True,
     )
-    image_url = serializers.ListField(
+    image_url = serializers.ImageField(
+        use_url=True,
         read_only=True,
-        child=serializers.ImageField(use_url=True),
+        source="image",
     )
 
     class Meta:
-        model = ReviewImageModel
+        model = WorkshopModel
         fields = (
             "image",
             "image_url",

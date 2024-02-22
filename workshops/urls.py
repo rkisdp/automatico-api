@@ -31,9 +31,19 @@ urlpatterns = (
         name="detail",
     ),
     re_path(
+        r"^/(?P<workshop_id>\d+)/banner/?$",
+        views.WorkshopBannerView.as_view(),
+        name="banner",
+    ),
+    re_path(
         r"^/(?P<workshop_id>\d+)/brands/?$",
         views.WorkshopBrandListView.as_view(),
         name="brands",
+    ),
+    re_path(
+        r"^/(?P<workshop_id>\d+)/image/?$",
+        views.WorkshopImageView.as_view(),
+        name="image",
     ),
     re_path(
         r"^/(?P<workshop_id>\d+)/contacts/?$",
