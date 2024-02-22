@@ -48,7 +48,7 @@ class UserVehicleView(
         return self.create(request, *args, **kwargs)
 
     def get_queryset(self):
-        return self.request.user.vehicles.all()
+        return self.request.user.vehicles.all().filter(is_deleted=False)
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "vehicles")
