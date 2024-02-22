@@ -7,14 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Retrieve workshop and/or customer contact information when accepting a service request.
 - Enable `POST /image` to upload an image and return it's ID.
 - Deactivate a workshop.
 - Activate a workshop.
 - Protected workshop management routes. This routes should need a workshop_id claim on the JWT or something like that.
 - Translate (some) error messages.
-- Authorization with 3rd party providers (Google and Facebook).
+- Authorization with Google.
 - Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
+
+## [0.13.0] - 2024-02-22
+
+### Added
+
+- Workshop description and banner.
+
+### Fixed
+
+- `POST /workshops/{workshop_id}/brands` endpoint.
 
 ## [0.12.0] - 2024-02-17
 
