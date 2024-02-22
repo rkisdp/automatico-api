@@ -45,9 +45,23 @@ class WorkshopModel(models.Model):
         max_length=100,
         unique=True,
     )
+    description = models.TextField(
+        verbose_name=_("description"),
+        help_text=_("The workshop description."),
+        max_length=500,
+        null=True,
+        blank=True,
+    )
     image = models.ImageField(
         verbose_name=_("image"),
         help_text=_("The workshop image."),
+        upload_to=rename,
+        null=True,
+        blank=True,
+    )
+    banner = models.ImageField(
+        verbose_name=_("banner"),
+        help_text=_("The workshop banner."),
         upload_to=rename,
         null=True,
         blank=True,
