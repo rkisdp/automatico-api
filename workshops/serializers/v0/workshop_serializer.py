@@ -50,6 +50,12 @@ class WorkshopSerializer(serializers.ModelSerializer):
         use_url=True,
         help_text=_("The image of the workshop."),
     )
+    banner_url = serializers.ImageField(
+        read_only=True,
+        source="banner",
+        use_url=True,
+        help_text=_("The banner of the workshop."),
+    )
     brands_url = HyperLinkSelfField(
         view_name="workshops:brands",
         lookup_field="id",
@@ -81,6 +87,7 @@ class WorkshopSerializer(serializers.ModelSerializer):
             "id",
             "owner",
             "name",
+            "description",
             "rating",
             "recent_rating",
             "location",
@@ -92,6 +99,7 @@ class WorkshopSerializer(serializers.ModelSerializer):
             "vehicles_count",
             "created_at",
             "image_url",
+            "banner_url",
             "brands_url",
             "specialities_url",
             "vehicles_url",
