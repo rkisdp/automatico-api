@@ -1,9 +1,9 @@
 from django.contrib.admin import ModelAdmin, register
 
-from workshops.models import SpecialityModel
+from workshops.models import Speciality
 
 
-@register(SpecialityModel)
+@register(Speciality)
 class SpecialityAdmin(ModelAdmin):
     search_help_text = "Speciality"
     show_full_result_count = True

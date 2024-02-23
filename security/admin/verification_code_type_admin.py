@@ -1,9 +1,8 @@
 from django.contrib.admin import ModelAdmin, register
+from security.models import VerificationCodeType
 
-from security.models import VerificationCodeTypeModel
 
-
-@register(VerificationCodeTypeModel)
+@register(VerificationCodeType)
 class VerificationCodeTypeAdmin(ModelAdmin):
     list_display = ("code", "name")
     search_fields = ("code", "name")

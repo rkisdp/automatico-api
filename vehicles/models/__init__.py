@@ -1,2 +1,2 @@
-from .vehicle_brand_model import VehicleBrandModel
-from .vehicle_model import VehicleModel
+from .vehicle_brand_model import VehicleBrand
+from .vehicle_model import Vehicle

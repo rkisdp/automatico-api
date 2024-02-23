@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from workshops.models import ReviewImageModel
+from workshops.models import ReviewImage
 
 
 class ReviewPhotoSerializer(serializers.ModelSerializer):
@@ -19,7 +19,7 @@ class ReviewPhotoSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = ReviewImageModel
+        model = ReviewImage
         fields = (
             "images",
             "image_urls",
@@ -37,7 +37,7 @@ class ReviewPhotoSerializer(serializers.ModelSerializer):
         images = []
         review = self.context["review"]
         for image in validated_data["images"]:
-            image = ReviewImageModel.objects.create(
+            image = ReviewImage.objects.create(
                 review=review,
                 image=image,
             )

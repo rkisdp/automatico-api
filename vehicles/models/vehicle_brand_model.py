@@ -7,13 +7,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-def rename(instance: VehicleBrandModel, filename: str) -> str:
+def rename(instance: VehicleBrand, filename: str) -> str:
     ext = filename.split(".")[-1]
     filename = f"{uuid4()}.{ext}"
     return path.join("vehicles", "brands", "images", filename)
 
 
-class VehicleBrandModel(models.Model):
+class VehicleBrand(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Vehicle brand id"),

@@ -2,10 +2,10 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 
-class QuestionModel(models.Model):
+class Question(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("The unique identifier of the question."),
@@ -40,7 +40,7 @@ class QuestionModel(models.Model):
     workshop = models.ForeignKey(
         verbose_name=_("workshop"),
         help_text=_("Workshop who the question was asked"),
-        to=WorkshopModel,
+        to=Workshop,
         on_delete=models.PROTECT,
         related_name="questions",
         editable=False,

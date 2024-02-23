@@ -5,7 +5,7 @@ from drf_spectacular.utils import extend_schema
 from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
-from questions.models import QuestionModel
+from questions.models import Question
 
 SCHEMA_TAGS = ("questions",)
 
@@ -18,7 +18,7 @@ class QuestionDetailView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = QuestionModel.objects.all()
+    queryset = Question.objects.all()
     lookup_fields = ("workshop_id", "number")
     lookup_url_kwargs = ("workshop_id", "question_number")
 

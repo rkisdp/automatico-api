@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework.fields import empty
 
 from users.serializers.v0 import UserListSerializer
-from vehicles.models import VehicleBrandModel, VehicleModel
+from vehicles.models import Vehicle, VehicleBrand
 
 from .vehicle_brand_serializer import VehicleBrandSerializer
 
@@ -18,7 +18,7 @@ class PrivateVehicleSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = VehicleModel
+        model = Vehicle
         fields = (
             "id",
             "brand",
@@ -46,8 +46,8 @@ class PrivateVehicleSerializer(serializers.ModelSerializer):
 
     def validate_brand(self, value):
         try:
-            return VehicleBrandModel.objects.get(name__iexact=value)
-        except VehicleBrandModel.DoesNotExist:
+            return VehicleBrand.objects.get(name__iexact=value)
+        except VehicleBrand.DoesNotExist:
             raise serializers.ValidationError(
                 _(f"Vehicle brand '{value}' does not exist.")
             )

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from core import mixins
 from core.generics import GenericAPIView
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -16,7 +16,7 @@ class UserFavoriteWorkshopListView(
     GenericAPIView,
 ):
     permission_classes = (IsAuthenticated,)
-    queryset = WorkshopModel.objects.none()
+    queryset = Workshop.objects.none()
     ordering = ("id",)
     ordering_fields = ("id", "name")
 

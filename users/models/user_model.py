@@ -9,19 +9,19 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 from ..managers import UserManager
 
 
-def rename(instance: UserModel, filename: str) -> str:
+def rename(instance: User, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
     return path.join("users", "images", filename)
 
 
-class UserModel(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("User id"),
@@ -78,7 +78,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         default=False,
     )
     favorite_workshops = models.ManyToManyField(
-        to=WorkshopModel,
+        to=Workshop,
         verbose_name=_("favorite workshops"),
         help_text=_("User favorite workshops"),
         related_name="favorite_users",

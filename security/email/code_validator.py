@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import check_password
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from security.models import VerificationCodeModel
+from security.models import VerificationCode
 
 
 def _raise_validation_error(message: str) -> None:
@@ -15,7 +15,7 @@ class CodeValidator:
         if not hasattr(user, "verification_code"):
             _raise_validation_error("Invalid or expired validation code")
 
-        verification_code: VerificationCodeModel = user.verification_code
+        verification_code: VerificationCode = user.verification_code
         if (
             verification_code.type.code != type
             and verification_code.type.code != f"R{type}"
@@ -30,5 +30,5 @@ class CodeValidator:
 
     @staticmethod
     def delete_verification_code(user) -> None:
-        verification_code: VerificationCodeModel = user.verification_code
+        verification_code: VerificationCode = user.verification_code
         verification_code.delete()

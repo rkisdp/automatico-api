@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.fields.v0 import HyperLinkSelfField
-from workshops.models import SpecialityModel
+from workshops.models import Speciality
 
 
 class WorkshopSpecialityListSerializer(serializers.ModelSerializer):
@@ -13,5 +13,5 @@ class WorkshopSpecialityListSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = SpecialityModel
+        model = Speciality
         fields = ("id", "name", "url")

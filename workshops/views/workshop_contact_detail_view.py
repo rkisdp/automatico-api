@@ -6,7 +6,7 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
-from workshops.models import WorkshopContactModel
+from workshops.models import WorkshopContact
 
 SCHEMA_TAGS = ("workshops", "deprecated")
 
@@ -19,7 +19,7 @@ class WorkshopContactDetailView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = WorkshopContactModel.objects.all()
+    queryset = WorkshopContact.objects.all()
     lookup_fields = ("workshop_id", "id")
     lookup_url_kwargs = ("workshop_id", "contact_id")
 

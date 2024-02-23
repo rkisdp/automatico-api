@@ -3,7 +3,7 @@ from django.contrib.gis.geos import Point
 from django_filters import rest_framework as django_filters
 
 from workshops.filters import SpecialityNameFilter, VehicleBrandNameFilter
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 
 class WorkshopFilterSet(django_filters.FilterSet):
@@ -15,7 +15,7 @@ class WorkshopFilterSet(django_filters.FilterSet):
     )
 
     class Meta:
-        model = WorkshopModel
+        model = Workshop
         fields = ("specialities", "brands")
 
     def filter_distance(self, queryset, name, value):

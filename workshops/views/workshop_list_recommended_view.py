@@ -8,7 +8,7 @@ from rest_framework.settings import api_settings
 
 from core import mixins
 from core.generics import GenericAPIView
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -18,7 +18,7 @@ class WorkshopListRecommendedView(
     mixins.ListModelMixin,
     GenericAPIView,
 ):
-    queryset = WorkshopModel.objects.all()
+    queryset = Workshop.objects.all()
     filter_backends = ()
 
     @extend_schema(

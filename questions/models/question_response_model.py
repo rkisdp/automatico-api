@@ -2,10 +2,10 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .question_model import QuestionModel
+from .question_model import Question
 
 
-class QuestionResponseModel(models.Model):
+class QuestionResponse(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Question id"),
@@ -35,7 +35,7 @@ class QuestionResponseModel(models.Model):
     question = models.ForeignKey(
         verbose_name=_("question"),
         help_text=_("Question asked"),
-        to=QuestionModel,
+        to=Question,
         on_delete=models.PROTECT,
         related_name="answers",
         editable=False,

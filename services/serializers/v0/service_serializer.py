@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from services.models import ServiceModel
+from services.models import Service
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class ServiceSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = ServiceModel
+        model = Service
         fields = (
             "id",
             "number",

@@ -4,7 +4,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
-from workshops.models import ReviewModel
+from workshops.models import Review
 
 SCHEMA_TAGS = ("reviews",)
 
@@ -16,7 +16,7 @@ class ReviewPhotoView(
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
-    queryset = ReviewModel.objects.all()
+    queryset = Review.objects.all()
     parser_classes = (MultiPartParser, FormParser)
     lookup_fields = ("workshop_id", "number")
     lookup_url_kwargs = ("workshop_id", "review_number")

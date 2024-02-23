@@ -5,7 +5,7 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView
-from vehicles.models import VehicleBrandModel
+from vehicles.models import VehicleBrand
 
 SCHEMA_TAGS = ("vehicles", "deprecated")
 
@@ -15,7 +15,7 @@ class VehicleBrandDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
 ):
-    queryset = VehicleBrandModel.objects.all()
+    queryset = VehicleBrand.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "brand_id"
 

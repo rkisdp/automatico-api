@@ -1,9 +1,9 @@
 from django.contrib.admin import ModelAdmin, register
 
-from vehicles.models import VehicleModel
+from vehicles.models import Vehicle
 
 
-@register(VehicleModel)
+@register(Vehicle)
 class VehicleAdmin(ModelAdmin):
     search_help_text = "Brand, model, nickname, owner, VIN"
     show_full_result_count = True

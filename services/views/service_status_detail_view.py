@@ -4,7 +4,7 @@ from drf_spectacular.utils import extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView
-from services.models import ServiceStatusModel
+from services.models import ServiceStatus
 
 SCHEMA_TAGS = ("services", "deprecated")
 
@@ -14,7 +14,7 @@ class ServiceStatusDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
 ):
-    queryset = ServiceStatusModel.objects.all()
+    queryset = ServiceStatus.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "status_id"
 

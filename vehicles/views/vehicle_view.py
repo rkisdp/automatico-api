@@ -5,7 +5,7 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView
-from vehicles.models import VehicleModel
+from vehicles.models import Vehicle
 
 SCHEMA_TAGS = ("vehicles",)
 
@@ -17,7 +17,7 @@ class VehicleView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = VehicleModel.objects.all()
+    queryset = Vehicle.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "vehicle_id"
 

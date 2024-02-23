@@ -6,7 +6,7 @@ from rest_framework.settings import api_settings
 
 from core import mixins
 from core.generics import GenericAPIView, get_object_or_404
-from workshops.models import SpecialityModel, WorkshopModel
+from workshops.models import Speciality, Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -18,7 +18,7 @@ class WorkshopSpecialityView(
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
-    queryset = SpecialityModel.objects.none()
+    queryset = Speciality.objects.none()
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"
     ordering = ("id",)
@@ -107,7 +107,7 @@ class WorkshopSpecialityView(
 
     def get_object(self):
         workshop_id = self.kwargs[self.lookup_url_kwarg]
-        return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
+        return get_object_or_404(Workshop.objects.all(), id=workshop_id)
 
     def get_queryset(self):
         workshop = self.get_object()

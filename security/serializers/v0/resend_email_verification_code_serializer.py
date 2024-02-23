@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from security.email import send_verification_code
-from security.models import VerificationCodeModel
+from security.models import VerificationCode
 
 
 class ResendEmailVerificationCodeSerializer(serializers.Serializer):
@@ -29,7 +29,7 @@ class ResendEmailVerificationCodeSerializer(serializers.Serializer):
                 {"email": _("Email is already verified.")}
             )
 
-        verification_codes = VerificationCodeModel.objects.filter(user=user)
+        verification_codes = VerificationCode.objects.filter(user=user)
         if verification_codes.exists():
             verification_codes.delete()
 

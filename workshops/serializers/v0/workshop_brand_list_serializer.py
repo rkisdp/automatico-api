@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from vehicles.models import VehicleBrandModel
+from vehicles.models import VehicleBrand
 
 
 class WorkshopBrandListSerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class WorkshopBrandListSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = VehicleBrandModel
+        model = VehicleBrand
         fields = (
             "id",
             "name",

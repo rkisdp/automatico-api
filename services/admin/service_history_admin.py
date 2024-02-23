@@ -1,9 +1,9 @@
 from django.contrib.admin import ModelAdmin, register
 
-from services.models import ServiceHistoryModel
+from services.models import ServiceHistory
 
 
-@register(ServiceHistoryModel)
+@register(ServiceHistory)
 class ServiceHistoryAdmin(ModelAdmin):
     search_help_text = "Workshop name or service status"
     show_full_result_count = True

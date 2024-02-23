@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .review_model import ReviewModel
+from .review_model import Review
 
 
-class ReviewResponseModel(models.Model):
+class ReviewResponse(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Question id"),
@@ -15,7 +15,7 @@ class ReviewResponseModel(models.Model):
     review = models.OneToOneField(
         verbose_name=_("review"),
         help_text=_("Review"),
-        to=ReviewModel,
+        to=Review,
         on_delete=models.PROTECT,
         related_name="response",
         editable=False,

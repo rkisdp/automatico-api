@@ -7,7 +7,7 @@ from rest_framework.serializers import (
     ValidationError,
 )
 
-from users.models import UserModel
+from users.models import User
 
 
 class ChangePasswordSerializer(ModelSerializer):
@@ -62,7 +62,7 @@ class ChangePasswordSerializer(ModelSerializer):
 
         return attrs
 
-    def update(self, instance: UserModel, validated_data):
+    def update(self, instance: User, validated_data):
         password = validated_data.pop("password")
         del validated_data["password_confirm"]
         del validated_data["current_password"]

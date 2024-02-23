@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
 
-class SpecialityModel(models.Model):
+class Speciality(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Speciality id"),
@@ -28,7 +28,7 @@ class SpecialityModel(models.Model):
 
     @staticmethod
     def validate_unique_name(name: str) -> None:
-        if SpecialityModel.objects.filter(name__iexact=name).exists():
+        if Speciality.objects.filter(name__iexact=name).exists():
             raise ValidationError(
                 {"name": _("Speciality with this name already exists.")}
             )

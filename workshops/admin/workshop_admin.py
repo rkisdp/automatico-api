@@ -1,9 +1,9 @@
 from django.contrib.gis.admin import GISModelAdmin, register
 
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 
-@register(WorkshopModel)
+@register(Workshop)
 class WorkshopAdmin(GISModelAdmin):
     search_help_text = (
         "You can search by owner first name, owner last name, name, "

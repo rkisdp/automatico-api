@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from core import mixins
 from core.generics import GenericAPIView
-from vehicles.models import VehicleModel
+from vehicles.models import Vehicle
 from vehicles.permissions import IsOwnerPermission
 
 SCHEMA_TAGS = ("vehicles",)
@@ -18,7 +18,7 @@ class VehiclePhotoView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = VehicleModel.objects.all()
+    queryset = Vehicle.objects.all()
     permission_classes = (IsAuthenticated, IsOwnerPermission)
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = "id"

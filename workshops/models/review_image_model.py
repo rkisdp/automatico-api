@@ -6,17 +6,17 @@ from uuid import uuid4
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .review_model import ReviewModel
+from .review_model import Review
 
 
-def rename(instance: ReviewImageModel, filename: str) -> str:
+def rename(instance: ReviewImage, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
     return path.join("workshops", "reviews", "images", filename)
 
 
-class ReviewImageModel(models.Model):
+class ReviewImage(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Vehicle brand id"),
@@ -27,7 +27,7 @@ class ReviewImageModel(models.Model):
     review = models.ForeignKey(
         verbose_name=_("review"),
         help_text=_("Review"),
-        to=ReviewModel,
+        to=Review,
         on_delete=models.PROTECT,
         related_name="images",
     )

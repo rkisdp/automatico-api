@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from core.fields.v0 import HyperLinkSelfField
 from core.serializers.v0 import StringRelatedHyperLinkSerializer
-from vehicles.models import VehicleModel
+from vehicles.models import Vehicle
 
 
 class WorkshopVehicleListSerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class WorkshopVehicleListSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = VehicleModel
+        model = Vehicle
         fields = (
             "id",
             "brand",

@@ -4,7 +4,7 @@ from drf_spectacular.utils import extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView
-from services.models import ServiceStatusModel
+from services.models import ServiceStatus
 
 SCHEMA_TAGS = ("services",)
 
@@ -14,7 +14,7 @@ class ServiceStatusListView(
     mixins.ListModelMixin,
     GenericAPIView,
 ):
-    queryset = ServiceStatusModel.objects.all()
+    queryset = ServiceStatus.objects.all()
     ordering = ("id",)
     ordering_fields = ("id", "name")
 

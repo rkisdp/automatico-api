@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from core import mixins
 from core.generics import GenericAPIView
-from services.models import ServiceModel
+from services.models import Service
 
 SCHEMA_TAGS = ("services",)
 
@@ -16,7 +16,7 @@ class UserWorkshopServiceView(
     GenericAPIView,
 ):
     permission_classes = (IsAuthenticated,)
-    queryset = ServiceModel.objects.none()
+    queryset = Service.objects.none()
     ordering = ("id",)
     ordering_fields = ("id", "created_at", "closed_at")
 
@@ -37,7 +37,7 @@ class UserWorkshopServiceView(
         return self.list(request, *args, **kwargs)
 
     def get_queryset(self):
-        return ServiceModel.objects.filter(workshop__owner=self.request.user)
+        return Service.objects.filter(workshop__owner=self.request.user)
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "services")

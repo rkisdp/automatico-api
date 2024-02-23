@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from core import mixins
 from core.generics import GenericAPIView
-from services.models import ServiceModel
+from services.models import Service
 
 SCHEMA_TAGS = ("services",)
 
@@ -15,7 +15,7 @@ class UserServiceView(
     mixins.ListModelMixin,
     GenericAPIView,
 ):
-    queryset = ServiceModel.objects.none()
+    queryset = Service.objects.none()
     permission_classes = (IsAuthenticated,)
     ordering = ("id",)
     ordering_fields = ("id", "created_at", "closed_at")
@@ -38,7 +38,7 @@ class UserServiceView(
         return self.list(request, *args, **kwargs)
 
     def get_queryset(self):
-        return ServiceModel.objects.filter(vehicle__owner=self.request.user)
+        return Service.objects.filter(vehicle__owner=self.request.user)
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "services")

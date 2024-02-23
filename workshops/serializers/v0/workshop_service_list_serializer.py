@@ -2,9 +2,9 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.fields import empty
 
-from services.models import ServiceModel, ServiceStatusModel
+from services.models import Service, ServiceStatus
 from users.serializers.v0 import UserListSerializer
-from vehicles.models import VehicleModel
+from vehicles.models import Vehicle
 from vehicles.serializers.v0 import VehicleSerializer
 
 
@@ -25,7 +25,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = ServiceModel
+        model = Service
         fields = (
             "id",
             "vehicle",
@@ -56,7 +56,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         try:
             user = self.context["request"].user
             return user.vehicles.get(nickname__iexact=value)
-        except VehicleModel.DoesNotExist:
+        except Vehicle.DoesNotExist:
             raise serializers.ValidationError(
                 _(f"Vehicle '{value}' does not exist.")
             )
@@ -65,7 +65,7 @@ class WorkshopServiceListSerializer(serializers.ModelSerializer):
         validated_data["workshop"] = self.context["workshop"]
         service = super().create(validated_data)
         service.histories.create(
-            status=ServiceStatusModel.objects.get(name__iexact="Solicitado"),
+            status=ServiceStatus.objects.get(name__iexact="Solicitado"),
             comment=service.description,
             responsable=self.context["request"].user,
         )

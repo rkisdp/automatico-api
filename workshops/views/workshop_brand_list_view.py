@@ -8,8 +8,8 @@ from rest_framework.settings import api_settings
 
 from core import mixins
 from core.generics import GenericAPIView, get_object_or_404
-from vehicles.models import VehicleBrandModel
-from workshops.models import WorkshopModel
+from vehicles.models import VehicleBrand
+from workshops.models import Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -21,7 +21,7 @@ class WorkshopBrandListView(
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
-    queryset = VehicleBrandModel.objects.none()
+    queryset = VehicleBrand.objects.none()
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"
     ordering = ("id",)
@@ -119,11 +119,11 @@ class WorkshopBrandListView(
 
     def get_object(self):
         workshop_id = self.kwargs[self.lookup_url_kwarg]
-        return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
+        return get_object_or_404(Workshop.objects.all(), id=workshop_id)
 
     def get_queryset(self):
         workshop = self.get_object()
-        return VehicleBrandModel.objects.filter(workshop_brands=workshop)
+        return VehicleBrand.objects.filter(workshop_brands=workshop)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

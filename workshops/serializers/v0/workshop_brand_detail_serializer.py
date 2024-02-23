@@ -1,8 +1,8 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from vehicles.models import VehicleBrandModel
-from workshops.models import WorkshopModel
+from vehicles.models import VehicleBrand
+from workshops.models import Workshop
 
 from .workshop_brand_list_serializer import WorkshopBrandListSerializer
 
@@ -15,13 +15,11 @@ class WorkshopBrandDetailSerializer(serializers.ListSerializer):
         return self._clean_brands(brands)
 
     def create(self, validated_data):
-        workshop = WorkshopModel.objects.get(id=self.context.get("workshop_id"))
+        workshop = Workshop.objects.get(id=self.context.get("workshop_id"))
         for item in validated_data:
             try:
-                brand = VehicleBrandModel.objects.get(
-                    name__iexact=item.get("name")
-                )
-            except VehicleBrandModel.DoesNotExist:
+                brand = VehicleBrand.objects.get(name__iexact=item.get("name"))
+            except VehicleBrand.DoesNotExist:
                 raise serializers.ValidationError(
                     {
                         "name": _(
@@ -32,14 +30,12 @@ class WorkshopBrandDetailSerializer(serializers.ListSerializer):
             workshop.brands.add(brand)
         return workshop.brands.all()
 
-    def update(self, instance: WorkshopModel, validated_data):
+    def update(self, instance: Workshop, validated_data):
         instance.brands.clear()
         for item in validated_data:
             try:
-                brand = VehicleBrandModel.objects.get(
-                    name__iexact=item.get("name")
-                )
-            except VehicleBrandModel.DoesNotExist:
+                brand = VehicleBrand.objects.get(name__iexact=item.get("name"))
+            except VehicleBrand.DoesNotExist:
                 raise serializers.ValidationError(
                     {
                         "name": _(

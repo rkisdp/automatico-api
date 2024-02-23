@@ -6,7 +6,7 @@ from rest_framework.settings import api_settings
 
 from core import mixins
 from core.generics import GenericAPIView
-from workshops.models import SpecialityModel
+from workshops.models import Speciality
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -16,7 +16,7 @@ class SpecialityListView(
     mixins.ListModelMixin,
     GenericAPIView,
 ):
-    queryset = SpecialityModel.objects.all()
+    queryset = Speciality.objects.all()
     ordering = ("id",)
     search_fields = ("name",)
     ordering_fields = ("id", "name")

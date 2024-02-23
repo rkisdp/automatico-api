@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from vehicles.models import VehicleModel
+from vehicles.models import Vehicle
 
-# from workshops.models import WorkshopModel
+# from workshops.models import Workshop
 
 
-class ServiceModel(models.Model):
+class Service(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Service id"),
@@ -17,14 +17,14 @@ class ServiceModel(models.Model):
     vehicle = models.ForeignKey(
         verbose_name=_("vehicle"),
         help_text=_("Vehicle"),
-        to=VehicleModel,
+        to=Vehicle,
         on_delete=models.PROTECT,
         related_name="services",
     )
     workshop = models.ForeignKey(
         verbose_name=_("workshop"),
         help_text=_("Workshop"),
-        to="workshops.WorkshopModel",
+        to="workshops.Workshop",
         on_delete=models.PROTECT,
         related_name="services",
     )

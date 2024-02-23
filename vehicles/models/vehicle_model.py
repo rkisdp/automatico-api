@@ -12,17 +12,17 @@ from django.core.validators import (
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .vehicle_brand_model import VehicleBrandModel
+from .vehicle_brand_model import VehicleBrand
 
 
-def rename(instance: VehicleModel, filename: str) -> str:
+def rename(instance: Vehicle, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
     return path.join("vehicles", "images", filename)
 
 
-class VehicleModel(models.Model):
+class Vehicle(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Service id"),
@@ -33,7 +33,7 @@ class VehicleModel(models.Model):
     brand = models.ForeignKey(
         verbose_name=_("brand"),
         help_text=_("Brand"),
-        to=VehicleBrandModel,
+        to=VehicleBrand,
         on_delete=models.PROTECT,
         related_name="vehicles",
     )

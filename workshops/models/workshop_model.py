@@ -10,19 +10,19 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
-from vehicles.models import VehicleBrandModel, VehicleModel
+from vehicles.models import Vehicle, VehicleBrand
 
-from .speciality_model import SpecialityModel
+from .speciality_model import Speciality
 
 
-def rename(instance: WorkshopModel, filename: str) -> str:
+def rename(instance: Workshop, filename: str) -> str:
     ext = filename.split(".")[-1]
 
     filename = f"{uuid4()}.{ext}"
     return path.join("workshops", "images", filename)
 
 
-class WorkshopModel(models.Model):
+class Workshop(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("The workshop ID."),
@@ -82,21 +82,21 @@ class WorkshopModel(models.Model):
     brands = models.ManyToManyField(
         verbose_name=_("brands"),
         help_text=_("The brands of vehicles the workshop works with"),
-        to=VehicleBrandModel,
+        to=VehicleBrand,
         related_name="workshop_brands",
         blank=True,
     )
     specialities = models.ManyToManyField(
         verbose_name=_("specialities"),
         help_text=_("Workshop specialities"),
-        to=SpecialityModel,
+        to=Speciality,
         related_name="workshop_specialities",
         blank=True,
     )
     vehicles = models.ManyToManyField(
         verbose_name=_("vehicles"),
         help_text=_("Workshop vehicles"),
-        to=VehicleModel,
+        to=Vehicle,
         related_name="workshop_vehicles",
         blank=True,
     )
@@ -126,7 +126,7 @@ class WorkshopModel(models.Model):
 
     @staticmethod
     def validate_unique_name(name: str) -> None:
-        if WorkshopModel.objects.filter(name__iexact=name).exists():
+        if Workshop.objects.filter(name__iexact=name).exists():
             raise ValidationError(
                 {"name": _("Workshop with this name already exists.")}
             )

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from vehicles.models import VehicleModel
+from vehicles.models import Vehicle
 
 
 class VehiclePhotoSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class VehiclePhotoSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = VehicleModel
+        model = Vehicle
         fields = (
             "image",
             "image_url",

@@ -4,10 +4,10 @@ from rest_framework import serializers
 from rest_framework.fields import empty
 
 from core.fields.v0 import HyperLinkSelfField
-from services.models import ServiceModel
+from services.models import Service
 from services.serializers.v0 import ServiceSerializer
 from users.serializers.v0 import UserListSerializer
-from workshops.models import ReviewModel
+from workshops.models import Review
 
 from .review_response_serializer import ReviewResponseSerializer
 
@@ -32,7 +32,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = ReviewModel
+        model = Review
         fields = (
             "id",
             "number",
@@ -78,8 +78,8 @@ class ReviewSerializer(serializers.ModelSerializer):
             workshop = self.context["workshop"]
             if value is None:
                 return None
-            return ServiceModel.objects.get(number=value, workshop=workshop)
-        except ServiceModel.DoesNotExist:
+            return Service.objects.get(number=value, workshop=workshop)
+        except Service.DoesNotExist:
             raise serializers.ValidationError(
                 _(f"Service #{value} does not exist.")
             )
@@ -102,7 +102,7 @@ class ReviewSerializer(serializers.ModelSerializer):
                 _("You can only review services for your vehicles.")
             )
 
-        if ReviewModel.objects.filter(service=service).exists():
+        if Review.objects.filter(service=service).exists():
             raise serializers.ValidationError(
                 _("You have already reviewed this service.")
             )

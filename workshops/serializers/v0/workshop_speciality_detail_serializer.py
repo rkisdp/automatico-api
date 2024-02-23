@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from workshops.models import SpecialityModel, WorkshopModel
+from workshops.models import Speciality, Workshop
 
 from .workshop_speciality_list_serializer import (
     WorkshopSpecialityListSerializer,
@@ -19,10 +19,10 @@ class WorkshopSpecialityDetailSerializer(serializers.ListSerializer):
         workshop = self.context["workshop"]
         for item in validated_data:
             try:
-                speciality = SpecialityModel.objects.get(
+                speciality = Speciality.objects.get(
                     name__iexact=item.get("name")
                 )
-            except SpecialityModel.DoesNotExist:
+            except Speciality.DoesNotExist:
                 raise serializers.ValidationError(
                     {
                         "name": _(
@@ -33,14 +33,14 @@ class WorkshopSpecialityDetailSerializer(serializers.ListSerializer):
             workshop.specialities.add(speciality)
         return workshop.specialities.all()
 
-    def update(self, instance: WorkshopModel, validated_data):
+    def update(self, instance: Workshop, validated_data):
         instance.specialities.clear()
         for item in validated_data:
             try:
-                speciality = SpecialityModel.objects.get(
+                speciality = Speciality.objects.get(
                     name__iexact=item.get("name")
                 )
-            except SpecialityModel.DoesNotExist:
+            except Speciality.DoesNotExist:
                 raise serializers.ValidationError(
                     {
                         "name": _(

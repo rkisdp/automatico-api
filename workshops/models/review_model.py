@@ -3,12 +3,12 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from services.models import ServiceModel
+from services.models import Service
 
-from .workshop_model import WorkshopModel
+from .workshop_model import Workshop
 
 
-class ReviewModel(models.Model):
+class Review(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Review id"),
@@ -19,7 +19,7 @@ class ReviewModel(models.Model):
     workshop = models.ForeignKey(
         verbose_name=_("workshop"),
         help_text=_("Workshop"),
-        to=WorkshopModel,
+        to=Workshop,
         on_delete=models.PROTECT,
         related_name="reviews",
         null=True,
@@ -28,7 +28,7 @@ class ReviewModel(models.Model):
     service = models.ForeignKey(
         verbose_name=_("service"),
         help_text=_("Service"),
-        to=ServiceModel,
+        to=Service,
         on_delete=models.PROTECT,
         related_name="reviews",
         null=True,

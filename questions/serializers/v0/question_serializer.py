@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.fields.v0 import HyperLinkSelfField
-from questions.models import QuestionModel
+from questions.models import Question
 from users.serializers.v0 import UserListSerializer
 
 from .question_response_serializer import QuestionResponseSerializer
@@ -24,7 +24,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = QuestionModel
+        model = Question
         fields = (
             "id",
             "number",

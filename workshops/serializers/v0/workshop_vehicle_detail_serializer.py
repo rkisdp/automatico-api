@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 from .workshop_vehicle_list_serializer import WorkshopVehicleListSerializer
 
@@ -17,7 +17,7 @@ class WorkshopVehicleDetailSerializer(serializers.ListSerializer):
             )
         return attrs
 
-    def update(self, instance: WorkshopModel, validated_data):
+    def update(self, instance: Workshop, validated_data):
         instance.vehicles.clear()
         for item in validated_data:
             instance.vehicles.add(item.get("vehicle"))

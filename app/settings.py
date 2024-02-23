@@ -327,7 +327,7 @@ api_settings.MEDIA_URL = MEDIA_URL
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "users.UserModel"
+AUTH_USER_MODEL = "users.User"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 

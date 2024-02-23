@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.html import strip_tags
 
-from security.models import VerificationCodeModel, VerificationCodeTypeModel
+from security.models import VerificationCode, VerificationCodeType
 
 
 def _gen_verification_code() -> str:
@@ -22,10 +22,10 @@ def send_verification_code(
 
     code = _gen_verification_code()
 
-    verification_code_type = VerificationCodeTypeModel.objects.get(
+    verification_code_type = VerificationCodeType.objects.get(
         code__iexact=code_type
     )
-    VerificationCodeModel.objects.create(
+    VerificationCode.objects.create(
         user=user, type=verification_code_type, code=make_password(code)
     )
 

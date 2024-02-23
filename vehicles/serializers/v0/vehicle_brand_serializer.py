@@ -1,7 +1,7 @@
 from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
 
-from vehicles.models import VehicleBrandModel
+from vehicles.models import VehicleBrand
 
 
 @extend_schema_serializer(component_name="Vehicle Brand")
@@ -13,6 +13,6 @@ class VehicleBrandSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = VehicleBrandModel
+        model = VehicleBrand
         fields = ("id", "name", "image_url")
         read_only_fields = ("id",)

@@ -1,10 +1,10 @@
 from django.contrib.admin import ModelAdmin, register
 
 from services.admin.inlines import ServiceHistoryInline
-from services.models import ServiceModel
+from services.models import Service
 
 
-@register(ServiceModel)
+@register(Service)
 class ServiceAdmin(ModelAdmin):
     search_help_text = "Vehicle plate or workshop name"
     show_full_result_count = True

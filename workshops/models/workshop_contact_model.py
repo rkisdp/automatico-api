@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .workshop_model import WorkshopModel
+from .workshop_model import Workshop
 
 
-class WorkshopContactModel(models.Model):
+class WorkshopContact(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Workshop contact id"),
@@ -15,7 +15,7 @@ class WorkshopContactModel(models.Model):
     workshop = models.ForeignKey(
         verbose_name=_("workshop"),
         help_text=_("Workshop"),
-        to=WorkshopModel,
+        to=Workshop,
         on_delete=models.PROTECT,
         related_name="contacts",
     )

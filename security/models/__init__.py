@@ -1,2 +1,2 @@
-from .verification_code_model import VerificationCodeModel
-from .verification_code_type_model import VerificationCodeTypeModel
+from .verification_code_model import VerificationCode
+from .verification_code_type_model import VerificationCodeType

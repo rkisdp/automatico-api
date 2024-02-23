@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from services.models import ServiceHistoryModel, ServiceStatusModel
+from services.models import ServiceHistory, ServiceStatus
 from users.serializers.v0 import UserListSerializer
 
 
@@ -11,7 +11,7 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
     responsable = UserListSerializer(read_only=True)
 
     class Meta:
-        model = ServiceHistoryModel
+        model = ServiceHistory
         fields = (
             "id",
             "status",
@@ -23,8 +23,8 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
 
     def validate_status(self, value):
         try:
-            return ServiceStatusModel.objects.get(name__iexact=value)
-        except ServiceStatusModel.DoesNotExist:
+            return ServiceStatus.objects.get(name__iexact=value)
+        except ServiceStatus.DoesNotExist:
             raise serializers.ValidationError(
                 _(f"Service status '{value}' does not exist.")
             )
@@ -65,7 +65,7 @@ class ServiceHistorySerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data["responsable"] = self.context["request"].user
         validated_data["service"] = self.context["service"]
-        history = ServiceHistoryModel.objects.create(**validated_data)
+        history = ServiceHistory.objects.create(**validated_data)
         service = history.service
         if history.status.id in [4, 5, 7]:
             service.closed_at = timezone.now()

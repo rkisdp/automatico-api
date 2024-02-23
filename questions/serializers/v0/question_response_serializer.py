@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from questions.models import QuestionResponseModel
+from questions.models import QuestionResponse
 from users.serializers.v0 import UserListSerializer
 
 
@@ -15,7 +15,7 @@ class QuestionResponseSerializer(serializers.ModelSerializer):
     # )
 
     class Meta:
-        model = QuestionResponseModel
+        model = QuestionResponse
         fields = (
             "id",
             "body",

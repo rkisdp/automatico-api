@@ -1,7 +1,7 @@
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import DjangoPermissions
 
 
-class ModelPermissions(DjangoModelPermissions):
+class Permissions(DjangoPermissions):
     perms_map = {
         "GET": ["%(app_label)s.view_%(model_name)s"],
         "OPTIONS": ["%(app_label)s.view_%(model_name)s"],

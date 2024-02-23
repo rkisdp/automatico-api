@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from core.fields.v0 import HyperLinkSelfField
 from users.serializers.v0 import UserListSerializer
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 
 @extend_schema_serializer(
@@ -82,7 +82,7 @@ class WorkshopSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = WorkshopModel
+        model = Workshop
         fields = (
             "id",
             "owner",

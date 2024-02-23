@@ -6,7 +6,7 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import RetrieveModelMixin
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -18,7 +18,7 @@ class WorkshopDetailView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = WorkshopModel.objects.all()
+    queryset = Workshop.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"
 

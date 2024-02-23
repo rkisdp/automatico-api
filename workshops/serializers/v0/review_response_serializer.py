@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from users.serializers.v0 import UserListSerializer
-from workshops.models import ReviewResponseModel
+from workshops.models import ReviewResponse
 
 
 class ReviewResponseSerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class ReviewResponseSerializer(serializers.ModelSerializer):
     # review_url = serializers.HyperlinkedRelatedField(read_only=True)
 
     class Meta:
-        model = ReviewResponseModel
+        model = ReviewResponse
         fields = (
             "id",
             "body",

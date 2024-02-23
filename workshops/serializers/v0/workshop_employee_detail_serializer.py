@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 from .workshop_employee_list_serializer import WorkshopEmployeeListSerializer
 
@@ -15,7 +15,7 @@ class WorkshopEmployeeDetailSerializer(serializers.ListSerializer):
         return self._clean_emails(emails)
 
     def create(self, validated_data):
-        workshop = WorkshopModel.objects.get(id=self.context.get("workshop_id"))
+        workshop = Workshop.objects.get(id=self.context.get("workshop_id"))
         for item in validated_data:
             employee = get_user_model().objects.get(
                 email__iexact=item.get("email")
@@ -23,7 +23,7 @@ class WorkshopEmployeeDetailSerializer(serializers.ListSerializer):
             workshop.employees.add(employee)
         return workshop.employees.all()
 
-    def update(self, instance: WorkshopModel, validated_data):
+    def update(self, instance: Workshop, validated_data):
         instance.employees.clear()
         for item in validated_data:
             employee = get_user_model().objects.get(

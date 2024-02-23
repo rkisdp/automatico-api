@@ -4,7 +4,7 @@ from drf_spectacular.utils import extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView
-from workshops.models import ReviewModel
+from workshops.models import Review
 
 SCHEMA_TAGS = ("reviews",)
 
@@ -17,7 +17,7 @@ class ReviewDetailView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = ReviewModel.objects.all()
+    queryset = Review.objects.all()
     lookup_fields = ("workshop_id", "number")
     lookup_url_kwargs = ("workshop_id", "review_number")
 

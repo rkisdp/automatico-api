@@ -4,7 +4,7 @@ from drf_spectacular.utils import extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView
-from vehicles.models import VehicleBrandModel
+from vehicles.models import VehicleBrand
 
 SCHEMA_TAGS = ("vehicles",)
 
@@ -14,7 +14,7 @@ class VehicleBrandListView(
     mixins.ListModelMixin,
     GenericAPIView,
 ):
-    queryset = VehicleBrandModel.objects.all()
+    queryset = VehicleBrand.objects.all()
     ordering = ("id",)
     ordering_fields = ("id", "name")
 

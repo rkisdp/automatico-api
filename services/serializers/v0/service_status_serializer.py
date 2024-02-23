@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from services.models import ServiceStatusModel
+from services.models import ServiceStatus
 
 
 class ServiceStatusSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ServiceStatusModel
+        model = ServiceStatus
         fields = ("id", "name")

@@ -10,8 +10,8 @@ from rest_framework.settings import api_settings
 
 from core import mixins
 from core.generics import GenericAPIView
-from vehicles.models import VehicleBrandModel
-from workshops.models import SpecialityModel, WorkshopModel
+from vehicles.models import VehicleBrand
+from workshops.models import Speciality, Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -21,7 +21,7 @@ class WorkshopListTrendingView(
     mixins.ListModelMixin,
     GenericAPIView,
 ):
-    queryset = WorkshopModel.objects.all()
+    queryset = Workshop.objects.all()
     filter_backends = ()
 
     @extend_schema(
@@ -41,7 +41,7 @@ class WorkshopListTrendingView(
                 description="Filter by vehicle brands.",
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.QUERY,
-                enum=VehicleBrandModel.objects.values_list("name", flat=True),
+                enum=VehicleBrand.objects.values_list("name", flat=True),
                 many=True,
                 explode=False,
             ),
@@ -50,7 +50,7 @@ class WorkshopListTrendingView(
                 description="Filter by specialities.",
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.QUERY,
-                enum=SpecialityModel.objects.values_list("name", flat=True),
+                enum=Speciality.objects.values_list("name", flat=True),
                 many=True,
                 explode=False,
             ),

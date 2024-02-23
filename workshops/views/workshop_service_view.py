@@ -1,13 +1,12 @@
+from core import mixins
+from core.generics import GenericAPIView, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework.settings import api_settings
-
-from core import mixins
-from core.generics import GenericAPIView, get_object_or_404
-from services.models import ServiceModel
-from workshops.models import WorkshopModel
+from services.models import Service
+from workshops.models import Workshop
 
 SCHEMA_TAGS = ("services",)
 
@@ -18,7 +17,7 @@ class WorkshopServiceView(
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
-    queryset = ServiceModel.objects.all()
+    queryset = Service.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"
     ordering = ("id",)
@@ -103,7 +102,7 @@ class WorkshopServiceView(
 
     def get_object(self):
         workshop_id = self.kwargs[self.lookup_url_kwarg]
-        return get_object_or_404(WorkshopModel.objects.all(), id=workshop_id)
+        return get_object_or_404(Workshop.objects.all(), id=workshop_id)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

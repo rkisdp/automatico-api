@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class ServiceStatusModel(models.Model):
+class ServiceStatus(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Vehicle brand id"),

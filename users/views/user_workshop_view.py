@@ -7,7 +7,7 @@ from rest_framework.settings import api_settings
 
 from core import mixins
 from core.generics import GenericAPIView, get_object_or_404
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -17,7 +17,7 @@ class UserWorkshopView(
     mixins.ListModelMixin,
     GenericAPIView,
 ):
-    queryset = WorkshopModel.objects.none()
+    queryset = Workshop.objects.none()
     lookup_field = "id"
     lookup_url_kwarg = "user_id"
     ordering = ("id",)

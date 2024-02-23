@@ -1,3 +1,3 @@
-from .service_history_model import ServiceHistoryModel
-from .service_model import ServiceModel
-from .service_status_model import ServiceStatusModel
+from .service_history_model import ServiceHistory
+from .service_model import Service
+from .service_status_model import ServiceStatus

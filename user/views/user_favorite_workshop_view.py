@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from core import mixins
 from core.generics import GenericAPIView
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -16,7 +16,7 @@ class UserFavoriteWorkshopView(
     GenericAPIView,
 ):
     permission_classes = (IsAuthenticated,)
-    queryset = WorkshopModel.objects.all()
+    queryset = Workshop.objects.all()
     ordering = ("id",)
     ordering_fields = ("id", "name")
     lookup_field = "id"

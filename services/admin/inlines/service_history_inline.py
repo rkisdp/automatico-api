@@ -1,10 +1,10 @@
 from django.contrib.admin import TabularInline
 
-from services.models import ServiceHistoryModel
+from services.models import ServiceHistory
 
 
 class ServiceHistoryInline(TabularInline):
-    model = ServiceHistoryModel
+    model = ServiceHistory
     extra = 0
     verbose_name = "history"
     verbose_name_plural = "histories"

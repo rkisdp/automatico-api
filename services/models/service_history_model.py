@@ -2,11 +2,11 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .service_model import ServiceModel
-from .service_status_model import ServiceStatusModel
+from .service_model import Service
+from .service_status_model import ServiceStatus
 
 
-class ServiceHistoryModel(models.Model):
+class ServiceHistory(models.Model):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Service id"),
@@ -17,14 +17,14 @@ class ServiceHistoryModel(models.Model):
     service = models.ForeignKey(
         verbose_name=_("service"),
         help_text=_("Service"),
-        to=ServiceModel,
+        to=Service,
         on_delete=models.PROTECT,
         related_name="histories",
     )
     status = models.ForeignKey(
         verbose_name=_("status"),
         help_text=_("Status"),
-        to=ServiceStatusModel,
+        to=ServiceStatus,
         on_delete=models.PROTECT,
         related_name="histories",
     )

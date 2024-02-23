@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
-from workshops.models import ReviewModel
+from workshops.models import Review
 
 SCHEMA_TAGS = ("reviews",)
 
@@ -19,7 +19,7 @@ class ReviewResponseView(
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
-    queryset = ReviewModel.objects.all()
+    queryset = Review.objects.all()
     lookup_fields = ("workshop_id", "number")
     lookup_url_kwargs = ("workshop_id", "review_number")
     ordering = ("id",)

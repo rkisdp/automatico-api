@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from core import mixins
 from core.generics import GenericAPIView
-from vehicles.models import VehicleModel
+from vehicles.models import Vehicle
 
 SCHEMA_TAGS = ("vehicles",)
 
@@ -17,7 +17,7 @@ class UserVehicleView(
     GenericAPIView,
 ):
     permission_classes = (IsAuthenticated,)
-    queryset = VehicleModel.objects.none()
+    queryset = Vehicle.objects.none()
     ordering = ("id",)
     ordering_fields = ("id", "brand", "model")
     search_fields = ("brand__name", "model", "nickname", "plate", "vin")

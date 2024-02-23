@@ -5,7 +5,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 
 from core import mixins
 from core.generics import GenericAPIView
-from workshops.models import WorkshopModel
+from workshops.models import Workshop
 
 SCHEMA_TAGS = ("workshops",)
 
@@ -16,7 +16,7 @@ class WorkshopImageView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = WorkshopModel.objects.all()
+    queryset = Workshop.objects.all()
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"
