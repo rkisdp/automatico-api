@@ -50,8 +50,6 @@ class Workshop(SoftDeleteModel):
         verbose_name=_("description"),
         help_text=_("The workshop description."),
         max_length=500,
-        null=True,
-        blank=True,
     )
     image = models.ImageField(
         verbose_name=_("image"),
