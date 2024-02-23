@@ -66,6 +66,4 @@ class VehiclePhotoView(
         return self.destroy(request, *args, **kwargs)
 
     def perform_destroy(self, instance):
-        if not instance.image:
-            return
         instance.image.delete()

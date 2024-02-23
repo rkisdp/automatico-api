@@ -1,12 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 
 from vehicles.models import Vehicle
 
 # from workshops.models import Workshop
 
 
-class Service(models.Model):
+class Service(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Service id"),

@@ -80,7 +80,3 @@ class VehicleView(
     )
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
-
-    def perform_destroy(self, instance):
-        instance.is_deleted = True
-        instance.save()

@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 from rest_framework.exceptions import ValidationError
 
 
-class Speciality(models.Model):
+class Speciality(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Speciality id"),

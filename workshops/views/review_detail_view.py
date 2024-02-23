@@ -54,7 +54,3 @@ class ReviewDetailView(
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)
         return getattr(module, "ReviewSerializer")
-
-    def perform_destroy(self, instance):
-        instance.is_deleted = True
-        instance.save()

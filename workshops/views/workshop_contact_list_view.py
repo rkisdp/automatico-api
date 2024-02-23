@@ -3,11 +3,12 @@ from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import status
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 from core import mixins
-from core.generics import GenericAPIView, get_object_or_404
+from core.generics import GenericAPIView
 from workshops.models import Workshop, WorkshopContact
 
 SCHEMA_TAGS = ("workshops",)

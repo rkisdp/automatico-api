@@ -11,6 +11,7 @@ from django.core.validators import (
 )
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 
 from .vehicle_brand import VehicleBrand
 
@@ -22,7 +23,7 @@ def rename(instance: Vehicle, filename: str) -> str:
     return path.join("vehicles", "images", filename)
 
 
-class Vehicle(models.Model):
+class Vehicle(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Service id"),
@@ -101,11 +102,6 @@ class Vehicle(models.Model):
         upload_to=rename,
         null=True,
         blank=True,
-    )
-    is_deleted = models.BooleanField(
-        verbose_name=_("is deleted"),
-        help_text=_("Deleted"),
-        default=False,
     )
     is_archived = models.BooleanField(
         verbose_name=_("archived"),

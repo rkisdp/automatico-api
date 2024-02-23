@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 
 from .workshop import Workshop
 
 
-class WorkshopContact(models.Model):
+class WorkshopContact(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Workshop contact id"),

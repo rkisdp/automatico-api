@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 
 from workshops.models import Workshop
 
 
-class Question(models.Model):
+class Question(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("The unique identifier of the question."),
@@ -43,12 +44,6 @@ class Question(models.Model):
         to=Workshop,
         on_delete=models.PROTECT,
         related_name="questions",
-        editable=False,
-    )
-    is_deleted = models.BooleanField(
-        verbose_name=_("is deleted"),
-        help_text=_("Indicates if the question is deleted"),
-        default=False,
         editable=False,
     )
     created_at = models.DateTimeField(

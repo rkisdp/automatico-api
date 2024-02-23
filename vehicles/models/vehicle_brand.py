@@ -5,6 +5,7 @@ from uuid import uuid4
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 
 
 def rename(instance: VehicleBrand, filename: str) -> str:
@@ -13,7 +14,7 @@ def rename(instance: VehicleBrand, filename: str) -> str:
     return path.join("vehicles", "brands", "images", filename)
 
 
-class VehicleBrand(models.Model):
+class VehicleBrand(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Vehicle brand id"),

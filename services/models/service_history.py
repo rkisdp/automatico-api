@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 
 from .service import Service
 from .service_status import ServiceStatus
 
 
-class ServiceHistory(models.Model):
+class ServiceHistory(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Service id"),

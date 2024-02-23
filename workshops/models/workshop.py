@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.gis.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 from rest_framework.exceptions import ValidationError
 
 from vehicles.models import Vehicle, VehicleBrand
@@ -22,7 +23,7 @@ def rename(instance: Workshop, filename: str) -> str:
     return path.join("workshops", "images", filename)
 
 
-class Workshop(models.Model):
+class Workshop(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("The workshop ID."),

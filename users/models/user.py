@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 
 from workshops.models import Workshop
 
@@ -21,7 +22,7 @@ def rename(instance: User, filename: str) -> str:
     return path.join("users", "images", filename)
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(SoftDeleteModel, AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("User id"),

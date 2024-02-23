@@ -55,7 +55,3 @@ class QuestionDetailView(
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "questions")
         return getattr(module, "QuestionSerializer")
-
-    def perform_destroy(self, instance):
-        instance.is_deleted = True
-        instance.save()

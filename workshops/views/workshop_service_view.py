@@ -1,10 +1,12 @@
-from core import mixins
-from core.generics import GenericAPIView, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
+from rest_framework.generics import get_object_or_404
 from rest_framework.settings import api_settings
+
+from core import mixins
+from core.generics import GenericAPIView
 from services.models import Service
 from workshops.models import Workshop
 
@@ -32,7 +34,7 @@ class WorkshopServiceView(
     )
 
     @extend_schema(
-        operation_id="list_workshop_services",
+        operation_id="list-workshop-services",
         summary="List workshop services",
         description="Lists workshop services",
         parameters=(
@@ -80,7 +82,7 @@ class WorkshopServiceView(
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="create_service",
+        operation_id="create-service",
         summary="Request a service",
         description="Requests a service",
         parameters=(

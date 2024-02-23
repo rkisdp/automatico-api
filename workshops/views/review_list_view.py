@@ -3,9 +3,10 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
+from rest_framework.generics import get_object_or_404
 
 from core import mixins
-from core.generics import GenericAPIView, get_object_or_404
+from core.generics import GenericAPIView
 from workshops.models import Workshop
 
 SCHEMA_TAGS = ("reviews",)
@@ -67,7 +68,7 @@ class ReviewListView(
 
     def get_queryset(self):
         workshop = self.get_object()
-        return workshop.reviews.all().filter(is_deleted=False)
+        return workshop.reviews.all()
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

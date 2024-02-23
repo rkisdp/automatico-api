@@ -62,7 +62,4 @@ class WorkshopBannerView(
         return self.destroy(request, *args, **kwargs)
 
     def perform_destroy(self, instance):
-        if not instance.banner:
-            return
         instance.banner.delete()
-        instance.save()

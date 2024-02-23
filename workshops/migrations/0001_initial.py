@@ -191,7 +191,7 @@ class Migration(migrations.Migration):
                         blank=True,
                         help_text="Workshop photo",
                         null=True,
-                        upload_to=workshops.models.workshop_model.rename,
+                        upload_to=workshops.models.workshop.rename,
                         verbose_name="photo",
                     ),
                 ),

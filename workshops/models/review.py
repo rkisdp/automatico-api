@@ -2,13 +2,14 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_softdelete.models import SoftDeleteModel
 
 from services.models import Service
 
 from .workshop import Workshop
 
 
-class Review(models.Model):
+class Review(SoftDeleteModel):
     id = models.AutoField(
         verbose_name=_("id"),
         help_text=_("Review id"),
@@ -63,11 +64,6 @@ class Review(models.Model):
             MinValueValidator(1.0),
             MaxValueValidator(5.0),
         ),
-    )
-    is_deleted = models.BooleanField(
-        verbose_name=_("is deleted"),
-        help_text=_("Is deleted"),
-        default=False,
     )
     created_at = models.DateTimeField(
         verbose_name=_("responded at"),
