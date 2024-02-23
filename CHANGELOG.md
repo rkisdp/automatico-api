@@ -15,15 +15,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Authorization with Google.
 - Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
 
+## [0.13.1] - 2024-02-23
+
+### Fixed
+
+- `POST /workshops/{workshop_id}/brands` endpoint.
+-
+### Changed
+
+- Renamed Rating headers from `X-#-Star-Rating`to `X-Rating-#-Star`.
+- Workshop description is required.
+
 ## [0.13.0] - 2024-02-22
 
 ### Added
 
 - Workshop description and banner.
-
-### Fixed
-
-- `POST /workshops/{workshop_id}/brands` endpoint.
 
 ## [0.12.0] - 2024-02-17
 
