@@ -58,6 +58,10 @@ class ReviewListView(
 
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
+
+        if response.status_code != 200:
+            return response
+
         headers = self._get_rating_headers()
         response = self._add_headers_to_response(response, headers)
         return response
@@ -87,22 +91,22 @@ class ReviewListView(
     def _get_rating_headers(self):
         headers = {
             "X-Rating-Average": round(
-                self.get_queryset().aggregate(rating_average=Avg("rating"))[
-                    "rating_average"
-                ],
+                self.get_queryset().aggregate(rating_avg=Avg("rating"))[
+                    "rating_avg"
+                ] or 0,
                 1,
             ),
-            "X-5-Star-Rating": self.get_queryset().filter(rating=5).count(),
-            "X-4-Star-Rating": self.get_queryset()
+            "X-Rating-5-Star": self.get_queryset().filter(rating=5).count(),
+            "X-Rating-4-Star": self.get_queryset()
             .filter(rating__gte=4, rating__lt=5)
             .count(),
-            "X-3-Star-Rating": self.get_queryset()
+            "X-Rating-3-Star": self.get_queryset()
             .filter(rating__gte=3, rating__lt=4)
             .count(),
-            "X-2-Star-Rating": self.get_queryset()
+            "X-Rating-2-Star": self.get_queryset()
             .filter(rating__gte=2, rating__lt=3)
             .count(),
-            "X-1-Star-Rating": self.get_queryset()
+            "X-Rating-1-Star": self.get_queryset()
             .filter(rating__gte=1, rating__lt=2)
             .count(),
         }
