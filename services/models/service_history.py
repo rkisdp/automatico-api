@@ -2,8 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .service_model import Service
-from .service_status_model import ServiceStatus
+from .service import Service
+from .service_status import ServiceStatus
 
 
 class ServiceHistory(models.Model):

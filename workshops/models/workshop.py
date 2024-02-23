@@ -12,7 +12,7 @@ from rest_framework.exceptions import ValidationError
 
 from vehicles.models import Vehicle, VehicleBrand
 
-from .speciality_model import Speciality
+from .speciality import Speciality
 
 
 def rename(instance: Workshop, filename: str) -> str:

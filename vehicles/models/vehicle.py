@@ -12,7 +12,7 @@ from django.core.validators import (
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .vehicle_brand_model import VehicleBrand
+from .vehicle_brand import VehicleBrand
 
 
 def rename(instance: Vehicle, filename: str) -> str:

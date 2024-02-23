@@ -6,7 +6,7 @@ from uuid import uuid4
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .review_model import Review
+from .review import Review
 
 
 def rename(instance: ReviewImage, filename: str) -> str:

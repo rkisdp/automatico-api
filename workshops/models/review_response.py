@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .review_model import Review
+from .review import Review
 
 
 class ReviewResponse(models.Model):

@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import vehicles.models.vehicle_model
+import vehicles.models.vehicle
 
 
 class Migration(migrations.Migration):
@@ -92,7 +92,7 @@ class Migration(migrations.Migration):
                         blank=True,
                         help_text="Photo",
                         null=True,
-                        upload_to=vehicles.models.vehicle_model.rename,
+                        upload_to=vehicles.models.vehicle.rename,
                         verbose_name="photo",
                     ),
                 ),

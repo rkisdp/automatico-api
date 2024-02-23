@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from services.models import Service
 
-from .workshop_model import Workshop
+from .workshop import Workshop
 
 
 class Review(models.Model):

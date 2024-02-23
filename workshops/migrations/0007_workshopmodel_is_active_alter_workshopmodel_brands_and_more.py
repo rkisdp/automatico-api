@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import workshops.models.workshop_model
+import workshops.models.workshop
 
 
 class Migration(migrations.Migration):
@@ -88,7 +88,7 @@ class Migration(migrations.Migration):
                 blank=True,
                 help_text="The workshop photo.",
                 null=True,
-                upload_to=workshops.models.workshop_model.rename,
+                upload_to=workshops.models.workshop.rename,
                 verbose_name="photo",
             ),
         ),

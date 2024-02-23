@@ -3,8 +3,8 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import workshops.models.review_image_model
-import workshops.models.workshop_model
+import workshops.models.review_image
+import workshops.models.workshop
 
 
 class Migration(migrations.Migration):
@@ -400,7 +400,7 @@ class Migration(migrations.Migration):
                     "photo",
                     models.ImageField(
                         help_text="Photo",
-                        upload_to=workshops.models.review_image_model.rename,
+                        upload_to=workshops.models.review_image.rename,
                         verbose_name="photo",
                     ),
                 ),

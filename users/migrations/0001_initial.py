@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 import django.utils.timezone
-import users.models.user_model
+import users.models.user
 
 
 class Migration(migrations.Migration):
@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
                         blank=True,
                         help_text="User profile photo",
                         null=True,
-                        upload_to=users.models.user_model.rename,
+                        upload_to=users.models.user.rename,
                         verbose_name="photo",
                     ),
                 ),
