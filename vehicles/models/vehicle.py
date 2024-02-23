@@ -76,8 +76,8 @@ class Vehicle(SoftDeleteModel):
         validators=(
             RegexValidator(
                 regex=(
-                    r"^(A{1,2}|B|C|D{1,2}|F|G|L|H|I|T|P{1,2}|U|J|R|S|M|O[EFMPI]"
-                    r"|E[AGLMEIDX]|VC|WD|YX|N?Z|K)\d{6}$"
+                    r"^((A{1,2}|B|C|D{1,2}|F|G|L|H|I|T|P{1,2}|U|J|R|S|M|O[EFMPI"
+                    r"]|E[AGLMEIDX]|VC|WD|YX|N?Z)\d{6})|(K\d{7})$"
                 ),
                 message=_("Plate must be in the format 'A000000'."),
             ),
