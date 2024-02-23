@@ -14,10 +14,10 @@ class VehicleBrandAdmin(ModelAdmin):
 
     fieldsets = (
         (
-            "Personal information",
+            "Brand information",
             {
                 "classes": ("extrapretty",),
-                "fields": ("name",),
+                "fields": ("name", "image"),
             },
         ),
     )
