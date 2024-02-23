@@ -15,7 +15,7 @@ class WorkshopBrandDetailSerializer(serializers.ListSerializer):
         return self._clean_brands(brands)
 
     def create(self, validated_data):
-        workshop = Workshop.objects.get(id=self.context.get("workshop_id"))
+        workshop = self.context["workshop"]
         for item in validated_data:
             try:
                 brand = VehicleBrand.objects.get(name__iexact=item.get("name"))
