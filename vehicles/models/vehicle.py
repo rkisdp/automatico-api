@@ -123,6 +123,9 @@ class Vehicle(SoftDeleteModel):
         return f"{self.brand} {self.model} ({self.year})"
 
     def save(self, *args, **kwargs) -> None:
-        self.plate = self.plate.upper()
-        self.vin = self.vin.upper()
+        if self.plate is not None:
+            self.plate = self.plate.upper()
+
+        if self.vin is not None:
+            self.vin = self.vin.upper()
         super().save(*args, **kwargs)
