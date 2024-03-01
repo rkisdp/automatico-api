@@ -1,153 +1,153 @@
 [
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 1,
     "fields": {
       "name": "Ford"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 2,
     "fields": {
       "name": "Toyota"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 3,
     "fields": {
       "name": "Chevrolet"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 4,
     "fields": {
       "name": "Honda"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 5,
     "fields": {
       "name": "Volkswagen"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 6,
     "fields": {
       "name": "Nissan"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 7,
     "fields": {
       "name": "BMW"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 8,
     "fields": {
       "name": "Mercedes-Benz"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 9,
     "fields": {
       "name": "Audi"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 10,
     "fields": {
       "name": "Hyundai"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 11,
     "fields": {
       "name": "Kia"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 12,
     "fields": {
       "name": "Subaru"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 13,
     "fields": {
       "name": "Mazda"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 14,
     "fields": {
       "name": "Mitsubishi"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 15,
     "fields": {
       "name": "Porsche"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 16,
     "fields": {
       "name": "Volvo"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 17,
     "fields": {
       "name": "Land Rover"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 18,
     "fields": {
       "name": "Jeep"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 19,
     "fields": {
       "name": "MINI"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 20,
     "fields": {
       "name": "Fiat"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 21,
     "fields": {
       "name": "Peugeot"
     }
   },
   {
-    "model": "vehicles.vehiclebrandmodel",
+    "model": "vehicles.vehiclebrand",
     "pk": 22,
     "fields": {
       "name": "Renault"

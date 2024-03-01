@@ -8,7 +8,7 @@ from security.email import CodeValidator
 
 
 class ConfirmPasswordResetSerializer(serializers.Serializer):
-    email = serializers.CharField(write_only=True)
+    email = serializers.EmailField(write_only=True)
     code = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
     password_confirm = serializers.CharField(write_only=True)

@@ -1,6 +1,6 @@
 [
   {
-    "model": "security.verificationcodetypemodel",
+    "model": "security.verificationcodetype",
     "pk": 1,
     "fields": {
       "code": "AAC",
@@ -9,7 +9,7 @@
     }
   },
   {
-    "model": "security.verificationcodetypemodel",
+    "model": "security.verificationcodetype",
     "pk": 2,
     "fields": {
       "code": "RAAC",
@@ -18,7 +18,7 @@
     }
   },
   {
-    "model": "security.verificationcodetypemodel",
+    "model": "security.verificationcodetype",
     "pk": 3,
     "fields": {
       "code": "EVC",
@@ -27,7 +27,7 @@
     }
   },
   {
-    "model": "security.verificationcodetypemodel",
+    "model": "security.verificationcodetype",
     "pk": 4,
     "fields": {
       "code": "REVC",
@@ -36,7 +36,7 @@
     }
   },
   {
-    "model": "security.verificationcodetypemodel",
+    "model": "security.verificationcodetype",
     "pk": 5,
     "fields": {
       "code": "PRC",
@@ -45,7 +45,7 @@
     }
   },
   {
-    "model": "security.verificationcodetypemodel",
+    "model": "security.verificationcodetype",
     "pk": 6,
     "fields": {
       "code": "RPRC",
