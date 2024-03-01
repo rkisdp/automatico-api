@@ -1,3 +1,4 @@
+from django.contrib.gis.db.models import Q
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
 from django.utils.decorators import method_decorator
@@ -67,31 +68,34 @@ class WorkshopListRecommendedView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
-
-        user = self.request.user
-        if user.is_authenticated:
-            user_brands = user.vehicles.values_list("brand__name", flat=True)
-            queryset = queryset.filter(brands__name__in=user_brands)
-        queryset = self._filter_workshop_by_user_location(queryset)
-        return queryset
+        brands_filter = self._get_brands_filter()
+        distance_filter = self._get_distance_filter()
+        return queryset.filter(distance_filter | brands_filter).distinct()
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)
         return getattr(module, "MinimalWorkshopSerializer")
 
-    def _filter_workshop_by_user_location(self, queryset):
-        try:
+    def _get_brands_filter(self):
+        user = self.request.user
+        if user.is_anonymous:
+            return Q()
+        user_vehicles_brands = user.vehicles.values_list(
+            "brand__name",
+            flat=True,
+        )
+        return Q(brands__name__in=user_vehicles_brands)
 
+    def _get_distance_filter(self):
+        try:
             lat, lon = self.request.META.get("HTTP_X_USER_LOCATION").split(",")
         except (AttributeError, ValueError):
             lat, lon = None, None
         if lat is None or lon is None:
-            return queryset
+            return Q()
 
         user_location = Point(float(lon), float(lat), srid=4326)
-        queryset = (
-            queryset.annotate(distance=Distance("location", user_location))
-            .filter(distance__isnull=False, distance__lte=5 * 1000)
-            .order_by("distance")
+        return Q(
+            location__isnull=False,
+            location__distance_lte=(user_location, 5 * 1000),
         )
-        return queryset
