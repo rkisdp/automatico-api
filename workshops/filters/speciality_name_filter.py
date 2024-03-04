@@ -10,4 +10,4 @@ class SpecialityNameFilter(CharFilter):
         query = Q()
         for speciality in value.split(","):
             query |= Q(specialities__name__iexact=speciality)
-        return qs.filter(query)
+        return qs.filter(query).distinct()
