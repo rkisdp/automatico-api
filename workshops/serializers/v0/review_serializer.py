@@ -12,8 +12,22 @@ from workshops.models import Review
 from .review_response_serializer import ReviewResponseSerializer
 
 
-@extend_schema_serializer(component_name="Review")
+@extend_schema_serializer(
+    component_name="Review",
+    deprecate_fields=("message",),
+)
 class ReviewSerializer(serializers.ModelSerializer):
+    body = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+    )
+    message = serializers.CharField(
+        source="body",
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+    )
     service = ServiceSerializer(read_only=True)
     client = UserListSerializer(read_only=True)
     response = ReviewResponseSerializer(read_only=True)
@@ -36,6 +50,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "number",
+            "body",
             "message",
             "rating",
             "response",
@@ -107,6 +122,13 @@ class ReviewSerializer(serializers.ModelSerializer):
                 _("You have already reviewed this service.")
             )
 
+        # Deprecated 'message' field
+        if not any([attrs.get("body", None), attrs.get("message", None)]):
+            raise serializers.ValidationError(
+                _("You must provide a body or message.")
+            )
+
+        attrs["body"] = attrs.get("body", attrs.get("message", None))
         return attrs
 
     def create(self, validated_data):

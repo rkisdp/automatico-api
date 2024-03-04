@@ -49,9 +49,9 @@ class Review(SoftDeleteModel):
         help_text=_("Number"),
         editable=False,
     )
-    message = models.TextField(
-        verbose_name=_("message"),
-        help_text=_("Review message"),
+    body = models.TextField(
+        verbose_name=_("body"),
+        help_text=_("Review body"),
         max_length=255,
     )
     rating = models.DecimalField(
