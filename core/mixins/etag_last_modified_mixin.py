@@ -18,8 +18,9 @@ class ETagLastModifiedMixin:
         return headers
 
     def get_headers_from_cache(self, request) -> dict:
-        etag = cache.get(f"{request.path}-etag")
-        last_modified = cache.get(f"{request.path}-last-modified")
+        request_path = self._get_request_path(request)
+        etag = cache.get(f"{request_path}-etag")
+        last_modified = cache.get(f"{request_path}-last-modified")
         headers = {"ETag": etag}
         if last_modified is not None:
             headers["Last-Modified"] = last_modified
@@ -30,25 +31,17 @@ class ETagLastModifiedMixin:
             return None
 
         last_modified = http_date(obj.updated_at.timestamp())
-        request_path = (
-            request.path
-            if not request.path.endswith("/")
-            else request.path[:-1]
-        )
+        request_path = self._get_request_path(request)
         cache_key_last_modified = f"{request_path}-last-modified"
-        cache.set(cache_key_last_modified, last_modified, timeout=None)
+        cache.set(cache_key_last_modified, last_modified, timeout=24 * 60 * 60)
         return last_modified
 
     def _set_etag(self, request, data: str) -> str:
         etag = hashlib.sha256(data.encode("utf-8")).hexdigest()
         etag = f'W/"{etag}"'
-        request_path = (
-            request.path
-            if not request.path.endswith("/")
-            else request.path[:-1]
-        )
+        request_path = self._get_request_path(request)
         cache_key = f"{request_path}-etag"
-        cache.set(cache_key, etag, timeout=None)
+        cache.set(cache_key, etag, timeout=24 * 60 * 60)
         return etag
 
     def check_etag(self, request) -> bool:
@@ -70,7 +63,8 @@ class ETagLastModifiedMixin:
         if if_match is None:
             return False
 
-        cache_key = f"{request.path}-etag"
+        request_path = self._get_request_path(request)
+        cache_key = f"{request_path}-etag"
         etag = cache.get(cache_key)
         if etag not in if_match.split(", "):
             raise PreconditionFailed(
@@ -82,7 +76,8 @@ class ETagLastModifiedMixin:
         return True
 
     def _check_if_none_match(self, request) -> bool:
-        cache_key = f"{request.path}-etag"
+        request_path = self._get_request_path(request)
+        cache_key = f"{request_path}-etag"
         etag = cache.get(cache_key)
 
         if_none_match = request.headers.get("If-None-Match")
@@ -135,3 +130,7 @@ class ETagLastModifiedMixin:
                 )
             )
         return True
+
+    def _get_request_path(self, request) -> str:
+        path, query_params = request.get_full_path().split("?")
+        return f"{path.rstrip('/')}?{query_params.rstrip('/')}"
