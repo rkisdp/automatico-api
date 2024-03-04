@@ -1,22 +1,22 @@
-from django.urls import re_path
+from django.urls import path
 
 from . import views
 
 app_name = "users"
 
 urlpatterns = (
-    re_path(
-        r"^/?$",
+    path(
+        "",
         views.UserListView.as_view(),
         name="list",
     ),
-    re_path(
-        r"^/(?P<user_id>\d+)/?$",
+    path(
+        "/<int:user_id>",
         views.UserDetailView.as_view(),
         name="detail",
     ),
-    re_path(
-        r"^/(?P<user_id>\d+)/workshops/?$",
+    path(
+        "/<int:user_id>/workshops",
         views.UserWorkshopView().as_view(),
         name="workshops",
     ),

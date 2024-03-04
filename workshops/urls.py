@@ -1,112 +1,112 @@
-from django.urls import re_path
+from django.urls import path
 
 from . import views
 
 app_name = "workshops"
 
 urlpatterns = (
-    re_path(
-        r"^/?$",
+    path(
+        "",
         views.WorkshopListView.as_view(),
         name="list",
     ),
-    re_path(
-        r"^/new/?$",
+    path(
+        "/new",
         views.WorkshopListNewView.as_view(),
         name="new",
     ),
-    re_path(
-        r"^/trending/?$",
+    path(
+        "/trending",
         views.WorkshopListTrendingView.as_view(),
         name="trending",
     ),
-    re_path(
-        r"^/recommended/?$",
+    path(
+        "/recommended",
         views.WorkshopListRecommendedView.as_view(),
         name="for-you",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/?$",
+    path(
+        "/<int:workshop_id>",
         views.WorkshopDetailView.as_view(),
         name="detail",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/banner/?$",
+    path(
+        "/<int:workshop_id>/banner",
         views.WorkshopBannerView.as_view(),
         name="banner",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/brands/?$",
+    path(
+        "/<int:workshop_id>/brands",
         views.WorkshopBrandListView.as_view(),
         name="brands",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/image/?$",
+    path(
+        "/<int:workshop_id>/image",
         views.WorkshopImageView.as_view(),
         name="image",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/contacts/?$",
+    path(
+        "/<int:workshop_id>/contacts",
         views.WorkshopContactListView.as_view(),
         name="contacts",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/employees/?$",
+    path(
+        "/<int:workshop_id>/employees",
         views.WorkshopEmployeeListView.as_view(),
         name="employees",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/services/?$",
+    path(
+        "/<int:workshop_id>/services",
         views.WorkshopServiceView.as_view(),
         name="services",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/specialities/?$",
+    path(
+        "/<int:workshop_id>/specialities",
         views.WorkshopSpecialityView.as_view(),
         name="specialities",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/vehicles/?$",
+    path(
+        "/<int:workshop_id>/vehicles",
         views.WorkshopVehicleView.as_view(),
         name="vehicles",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/questions/?$",
+    path(
+        "/<int:workshop_id>/questions",
         views.QuestionListView.as_view(),
         name="questions",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/reviews/?$",
+    path(
+        "/<int:workshop_id>/reviews",
         views.ReviewListView.as_view(),
         name="reviews",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/questions/(?P<question_number>\d+)/?$",
+    path(
+        "/<int:workshop_id>/questions/<int:question_number>",
         views.QuestionDetailView.as_view(),
         name="question-detail",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/questions/(?P<question_number>\d+)/responses/?$",
+    path(
+        "/<int:workshop_id>/questions/<int:question_number>/responses",
         views.QuestionResponseListView.as_view(),
         name="question-responses",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_number>\d+)/?$",
+    path(
+        "/<int:workshop_id>/reviews/<int:review_number>",
         views.ReviewDetailView.as_view(),
         name="review-detail",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_number>\d+)/images/?$",
+    path(
+        "/<int:workshop_id>/reviews/<int:review_number>/images",
         views.ReviewPhotoView.as_view(),
         name="review-images",
     ),
-    re_path(
-        r"^/(?P<workshop_id>\d+)/reviews/(?P<review_number>\d+)/response/?$",
+    path(
+        "/<int:workshop_id>/reviews/<int:review_number>/response",
         views.ReviewResponseView.as_view(),
         name="review-response",
     ),
-    re_path(
-        r"^/specialities/?$",
+    path(
+        "/specialities",
         views.SpecialityListView.as_view(),
         name="speciality-list",
     ),

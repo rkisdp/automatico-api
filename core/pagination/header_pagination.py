@@ -42,7 +42,6 @@ class HeaderPagination(PageNumberPagination):
             (self.get_last_link(), "last"),
         ):
             if url is not None:
-                url = url.replace("/?", "?")
                 links.append(f"<{url}>; rel='{label}'")
 
         return links

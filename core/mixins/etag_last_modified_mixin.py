@@ -132,5 +132,4 @@ class ETagLastModifiedMixin:
         return True
 
     def _get_request_path(self, request) -> str:
-        path, query_params = request.get_full_path().split("?")
-        return f"{path.rstrip('/')}?{query_params.rstrip('/')}"
+        return request.get_full_path().rstrip("/")

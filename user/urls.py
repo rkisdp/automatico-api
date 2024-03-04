@@ -1,52 +1,52 @@
-from django.urls import re_path
+from django.urls import path
 
 from . import views
 
 app_name = "user"
 
 urlpatterns = (
-    re_path(
-        r"^/?$",
+    path(
+        "",
         views.UserProfileView().as_view(),
         name="profile",
     ),
-    re_path(
-        r"^/password/?$",
+    path(
+        "/password",
         views.ChangePasswordView().as_view(),
         name="password",
     ),
-    re_path(
-        r"^/image/?$",
+    path(
+        "/image",
         views.UserPhotoView().as_view(),
         name="image",
     ),
-    re_path(
-        r"^/services/?$",
+    path(
+        "/services",
         views.UserServiceView().as_view(),
         name="services",
     ),
-    re_path(
-        r"^/vehicles/?$",
+    path(
+        "/vehicles",
         views.UserVehicleView().as_view(),
         name="vehicles",
     ),
-    re_path(
-        r"^/workshops/?$",
+    path(
+        "/workshops",
         views.UserWorkshopView().as_view(),
         name="workshops",
     ),
-    re_path(
-        r"^/workshops/favorites/?$",
+    path(
+        "/workshops/favorites",
         views.UserFavoriteWorkshopListView().as_view(),
         name="favorite-workshops",
     ),
-    re_path(
-        r"^/workshops/favorites/(?P<workshop_id>\d+)/?$",
+    path(
+        "/workshops/favorites/<int:workshop_id>",
         views.UserFavoriteWorkshopView().as_view(),
         name="favorite-workshops",
     ),
-    re_path(
-        r"^/workshops/services/?$",
+    path(
+        "/workshops/services",
         views.UserWorkshopServiceView().as_view(),
         name="workshops-services",
     ),
