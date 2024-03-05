@@ -52,6 +52,12 @@ class Service(SoftDeleteModel):
         auto_now_add=True,
         editable=False,
     )
+    updated_at = models.DateTimeField(
+        verbose_name=_("updated at"),
+        help_text=_("The date and time of last update."),
+        auto_now=True,
+        editable=False,
+    )
     closed_at = models.DateTimeField(
         verbose_name=_("end date"),
         help_text=_("End date"),

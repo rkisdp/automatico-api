@@ -103,7 +103,7 @@ class User(SoftDeleteModel, AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(
         verbose_name=_("date joined"),
         help_text=_("User registration date"),
-        default=timezone.now,
+        auto_now_add=True,
         editable=False,
     )
     last_login = models.DateTimeField(
@@ -111,6 +111,12 @@ class User(SoftDeleteModel, AbstractBaseUser, PermissionsMixin):
         help_text=_("User last login date"),
         blank=True,
         null=True,
+        editable=False,
+    )
+    updated_at = models.DateTimeField(
+        verbose_name=_("updated at"),
+        help_text=_("The date and time of last update."),
+        auto_now=True,
         editable=False,
     )
 

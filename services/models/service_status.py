@@ -17,6 +17,18 @@ class ServiceStatus(SoftDeleteModel):
         max_length=50,
         unique=True,
     )
+    created_at = models.DateTimeField(
+        verbose_name=_("created at"),
+        help_text=_("The date and time of creation."),
+        auto_now_add=True,
+        editable=False,
+    )
+    updated_at = models.DateTimeField(
+        verbose_name=_("updated at"),
+        help_text=_("The date and time of last update."),
+        auto_now=True,
+        editable=False,
+    )
 
     class Meta:
         verbose_name = _("service status")

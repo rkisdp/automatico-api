@@ -12,7 +12,7 @@ class WorkshopAdmin(GISModelAdmin):
     )
     show_full_result_count = True
     list_per_page = 25
-    filter_horizontal = ("employees", "specialities", "vehicles", "brands")
+    filter_horizontal = ("employees", "specialities", "brands")
 
     list_display = ("name", "owner")
     search_fields = (
@@ -20,11 +20,6 @@ class WorkshopAdmin(GISModelAdmin):
         "owner__last_name",
         "name",
         "specialities__name",
-        "vehicles__brand__name",
-        "vehicles__model",
-        "vehicles__year",
-        "vehicles__nickname",
-        "vehicles__vin",
     )
 
     fieldsets = (
@@ -38,7 +33,6 @@ class WorkshopAdmin(GISModelAdmin):
                     "employees",
                     "brands",
                     "specialities",
-                    "vehicles",
                 ),
             },
         ),

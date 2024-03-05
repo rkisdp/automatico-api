@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django_softdelete.models import SoftDeleteModel
 from rest_framework.exceptions import ValidationError
 
-from vehicles.models import Vehicle, VehicleBrand
+from vehicles.models import VehicleBrand
 
 from .speciality import Speciality
 
@@ -92,13 +92,6 @@ class Workshop(SoftDeleteModel):
         related_name="workshop_specialities",
         blank=True,
     )
-    vehicles = models.ManyToManyField(
-        verbose_name=_("vehicles"),
-        help_text=_("Workshop vehicles"),
-        to=Vehicle,
-        related_name="workshop_vehicles",
-        blank=True,
-    )
     is_active = models.BooleanField(
         verbose_name=_("is active"),
         help_text=_("Whether the workshop is active or not."),
@@ -106,13 +99,15 @@ class Workshop(SoftDeleteModel):
     )
     created_at = models.DateTimeField(
         verbose_name=_("created at"),
-        help_text=_("The date and time the workshop was created."),
+        help_text=_("The date and time of creation."),
         auto_now_add=True,
+        editable=False,
     )
     updated_at = models.DateTimeField(
         verbose_name=_("updated at"),
-        help_text=_("The date and time the workshop was last updated."),
+        help_text=_("The date and time of last update."),
         auto_now=True,
+        editable=False,
     )
 
     class Meta:
