@@ -98,6 +98,12 @@ class AutoSchema(BaseAutoSchema):
             description="Cross-Origin-Opener-Policy of the request.",
             response=True,
         ),
+        OpenApiParameter(
+            name="format",
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+            exclude=True,
+        ),
     )
 
     def get_override_parameters(self):

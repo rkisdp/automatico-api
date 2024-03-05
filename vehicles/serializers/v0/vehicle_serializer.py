@@ -32,12 +32,6 @@ class VehicleSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("id",)
 
-    # def __init__(self, instance=None, data=empty, **kwargs):
-    #     super().__init__(instance, data, **kwargs)
-
-    #     if self.context and self.context["request"].method != "GET":
-    #         self.fields["brand"] = serializers.CharField(write_only=True)
-
     def get_fields(self):
         fields = super().get_fields()
         if self.context and self.context["request"].method != "GET":
