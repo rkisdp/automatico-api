@@ -2,6 +2,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
+from rest_framework.exceptions import ValidationError
 
 from core import mixins
 from core.generics import GenericAPIView
@@ -80,3 +81,17 @@ class VehicleView(
     )
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+    def perform_destroy(self, instance):
+        if instance.owner != self.request.user:
+            self.permission_denied(
+                self.request,
+                message="You are not the owner of this vehicle.",
+            )
+
+        if instance.services.filter(closed_at__isnull=True).exists():
+            raise ValidationError(
+                {"detail": "You cannot delete a vehicle with an open service."}
+            )
+
+        super().perform_destroy(instance)

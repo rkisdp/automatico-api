@@ -113,9 +113,9 @@ class Vehicle(SoftDeleteModel):
         verbose_name = _("vehicle")
         verbose_name_plural = _("vehicles")
         unique_together = (
-            ("nickname", "owner"),
-            ("vin", "owner"),
-            ("plate", "owner"),
+            ("nickname", "owner", "deleted_at"),
+            ("vin", "owner", "deleted_at"),
+            ("plate", "owner", "deleted_at"),
         )
         db_table = "vehicle"
 
