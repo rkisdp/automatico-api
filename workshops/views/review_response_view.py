@@ -38,7 +38,7 @@ class ReviewResponseView(
         return super().create(request, *args, **kwargs)
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_serializer_module(version)
+        module = self._get_serializer_module(version, "reviews")
         return getattr(module, "ReviewResponseSerializer")
 
     def get_serializer_context(self):

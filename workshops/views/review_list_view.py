@@ -80,7 +80,7 @@ class ReviewListView(
         return context
 
     def _get_versioned_serializer_class(self, version):
-        module = self._get_serializer_module(version)
+        module = self._get_serializer_module(version, "reviews")
         return getattr(module, "ReviewSerializer")
 
     def _add_headers_to_response(self, response, headers):

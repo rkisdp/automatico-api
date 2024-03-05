@@ -115,7 +115,7 @@ class MinimalWorkshopSerializer(serializers.ModelSerializer):
         validated_data["owner"] = self.context["request"].user
         return super().create(validated_data)
 
-    def get_is_favorite(self, obj):
+    def get_is_favorite(self, obj) -> bool:
         user = self.context["request"].user
         if not user.is_authenticated:
             return False
