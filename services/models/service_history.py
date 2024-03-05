@@ -40,7 +40,7 @@ class ServiceHistory(SoftDeleteModel):
         verbose_name=_("responsable"),
         help_text=_("Responsable"),
         to=settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
+        on_delete=models.DO_NOTHING,
         related_name="service_histories",
     )
     created_at = models.DateTimeField(

@@ -35,7 +35,7 @@ class Vehicle(SoftDeleteModel):
         verbose_name=_("brand"),
         help_text=_("Brand"),
         to=VehicleBrand,
-        on_delete=models.PROTECT,
+        on_delete=models.DO_NOTHING,
         related_name="vehicles",
     )
     model = models.CharField(
@@ -62,7 +62,7 @@ class Vehicle(SoftDeleteModel):
         verbose_name=_("owner"),
         help_text=_("Owner"),
         to=settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
+        on_delete=models.DO_NOTHING,
         related_name="vehicles",
         null=True,
         blank=True,

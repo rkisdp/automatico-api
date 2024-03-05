@@ -34,7 +34,7 @@ class Question(SoftDeleteModel):
         verbose_name=_("client"),
         help_text=_("Client who asked the question"),
         to=settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
+        on_delete=models.DO_NOTHING,
         related_name="questions",
         editable=False,
     )
@@ -42,7 +42,7 @@ class Question(SoftDeleteModel):
         verbose_name=_("workshop"),
         help_text=_("Workshop who the question was asked"),
         to=Workshop,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="questions",
         editable=False,
     )
@@ -69,7 +69,10 @@ class Question(SoftDeleteModel):
 
     def save(self, *args, **kwargs):
         if not self.number:
-            self.number = self.workshop.questions.count() + 1
+            self.number = (
+                Question.global_objects.filter(workshop=self.workshop).count()
+                + 1
+            )
         super().save(*args, **kwargs)
 
     @property

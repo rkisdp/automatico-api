@@ -19,14 +19,14 @@ class Service(SoftDeleteModel):
         verbose_name=_("vehicle"),
         help_text=_("Vehicle"),
         to=Vehicle,
-        on_delete=models.PROTECT,
+        on_delete=models.DO_NOTHING,
         related_name="services",
     )
     workshop = models.ForeignKey(
         verbose_name=_("workshop"),
         help_text=_("Workshop"),
         to="workshops.Workshop",
-        on_delete=models.PROTECT,
+        on_delete=models.DO_NOTHING,
         related_name="services",
     )
     number = models.PositiveIntegerField(
@@ -70,7 +70,10 @@ class Service(SoftDeleteModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.number = self.workshop.services.count() + 1
+            self.number = (
+                Service.global_objects.filter(workshop=self.workshop).count()
+                + 1
+            )
         super().save(*args, **kwargs)
 
     @property

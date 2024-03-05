@@ -21,7 +21,7 @@ class Review(SoftDeleteModel):
         verbose_name=_("workshop"),
         help_text=_("Workshop"),
         to=Workshop,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="reviews",
         null=True,
         blank=True,
@@ -30,7 +30,7 @@ class Review(SoftDeleteModel):
         verbose_name=_("service"),
         help_text=_("Service"),
         to=Service,
-        on_delete=models.PROTECT,
+        on_delete=models.DO_NOTHING,
         related_name="reviews",
         null=True,
         blank=True,
@@ -39,7 +39,7 @@ class Review(SoftDeleteModel):
         verbose_name=_("client"),
         help_text=_("Client"),
         to=settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="reviews",
         null=True,
         blank=True,
@@ -88,5 +88,7 @@ class Review(SoftDeleteModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.number = self.workshop.reviews.count() + 1
+            self.number = (
+                Review.global_objects.filter(workshop=self.workshop).count() + 1
+            )
         super().save(*args, **kwargs)

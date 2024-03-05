@@ -29,7 +29,7 @@ class QuestionResponse(SoftDeleteModel):
         verbose_name=_("client"),
         help_text=_("Client who answered the question."),
         to=settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
+        on_delete=models.DO_NOTHING,
         related_name="question_responses",
         editable=False,
     )

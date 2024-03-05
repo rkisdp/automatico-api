@@ -29,7 +29,7 @@ class ReviewImage(SoftDeleteModel):
         verbose_name=_("review"),
         help_text=_("Review"),
         to=Review,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="images",
     )
     image = models.ImageField(

@@ -35,7 +35,7 @@ class Workshop(SoftDeleteModel):
         verbose_name=_("owner"),
         help_text=_("The account owner of the workshop."),
         to=settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="workshops",
     )
     name = models.CharField(

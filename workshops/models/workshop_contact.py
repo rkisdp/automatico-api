@@ -17,7 +17,7 @@ class WorkshopContact(SoftDeleteModel):
         verbose_name=_("workshop"),
         help_text=_("Workshop"),
         to=Workshop,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="contacts",
     )
     name = models.CharField(
