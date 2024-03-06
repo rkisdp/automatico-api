@@ -218,6 +218,16 @@ SPECTACULAR_SETTINGS = {
             "description": "Deprecated endpoints.",
         },
     ),
+    "APPEND_COMPONENTS": {
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-Api-Key",
+            }
+        }
+    },
+    "SECURITY": [{"ApiKeyAuth": []}],
 }
 
 MIDDLEWARE = (
