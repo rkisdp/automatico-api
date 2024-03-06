@@ -14,13 +14,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Translate (some) error messages.
 - Authorization with Google.
 - Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
+- Rename 'client' field to 'user' on review model.
+
+## [0.14.0] - 2024-03-01
+
+### Added
+
+- Support for `application/json` content type.
+- Vehicle service indicator (designates if the vehicle is in a service).
+
+### Changed
+
+- `GET /workshops/recommended` recommendations.
+- Deprecated 'message' field on workshop review serializer in favor of 'body'.
+- Removed support for trailing slash endpoints.
+
+### Fixed
+
+- Workshop specialities filter returning duplicated workshops.
+- Review, Question and Service number generation.
+- `DELETE /workshops/{workshop_id}/reviews/{review_number}` returning 500 error.
+- `DELETE /vehicles/{vehicle_id}` returning 500 error.
+- `PUT /auth/password/reset/confirm` returning 500 error.
 
 ## [0.13.1] - 2024-02-23
 
 ### Fixed
 
 - `POST /workshops/{workshop_id}/brands` endpoint.
--
+
 ### Changed
 
 - Renamed Rating headers from `X-#-Star-Rating`to `X-Rating-#-Star`.

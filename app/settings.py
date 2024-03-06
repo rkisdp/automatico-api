@@ -68,8 +68,14 @@ INSTALLED_APPS = (
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_PARSER_CLASSES": ("core.parsers.AutoMaticoJSONParser",),
-    "DEFAULT_RENDERER_CLASSES": ("core.renderers.AutoMaticoJSONRenderer",),
+    "DEFAULT_PARSER_CLASSES": (
+        "core.parsers.AutoMaticoJSONParser",
+        "rest_framework.parsers.JSONParser",
+    ),
+    "DEFAULT_RENDERER_CLASSES": (
+        "core.renderers.AutoMaticoJSONRenderer",
+        "rest_framework.renderers.JSONRenderer",
+    ),
     "DEFAULT_VERSIONING_CLASS": "core.versioning.XAutoMaticoAPIVersioning",
     "DEFAULT_VERSION": "0",
     "ALLOWED_VERSIONS": ("0",),
@@ -139,7 +145,7 @@ CSRF_TRUSTED_ORIGINS = env.tuple("CSRF_TRUSTED_ORIGINS", default=())
 SPECTACULAR_SETTINGS = {
     "TITLE": "AutoMático API",
     "DESCRIPTION": "AutoMático API",
-    "VERSION": "0.13.0",
+    "VERSION": "0.14.0",
     "TOS": None,
     "LICENSE": None,
     "SERVE_INCLUDE_SCHEMA": False,
@@ -152,6 +158,9 @@ SPECTACULAR_SETTINGS = {
         "syntaxHighlight.activate": True,
         "syntaxHighlight.theme": "monokai",
     },
+    "SWAGGER_UI_DIST": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest",
+    "SWAGGER_UI_FAVICON_HREF": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png",
+    "REDOC_DIST": "https://cdn.jsdelivr.net/npm/redoc@latest",
     "COMPONENT_SPLIT_REQUEST": True,
     "SERVERS": (
         (
