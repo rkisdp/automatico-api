@@ -11,6 +11,11 @@ urlpatterns = (
         name="list",
     ),
     path(
+        "/specialities",
+        views.SpecialityListView.as_view(),
+        name="speciality-list",
+    ),
+    path(
         "/new",
         views.WorkshopListNewView.as_view(),
         name="new",
@@ -104,10 +109,5 @@ urlpatterns = (
         "/<int:workshop_id>/reviews/<int:review_number>/response",
         views.ReviewResponseView.as_view(),
         name="review-response",
-    ),
-    path(
-        "/specialities",
-        views.SpecialityListView.as_view(),
-        name="speciality-list",
     ),
 )

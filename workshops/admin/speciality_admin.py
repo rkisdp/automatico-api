@@ -17,7 +17,7 @@ class SpecialityAdmin(ModelAdmin):
             "Speciality information",
             {
                 "classes": ("extrapretty",),
-                "fields": ("name",),
+                "fields": ("name", "image"),
             },
         ),
     )
