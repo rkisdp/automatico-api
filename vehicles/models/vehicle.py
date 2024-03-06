@@ -18,7 +18,6 @@ from .vehicle_brand import VehicleBrand
 
 def rename(instance: Vehicle, filename: str) -> str:
     ext = filename.split(".")[-1]
-
     filename = f"{uuid4()}.{ext}"
     return path.join("vehicles", "images", filename)
 
@@ -64,8 +63,6 @@ class Vehicle(SoftDeleteModel):
         to=settings.AUTH_USER_MODEL,
         on_delete=models.DO_NOTHING,
         related_name="vehicles",
-        null=True,
-        blank=True,
     )
     plate = models.CharField(
         verbose_name=_("plate"),
