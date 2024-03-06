@@ -21,12 +21,13 @@ def send_verification_code(
         user.verification_code.delete()
 
     code = _gen_verification_code()
-
     verification_code_type = VerificationCodeType.objects.get(
         code__iexact=code_type
     )
     VerificationCode.objects.create(
-        user=user, type=verification_code_type, code=make_password(code)
+        user=user,
+        type=verification_code_type,
+        code=make_password(code),
     )
 
     html_message = render_to_string(
@@ -37,7 +38,6 @@ def send_verification_code(
         },
     )
     del code
-
     plain_message = strip_tags(html_message)
 
     message = EmailMultiAlternatives(

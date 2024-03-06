@@ -63,15 +63,20 @@ class ReviewSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("id", "number", "created_at")
 
-    def __init__(self, instance=None, data=empty, **kwargs):
-        super().__init__(instance, data, **kwargs)
-
+    def get_fields(self):
+        fields = super().get_fields()
         if self.context and self.context["request"].method != "GET":
-            self.fields["service"] = serializers.IntegerField(
+            fields["service"] = serializers.IntegerField(
                 write_only=True,
                 required=False,
                 allow_null=True,
             )
+        return fields
+
+    def run_validation(self, data=empty):
+        validated_data = super().run_validation(data)
+        self.fields["service"] = ServiceSerializer()
+        return validated_data
 
     def get_image_urls(
         self, obj
@@ -83,16 +88,11 @@ class ReviewSerializer(serializers.ModelSerializer):
                 images.append(request.build_absolute_uri(image.image.url))
         return images
 
-    def run_validation(self, data=empty):
-        validated_data = super().run_validation(data)
-        self.fields["service"] = ServiceSerializer()
-        return validated_data
-
     def validate_service(self, value):
+        if value is None:
+            return None
         try:
             workshop = self.context["workshop"]
-            if value is None:
-                return None
             return Service.objects.get(number=value, workshop=workshop)
         except Service.DoesNotExist:
             raise serializers.ValidationError(
@@ -109,23 +109,27 @@ class ReviewSerializer(serializers.ModelSerializer):
 
         if service.workshop != self.context["workshop"]:
             raise serializers.ValidationError(
-                _("Service does not belong to this workshop.")
+                {"service": _("Service does not belong to this workshop.")}
             )
 
         if service.vehicle.owner != self.context["request"].user:
             raise serializers.ValidationError(
-                _("You can only review services for your vehicles.")
+                {
+                    "service": _(
+                        "You can only review services for your vehicles."
+                    )
+                }
             )
 
         if Review.objects.filter(service=service).exists():
             raise serializers.ValidationError(
-                _("You have already reviewed this service.")
+                {"service": _("You have already reviewed this service.")}
             )
 
         # Deprecated 'message' field
         if not any([attrs.get("body", None), attrs.get("message", None)]):
             raise serializers.ValidationError(
-                _("You must provide a body or message.")
+                {"service": _("You must provide a body or message.")}
             )
 
         attrs["body"] = attrs.get("body", attrs.get("message", None))

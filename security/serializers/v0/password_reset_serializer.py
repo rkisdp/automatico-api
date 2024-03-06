@@ -11,7 +11,9 @@ class PasswordResetSerializer(serializers.Serializer):
     def validate(self, validated_data):
         email = validated_data.get("email")
         users = get_user_model().objects.filter(
-            email__iexact=email, is_active=True, email_verified=True
+            email__iexact=email,
+            is_active=True,
+            email_verified=True,
         )
 
         if not users.exists():

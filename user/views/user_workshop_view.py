@@ -50,4 +50,6 @@ class UserWorkshopView(
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "workshops")
+        if self.request.method == "POST":
+            return getattr(module, "WorkshopSerializer")
         return getattr(module, "MinimalWorkshopSerializer")

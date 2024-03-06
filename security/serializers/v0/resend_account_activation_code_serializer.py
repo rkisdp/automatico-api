@@ -29,5 +29,4 @@ class ResendAccountActivationCodeSerializer(serializers.Serializer):
             email_template="account_activation_code",
             email_subject="Activación de Cuenta",
         )
-
         return attrs

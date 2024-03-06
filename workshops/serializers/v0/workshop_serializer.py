@@ -108,7 +108,11 @@ class WorkshopSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
         geo_field = "location"
 
-    def get_is_favorite(self, obj):
+    def create(self, validated_data):
+        validated_data["owner"] = self.context["request"].user
+        return super().create(validated_data)
+
+    def get_is_favorite(self, obj) -> bool:
         user = self.context["request"].user
         if not user.is_authenticated:
             return False
