@@ -16,7 +16,7 @@ class WorkshopImageView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = Workshop.objects.all()
+    queryset = Workshop.global_objects.all()
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"

@@ -2,6 +2,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
 from core import mixins
@@ -19,7 +20,7 @@ class ReviewResponseView(
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
-    queryset = Review.objects.all()
+    queryset = Review.global_objects.all()
     lookup_fields = ("workshop_id", "number")
     lookup_url_kwargs = ("workshop_id", "review_number")
     ordering = ("id",)
@@ -29,7 +30,7 @@ class ReviewResponseView(
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         if not hasattr(instance, "response"):
-            return Response(None, status=status.HTTP_204_NO_CONTENT)
+            raise NotFound()
         serializer = self.get_serializer(instance.response)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

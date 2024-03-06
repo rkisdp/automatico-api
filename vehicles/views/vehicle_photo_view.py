@@ -18,7 +18,7 @@ class VehiclePhotoView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = Vehicle.objects.all()
+    queryset = Vehicle.global_objects.all()
     permission_classes = (IsAuthenticated, IsOwnerPermission)
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = "id"

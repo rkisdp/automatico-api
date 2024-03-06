@@ -1,6 +1,16 @@
 from importlib import import_module
 
 from rest_framework.generics import GenericAPIView as BaseGenericAPIView
+from rest_framework.generics import get_object_or_404 as _get_object_or_404
+
+from core.exceptions import Gone
+
+
+def get_object_or_404(queryset, *filter_args, **filter_kwargs):
+    obj = _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+    if obj.deleted_at is not None:
+        raise Gone()
+    return obj
 
 
 class GenericAPIView(BaseGenericAPIView):
@@ -40,7 +50,7 @@ class GenericAPIView(BaseGenericAPIView):
                 continue
             if not allowed:
                 throttle_durations.append(throttle.wait())
-            self.throttle_headers = throttle.get_headers()
+            self._throttle_headers = throttle.get_headers()
 
         if throttle_durations:
             durations = [
@@ -54,7 +64,22 @@ class GenericAPIView(BaseGenericAPIView):
 
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
-        if hasattr(self, "throttle_headers"):
-            for name, value in self.throttle_headers.items():
+        if hasattr(self, "_throttle_headers"):
+            for name, value in self._throttle_headers.items():
                 response[name] = value
         return response
+
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+        assert lookup_url_kwarg in self.kwargs, (
+            "Expected view %s to be called with a URL keyword argument "
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            "attribute on the view correctly."
+            % (self.__class__.__name__, lookup_url_kwarg)
+        )
+
+        filter_kwargs = {self.lookup_field: self.kwargs[lookup_url_kwarg]}
+        obj = get_object_or_404(queryset, **filter_kwargs)
+        self.check_object_permissions(self.request, obj)
+        return obj

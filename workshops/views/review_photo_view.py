@@ -16,7 +16,7 @@ class ReviewPhotoView(
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
-    queryset = Review.objects.all()
+    queryset = Review.global_objects.all()
     parser_classes = (MultiPartParser, FormParser)
     lookup_fields = ("workshop_id", "number")
     lookup_url_kwargs = ("workshop_id", "review_number")

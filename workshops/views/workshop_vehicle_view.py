@@ -2,11 +2,10 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework.generics import get_object_or_404
 from rest_framework.settings import api_settings
 
 from core import mixins
-from core.generics import GenericAPIView
+from core.generics import GenericAPIView, get_object_or_404
 from vehicles.models import Vehicle
 from workshops.models import Workshop
 
@@ -19,7 +18,7 @@ class WorkshopVehicleView(
     mixins.UpdateModelMixin,
     GenericAPIView,
 ):
-    queryset = Vehicle.objects.none()
+    queryset = Vehicle.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"
     ordering = ("id",)
@@ -73,11 +72,14 @@ class WorkshopVehicleView(
 
     def get_object(self):
         workshop_id = self.kwargs[self.lookup_url_kwarg]
-        return get_object_or_404(Workshop.objects.all(), id=workshop_id)
+        return get_object_or_404(Workshop.global_objects.all(), id=workshop_id)
 
     def get_queryset(self):
         workshop = self.get_object()
-        return Vehicle.objects.filter(workshop_vehicles=workshop)
+        return self.queryset.filter(
+            services__workshop=workshop,
+            services__closed_at__isnull=True,
+        )
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

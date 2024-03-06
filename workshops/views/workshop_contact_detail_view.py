@@ -19,7 +19,7 @@ class WorkshopContactDetailView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = WorkshopContact.objects.all()
+    queryset = WorkshopContact.global_objects.all()
     lookup_fields = ("workshop_id", "id")
     lookup_url_kwargs = ("workshop_id", "contact_id")
 

@@ -14,7 +14,7 @@ class ServiceStatusDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
 ):
-    queryset = ServiceStatus.objects.all()
+    queryset = ServiceStatus.global_objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "status_id"
 

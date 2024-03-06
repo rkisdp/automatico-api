@@ -15,7 +15,7 @@ class VehicleBrandDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
 ):
-    queryset = VehicleBrand.objects.all()
+    queryset = VehicleBrand.global_objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "brand_id"
 

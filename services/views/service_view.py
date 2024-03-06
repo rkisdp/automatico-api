@@ -14,7 +14,7 @@ class ServiceView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
 ):
-    queryset = Service.objects.all()
+    queryset = Service.global_objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "service_id"
 

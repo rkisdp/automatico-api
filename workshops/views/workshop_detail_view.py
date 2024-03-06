@@ -18,7 +18,7 @@ class WorkshopDetailView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = Workshop.objects.all()
+    queryset = Workshop.global_objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "workshop_id"
 
@@ -93,12 +93,6 @@ class WorkshopDetailView(
     )
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
-
-    def perform_destroy(self, instance):
-        if not instance.is_active:
-            return
-        instance.is_active = False
-        instance.save()
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version)

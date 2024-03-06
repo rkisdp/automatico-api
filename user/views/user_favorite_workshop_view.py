@@ -16,7 +16,7 @@ class UserFavoriteWorkshopView(
     GenericAPIView,
 ):
     permission_classes = (IsAuthenticated,)
-    queryset = Workshop.objects.all()
+    queryset = Workshop.global_objects.all()
     ordering = ("id",)
     ordering_fields = ("id", "name")
     lookup_field = "id"

@@ -18,7 +18,7 @@ class QuestionDetailView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = Question.objects.all()
+    queryset = Question.global_objects.all()
     lookup_fields = ("workshop_id", "number")
     lookup_url_kwargs = ("workshop_id", "question_number")
 

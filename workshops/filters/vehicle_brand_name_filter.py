@@ -10,4 +10,4 @@ class VehicleBrandNameFilter(CharFilter):
         query = Q()
         for brand in value.split(","):
             query |= Q(brands__name__iexact=brand)
-        return qs.filter(query)
+        return qs.filter(query).distinct()

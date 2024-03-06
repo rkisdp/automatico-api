@@ -15,7 +15,7 @@ class UserDetailView(
     mixins.RetrieveModelMixin,
     GenericAPIView,
 ):
-    queryset = get_user_model().objects.all()
+    queryset = get_user_model().global_objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "user_id"
 

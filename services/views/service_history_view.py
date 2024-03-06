@@ -3,10 +3,9 @@ from django.views.decorators.cache import cache_control
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework.settings import api_settings
-from rest_framework.generics import get_object_or_404
 
 from core import mixins
-from core.generics import GenericAPIView
+from core.generics import GenericAPIView, get_object_or_404
 from services.models import Service, ServiceHistory
 
 SCHEMA_TAGS = ("services",)
@@ -18,7 +17,7 @@ class ServiceHistoryView(
     mixins.CreateModelMixin,
     GenericAPIView,
 ):
-    queryset = ServiceHistory.objects.all()
+    queryset = ServiceHistory.objects.none()
     lookup_field = "id"
     lookup_url_kwarg = "service_id"
     ordering = ("id",)
@@ -86,7 +85,7 @@ class ServiceHistoryView(
 
     def get_object(self):
         service_id = self.kwargs[self.lookup_url_kwarg]
-        return get_object_or_404(Service.objects.all(), id=service_id)
+        return get_object_or_404(Service.global_objects.all(), id=service_id)
 
     def get_queryset(self):
         service = self.get_object()

@@ -1,4 +1,4 @@
-from rest_framework.generics import get_object_or_404
+from core.generics import get_object_or_404
 
 
 class MultipleFieldLookupMixin:
@@ -10,7 +10,6 @@ class MultipleFieldLookupMixin:
     def get_object(self):
         queryset = self.filter_queryset(super().get_queryset())
         kwargs = {}
-
         for field, kwarg in zip(self.lookup_fields, self.lookup_url_kwargs):
             kwargs[field] = self.kwargs[kwarg]
         obj = get_object_or_404(queryset, **kwargs)

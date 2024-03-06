@@ -18,7 +18,7 @@ class VehicleView(
     mixins.DestroyModelMixin,
     GenericAPIView,
 ):
-    queryset = Vehicle.objects.all()
+    queryset = Vehicle.global_objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "vehicle_id"
 
