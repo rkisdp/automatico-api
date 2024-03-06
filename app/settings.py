@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     "django_filters",
     "drf_spectacular",
     "rest_framework",
+    "rest_framework_api_key",
     "rest_framework_gis",
     "core",
     "documentation",
@@ -84,6 +85,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework_api_key.permissions.HasAPIKey",
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ),
     "DEFAULT_FILTER_BACKENDS": (
@@ -348,3 +350,5 @@ OAUTH2_GOOGLE_CLIENT_SECRET = env.str(
     "OAUTH2_GOOGLE_CLIENT_SECRET", default=None
 )
 OAUTH2_GOOGLE_PROJECT_ID = env.str("OAUTH2_GOOGLE_PROJECT_ID", default=None)
+
+API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
