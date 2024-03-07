@@ -1,4 +1,5 @@
 from django.contrib.gis.admin import GISModelAdmin, register
+from django.http import HttpRequest
 
 from workshops.models import Workshop
 
@@ -55,4 +56,7 @@ class WorkshopAdmin(GISModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         if obj:
             return ("owner",)
-        return ()
+        return super().get_readonly_fields(request, obj)
+
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        return False

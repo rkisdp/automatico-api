@@ -1,4 +1,5 @@
 from django.contrib.admin import ModelAdmin, register
+from django.http import HttpRequest
 
 from workshops.models import Speciality
 
@@ -21,3 +22,6 @@ class SpecialityAdmin(ModelAdmin):
             },
         ),
     )
+
+    def has_delete_permission(self, request: HttpRequest, obj=None) -> bool:
+        return request.user.is_superuser

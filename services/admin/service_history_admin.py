@@ -1,4 +1,5 @@
 from django.contrib.admin import ModelAdmin, register
+from django.http import HttpRequest
 
 from services.models import ServiceHistory
 
@@ -11,7 +12,7 @@ class ServiceHistoryAdmin(ModelAdmin):
 
     list_display = ("service", "status", "comment", "responsable")
     search_fields = ("service__workshop__name", "service__status__name")
-    readonly_fields = ("created_at",)
+    readonly_fields = ("service", "comment", "responsable", "created_at")
 
     date_hierarchy = "created_at"
 
@@ -32,22 +33,11 @@ class ServiceHistoryAdmin(ModelAdmin):
         ),
     )
 
-    fieldsets_add = (
-        (
-            "Service history information",
-            {
-                "classes": ("extrapretty",),
-                "fields": ("service", "status", "comment", "responsable"),
-            },
-        ),
-    )
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        return False
 
-    def get_fieldsets(self, request, obj=None):
-        if obj:
-            return self.fieldsets
-        return self.fieldsets_add
+    def has_change_permission(self, request: HttpRequest, obj=None) -> bool:
+        return False
 
-    def get_readonly_fields(self, request, obj=None):
-        if obj:
-            return self.readonly_fields + ("service", "comment", "responsable")
-        return self.readonly_fields
+    def has_delete_permission(self, request: HttpRequest, obj=None) -> bool:
+        return False

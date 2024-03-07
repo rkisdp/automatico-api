@@ -1,4 +1,6 @@
 from django.contrib.admin import ModelAdmin, register
+from django.http import HttpRequest
+
 from security.models import VerificationCodeType
 
 
@@ -22,5 +24,14 @@ class VerificationCodeTypeAdmin(ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            return self.readonly_fields + ("code", "name")
+            return ("code", "name") + self.readonly_fields
         return self.readonly_fields
+
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        return request.user.is_superuser
+
+    def has_change_permission(self, request: HttpRequest, obj=None) -> bool:
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request: HttpRequest, obj=None) -> bool:
+        return False

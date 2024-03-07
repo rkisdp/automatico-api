@@ -1,4 +1,5 @@
 from django.contrib.admin import ModelAdmin, register
+from django.http import HttpRequest
 
 from vehicles.models import VehicleBrand
 
@@ -21,3 +22,12 @@ class VehicleBrandAdmin(ModelAdmin):
             },
         ),
     )
+
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        return request.user.is_superuser
+
+    def has_change_permission(self, request: HttpRequest, obj=None) -> bool:
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request: HttpRequest, obj=None) -> bool:
+        return request.user.is_superuser

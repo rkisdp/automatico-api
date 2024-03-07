@@ -34,7 +34,6 @@ class Speciality(SoftDeleteModel):
         verbose_name=_("image"),
         help_text=_("Image"),
         upload_to=rename,
-        blank=True,
         null=True,
     )
     created_at = models.DateTimeField(
