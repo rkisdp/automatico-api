@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     "corsheaders",
     "django_filters",
     "drf_spectacular",
+    "drf_api_logger",
     "rest_framework",
     "rest_framework_api_key",
     "rest_framework_gis",
@@ -240,6 +241,7 @@ MIDDLEWARE = (
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "core.middleware.APILoggerMiddleware",
 )
 
 ROOT_URLCONF = "app.urls"
@@ -362,3 +364,9 @@ OAUTH2_GOOGLE_CLIENT_SECRET = env.str(
 OAUTH2_GOOGLE_PROJECT_ID = env.str("OAUTH2_GOOGLE_PROJECT_ID", default=None)
 
 API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
+
+DRF_API_LOGGER_DATABASE = True
+DRF_API_LOGGER_SLOW_API_ABOVE = 700
+DRF_API_LOGGER_ENABLE_TRACING = True
+DRF_API_LOGGER_SKIP_NAMESPACE = ("security",)
+DRF_API_LOGGER_CONTENT_TYPES = ("application/vnd.automatico+json",)
