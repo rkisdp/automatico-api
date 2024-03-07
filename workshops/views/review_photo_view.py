@@ -4,7 +4,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
-from workshops.models import Review
+from reviews.models import Review
 
 SCHEMA_TAGS = ("reviews",)
 

@@ -5,8 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django_softdelete.models import SoftDeleteModel
 
 from services.models import Service
-
-from .workshop import Workshop
+from workshops.models import Workshop
 
 
 class Review(SoftDeleteModel):

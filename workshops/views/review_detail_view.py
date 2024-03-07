@@ -4,7 +4,7 @@ from drf_spectacular.utils import extend_schema
 
 from core import mixins
 from core.generics import GenericAPIView
-from workshops.models import Review
+from reviews.models import Review
 
 SCHEMA_TAGS = ("reviews",)
 

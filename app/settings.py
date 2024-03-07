@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     "core",
     "documentation",
     "questions",
+    "reviews",
     "security",
     "services",
     "user",
@@ -366,7 +367,7 @@ OAUTH2_GOOGLE_PROJECT_ID = env.str("OAUTH2_GOOGLE_PROJECT_ID", default=None)
 API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
 
 DRF_API_LOGGER_DATABASE = True
-DRF_API_LOGGER_SLOW_API_ABOVE = 700
+DRF_API_LOGGER_SLOW_API_ABOVE = 200
 DRF_API_LOGGER_ENABLE_TRACING = True
 DRF_API_LOGGER_SKIP_NAMESPACE = ("security",)
 DRF_API_LOGGER_CONTENT_TYPES = ("application/vnd.automatico+json",)

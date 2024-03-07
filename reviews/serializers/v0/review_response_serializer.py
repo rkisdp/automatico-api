@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
+from reviews.models import ReviewResponse
 from users.serializers.v0 import UserListSerializer
-from workshops.models import ReviewResponse
 
 
 class ReviewResponseSerializer(serializers.ModelSerializer):

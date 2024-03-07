@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from core import mixins
 from core.generics import GenericAPIView
 from core.mixins import MultipleFieldLookupMixin
-from workshops.models import Review
+from reviews.models import Review
 
 SCHEMA_TAGS = ("reviews",)
 

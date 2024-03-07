@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import workshops.models.review_image
+import reviews.models.review_image
 
 
 class Migration(migrations.Migration):
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
             name="image",
             field=models.ImageField(
                 help_text="Image",
-                upload_to=workshops.models.review_image.rename,
+                upload_to=reviews.models.review_image.rename,
                 verbose_name="image",
             ),
         ),

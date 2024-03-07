@@ -4,10 +4,10 @@ from rest_framework import serializers
 from rest_framework.fields import empty
 
 from core.fields.v0 import HyperLinkSelfField
+from reviews.models import Review
 from services.models import Service
 from services.serializers.v0 import ServiceSerializer
 from users.serializers.v0 import UserListSerializer
-from workshops.models import Review
 
 from .review_response_serializer import ReviewResponseSerializer
 
