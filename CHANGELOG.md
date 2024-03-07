@@ -7,14 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Enable `POST /image` to upload an image and return it's ID.
 - Deactivate a workshop.
 - Activate a workshop.
-- Protected workshop management routes. This routes should need a workshop_id claim on the JWT or something like that.
-- Translate (some) error messages.
-- Authorization with Google.
-- Service request messages. This allows to have a chat on a prior to accepting or rejecting a request.
-- Rename 'client' field to 'user' on review model.
+- Protected workshop management routes.
+- Internationalization.
+- Workshop statistics.
+
+## [0.15.0] - 2024-03-07
+
+### Added
+
+- Workshop speciality image.
+- Api Key authentication via `X-Api-Key` header.
+
+### Changed
+
+- Some endpoints return 410 Gone when the resource is deleted.
+- Deprecated 'client' field and added 'user' on review model.
+
+### Fixed
+
+- X-Page-Size header always returning 25.
+
+### Removed
+
+- Deprecated fields from MinimalWorkshop ("owner", "vehicles", "location", "recent_rating", "brands_count", "specialities_count", "vehicles_count", "vehicles_url", "brands_url" and "specialities_url").
+- Deprecated field from Workshop ("owner").
 
 ## [0.14.0] - 2024-03-01
 
