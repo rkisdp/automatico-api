@@ -22,8 +22,7 @@ class Review(SoftDeleteModel):
         to=Workshop,
         on_delete=models.CASCADE,
         related_name="reviews",
-        null=True,
-        blank=True,
+        editable=False,
     )
     service = models.ForeignKey(
         verbose_name=_("service"),
@@ -31,17 +30,16 @@ class Review(SoftDeleteModel):
         to=Service,
         on_delete=models.DO_NOTHING,
         related_name="reviews",
-        null=True,
         blank=True,
+        null=True,
     )
-    client = models.ForeignKey(
-        verbose_name=_("client"),
-        help_text=_("Client"),
+    user = models.ForeignKey(
+        verbose_name=_("user"),
+        help_text=_("User"),
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="reviews",
-        null=True,
-        blank=True,
+        editable=False,
     )
     number = models.PositiveIntegerField(
         verbose_name=_("number"),
@@ -83,7 +81,7 @@ class Review(SoftDeleteModel):
         db_table = "message"
 
     def __str__(self) -> str:
-        return f"{self.client} - {self.workshop}"
+        return f"{self.user} - {self.workshop}"
 
     def save(self, *args, **kwargs):
         if not self.id:

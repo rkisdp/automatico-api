@@ -14,7 +14,7 @@ from .review_response_serializer import ReviewResponseSerializer
 
 @extend_schema_serializer(
     component_name="Review",
-    deprecate_fields=("message",),
+    deprecate_fields=("message", "client"),
 )
 class ReviewSerializer(serializers.ModelSerializer):
     body = serializers.CharField(
@@ -29,7 +29,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
     service = ServiceSerializer(read_only=True)
-    client = UserListSerializer(read_only=True)
+    user = UserListSerializer(read_only=True)
+    client = UserListSerializer(read_only=True, source="user")
     response = ReviewResponseSerializer(read_only=True)
     image_urls = serializers.SerializerMethodField()
     workshop_url = serializers.HyperlinkedRelatedField(
@@ -55,6 +56,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             "rating",
             "response",
             "service",
+            "user",
             "client",
             "created_at",
             "image_urls",
@@ -137,5 +139,5 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data["workshop"] = self.context["workshop"]
-        validated_data["client"] = self.context["request"].user
+        validated_data["user"] = self.context["request"].user
         return super().create(validated_data)
