@@ -3,19 +3,11 @@ from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
 
 from core.fields.v0 import HyperLinkSelfField
-from users.serializers.v0 import UserListSerializer
 from workshops.models import Workshop
 
 
-@extend_schema_serializer(
-    component_name="Workshop",
-    deprecate_fields=("owner",),
-)
+@extend_schema_serializer(component_name="Workshop")
 class WorkshopSerializer(serializers.ModelSerializer):
-    owner = UserListSerializer(
-        read_only=True,
-        help_text=_("The account owner of the workshop."),
-    )
     is_favorite = serializers.SerializerMethodField(
         help_text=_("Whether the workshop is a favorite of the user."),
     )
@@ -85,7 +77,6 @@ class WorkshopSerializer(serializers.ModelSerializer):
         model = Workshop
         fields = (
             "id",
-            "owner",
             "name",
             "description",
             "rating",
@@ -114,6 +105,6 @@ class WorkshopSerializer(serializers.ModelSerializer):
 
     def get_is_favorite(self, obj) -> bool:
         user = self.context["request"].user
-        if not user.is_authenticated:
+        if user.is_anonymous:
             return False
         return user.favorite_workshops.filter(id=obj.id).exists()
