@@ -88,6 +88,4 @@ class WorkshopVehicleView(
 
     def _get_versioned_serializer_class(self, version):
         module = self._get_serializer_module(version, "vehicles")
-        if self.request.method == "PUT":
-            return getattr(module, "VehicleSerializer")
         return getattr(module, "VehicleSerializer")

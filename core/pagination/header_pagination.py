@@ -50,7 +50,7 @@ class HeaderPagination(PageNumberPagination):
         links = self._get_links()
         headers = {
             "X-Page-Count": self.page.paginator.num_pages,
-            "X-Page-Size": self.page_size,
+            "X-Page-Size": self.page.paginator.per_page,
             "X-Current-Page": self.page.number,
         }
         if self.include_count:

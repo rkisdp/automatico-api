@@ -7,7 +7,7 @@ class AutoMaticoJSONRenderer(JSONRenderer):
     format = "automatico+json"
 
     def get_indent(self, accepted_media_type, renderer_context):
-        """S"""
+        """Same as JSONRenderer.get_indent, but indent 2 as default."""
         if accepted_media_type:
             # If the media type looks like 'application/vnd.automatico+json;
             # indent=4', then pretty print the result.
